@@ -1,0 +1,13 @@
+README.md
+setup.py
+py_package_template.egg-info/PKG-INFO
+py_package_template.egg-info/SOURCES.txt
+py_package_template.egg-info/dependency_links.txt
+py_package_template.egg-info/entry_points.txt
+py_package_template.egg-info/not-zip-safe
+py_package_template.egg-info/requires.txt
+py_package_template.egg-info/top_level.txt
+py_pkg/__init__.py
+py_pkg/__version__.py
+py_pkg/curves.py
+py_pkg/entry_points.py
