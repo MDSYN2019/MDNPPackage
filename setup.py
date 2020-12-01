@@ -1,53 +1,42 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-"""The setup script."""
+import os
+from setuptools import setup
 
-from setuptools import setup, find_packages
+# get key package details from py_pkg/__version__.py
+about = {}  # type: ignore
+here = os.path.abspath(os.path.dirname(__file__))
+with open(os.path.join(here, 'py_pkg', '__version__.py')) as f:
+    exec(f.read(), about)
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
+# load the README file and use it as the long_description for PyPI
+with open('README.md', 'r') as f:
+    readme = f.read()
 
-with open('HISTORY.rst') as history_file:
-    history = history_file.read()
-
-requirements = [ ]
-
-setup_requirements = [ ]
-
-test_requirements = [ ]
-
+# package configuration - for reference see:
+# https://setuptools.readthedocs.io/en/latest/setuptools.html#id9
 setup(
-    author="Audrey Roy Greenfeld",
-    author_email='audreyr@example.com',
-    python_requires='>=3.5',
-    classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Natural Language :: English',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-    ],
-    description="Python Boilerplate contains all the boilerplate you need to create a Python package.",
-    entry_points={
-        'console_scripts': [
-            'python_boilerplate=python_boilerplate.cli:main',
-        ],
-    },
-    install_requires=requirements,
-    license="MIT license",
-    long_description=readme + '\n\n' + history,
+    name=about['__title__'],
+    description=about['__description__'],
+    long_description=readme,
+    long_description_content_type='text/markdown',
+    version=about['__version__'],
+    author=about['__author__'],
+    author_email=about['__author_email__'],
+    url=about['__url__'],
+    packages=['py_pkg'],
     include_package_data=True,
-    keywords='python_boilerplate',
-    name='python_boilerplate',
-    packages=find_packages(include=['python_boilerplate', 'python_boilerplate.*']),
-    setup_requires=setup_requirements,
-    test_suite='tests',
-    tests_require=test_requirements,
-    url='https://github.com/audreyr/python_boilerplate',
-    version='0.1.0',
+    python_requires=">=3.7.*",
+    install_requires=['numpy', 'requests'],
+    license=about['__license__'],
     zip_safe=False,
+    entry_points={
+        'console_scripts': ['py-package-template=py_pkg.entry_points:main'],
+    },
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'Programming Language :: Python :: 3.7',
+    ],
+    keywords='package development template'
 )

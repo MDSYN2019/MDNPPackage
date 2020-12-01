@@ -1,1 +1,6 @@
-"""Unit test package for python_boilerplate."""
+"""
+tests
+~~~~~
+
+Test suite for the py_pkg package.
+"""
