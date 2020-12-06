@@ -15,6 +15,7 @@ This package builds the central sphere of the NP in question, using a voronoi ap
 """
 
 import numpy as np
+import csv
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -32,10 +33,16 @@ class CentralCoreGenerator:
     """
     NEW 
     """
-    def __init__(self):
-        pass
-      
+    def __init__(self, points, R, outputPDB):
+        self.points = points
+        self.R = R
+        self.outputPDB = outputPDB 
     def Sphere:
         pass
+    def Write:
+        with open(self.outputPDB, "w") as f:
+            writer = csv.writer(f)
+            writer.writerows()
+        
       
     
