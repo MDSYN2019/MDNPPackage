@@ -1,4 +1,5 @@
-# Python Package Template Project
+# MDNPPackage - the constructor for Coarse-grained/All-atomic Molecular Dynamics simulations
+
 
 [![image](https://img.shields.io/pypi/v/py-package-template.svg)](https://pypi.org/project/py-package-template/)
 [![Build Status](https://travis-ci.org/AlexIoannides/py-package-template.svg?branch=master)](https://travis-ci.org/AlexIoannides/py-package-template)
