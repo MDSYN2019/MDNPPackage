@@ -3,7 +3,8 @@
 Last updated: 06/12/2020 
 ------------------------
 
-Prerequisite packages reuqired: () 
+Prerequisite packages reuqired: OpenBabel (and the API python package, pybel, as linked here: https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html) 
+
 
 Summary
 -------
@@ -26,3 +27,15 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 import scipy as sp
 from scipy.spatial import SphericalVoronoi, geometric_slerp
+
+class CentralCoreGenerator:
+    """
+    NEW 
+    """
+    def __init__(self):
+        pass
+      
+    def Sphere:
+        pass
+      
+    
