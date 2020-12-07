@@ -33,12 +33,17 @@ class CentralCoreGenerator:
     """
     NEW 
     """
-    def __init__(self, points, R, outputPDB):
+    def __init__(self, points, R, outputPDB, center):
         self.points = points
         self.R = R
-        self.outputPDB = outputPDB 
+        self.outputPDB = outputPDB
+        self.center = center 
     def Sphere:
-        pass
+        """
+        Write custom spheres - hypothetical structures
+        """
+        VoroniBaseSphere = SphericalVoronoi(self.points, self.R, self.center)
+        
     def Write:
         with open(self.outputPDB, "w") as f:
             writer = csv.writer(f)
