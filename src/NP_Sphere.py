@@ -12,6 +12,8 @@ Summary
 This package builds the central sphere of the NP in question, using a voronoi approach. The input is as follows:
 
 
+
+Useful Links: https://py-sphere-voronoi.readthedocs.io/en/latest/voronoi_utility.html
 """
 
 import numpy as np
