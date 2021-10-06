@@ -4,7 +4,16 @@ import scipy
 import pybel
 import rdkit
 from rdkit import Chem
-import MDAnalysis
+import MDAnalysis as mda
+
+"""
+Last Updated: 17/12/2020 
+
+Author: Sang Young Noh 
+
+TODO 
+
+"""
 class Converter():
     """
     Written Manual here 

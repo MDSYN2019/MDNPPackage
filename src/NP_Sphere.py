@@ -12,6 +12,8 @@ Summary
 This package builds the central sphere of the NP in question, using a voronoi approach. The input is as follows:
 
 
+
+Useful Links: https://py-sphere-voronoi.readthedocs.io/en/latest/voronoi_utility.html
 """
 
 import numpy as np
@@ -33,12 +35,17 @@ class CentralCoreGenerator:
     """
     NEW 
     """
-    def __init__(self, points, R, outputPDB):
+    def __init__(self, points, R, outputPDB, center):
         self.points = points
         self.R = R
-        self.outputPDB = outputPDB 
+        self.outputPDB = outputPDB
+        self.center = center 
     def Sphere:
-        pass
+        """
+        Write custom spheres - hypothetical structures
+        """
+        VoroniBaseSphere = SphericalVoronoi(self.points, self.R, self.center)
+        
     def Write:
         with open(self.outputPDB, "w") as f:
             writer = csv.writer(f)
