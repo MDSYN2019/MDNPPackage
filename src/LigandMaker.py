@@ -1,6 +1,5 @@
 import numpy as np
 import scipy 
-
 import pybel
 import rdkit
 from rdkit import Chem
@@ -28,13 +27,21 @@ class Converter():
         else:
             self.option = option
             
-
-    def _UniverseConverterFromMol():
+    def GetRingSystems(mol, includeSpiro=False):
         """
-        What does this function do? 
+        What is this function doing?
         """
-        if self.option == 'mol':
-            # If the chosen file is a mol, then we need to convert it to smiles
-            moleculeSmile = Chem.MolToSmiles( 
-            
-    
+        ri = mol.GetRingInfo() # Sets out the indices of the rings structures within the mol file 
+        systems = []
+        for ring in ri.AtomRings():
+            ringAts = set(ring)
+            nSystems = []
+            for system in systems:
+                nInCommon = len(ringAts.intersection(system))
+                if nInCommon and (includeSpiro or nInCommon>1):
+                    ringAts = ringAts.union(system)
+                else:
+                    nSystems.append(system)
+                nSystems.append(ringAts)
+                systems = nSystems
+        return systems

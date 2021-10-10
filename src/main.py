@@ -3,7 +3,7 @@
 NP Construction Library 
 -----------------------
 
-Last Updated: 30/9/2021
+Last Updated: 06/10/2021
 -----------------------
 
 # These need to be implemented as part of the smiles functionality where we can add identify what can be martinized 
