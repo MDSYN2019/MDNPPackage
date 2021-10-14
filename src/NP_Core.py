@@ -49,14 +49,11 @@ class CentralCoreGenerator:
         self.output =  open(filename+".itp", 'w')
       
     def Nanoparticle_Base_Fibonacci_Sphere(samples=1):
-        """ Function to
-        create even points on a sphere for the base of a Nanoparticle.
-
-        Initially most likely I will have to create a coarse-grained
-        version first, then convert to """
+        """ 
+        Function to create even points on a sphere for the base of a Nanoparticle.
+        """
         points = []
         phi = math.pi * (3. - math.sqrt(5.))  # golden angle in radians
-
         for i in range(samples):
             y = 1 - (i / float(samples - 1)) * 2 # y goes from 1 to -1 radius = math.sqrt(1 - y * y) # radius at y
             theta = phi * i # golden angle increment
@@ -64,7 +61,15 @@ class CentralCoreGenerator:
             z = math.sin(theta) * radius points.append((x, y, z))
         # Return the surface points on the sphere  
         self.points = points
-    
+
+    def Nanoparticle_Base_Nanotube():
+        """
+        Function to create even points on a tube for the base of a Nanoparticle.
+        
+        This function would be based on Martin Vogele's code referenced. 
+        """
+        pass
+        
     def Connect_Ligand():
         """
         Find the connecting vector to each of the core atoms on the surface of the core, and 
@@ -81,23 +86,23 @@ class CentralCoreGenerator:
         for point in self.points:
             pass
         
-    def Write_Pdb:
+    def Write_Coordinates:
         """
-        From the core 
+        This writes the coordinates generated from either the nanotube or 
+        the spherical core and converts the xyz file into the pdb file, or leaves the 
+        xyz file. 
         """
         with open(self.outputPDB, "w") as f:
             writer = csv.writer(f)
             writer.writerows()
-
-
-    def Nanoparticle_Base_Nanotube():
-        """
-        """
         pass
-
     
-        
 class CoarseGrainer:
+    """
+    This class creates a MARTINI3 compatible mapping over the 
+    smiles pdb of the ligands that has been constructed from the RDKit code. 
+
+    """
     def __init__(self):
         pass
     
