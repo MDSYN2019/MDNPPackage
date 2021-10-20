@@ -6,11 +6,10 @@ from rdkit import Chem
 import MDAnalysis as mda
 
 """
-Last Updated: 17/12/2020 
+Last Updated: 18/12/2020 
+------------------------
 
-Author: Sang Young Noh 
 
-TODO 
 
 """
 class Converter():
