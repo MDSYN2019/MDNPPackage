@@ -1,0 +1,24 @@
+\begin{thebibliography}{1}
+
+\bibitem{Nanomodeller}
+S.~Franco-Ulloa, L.~Riccardi, F.~Rimembrana, M.~Pini, and M.~D. Vivo.
+\newblock {N}ano{M}odeler: {A} {W}ebserver for {M}olecular {S}imulations and
+  {E}ngineering of {N}anoparticles.
+\newblock {\em {J}ournal of {C}hemical {T}heory and {C}omputation},
+  15(3):2022--2032, 2019.
+
+\bibitem{Moltemplate}
+A.~I. Jewett.
+\newblock Moltemplate: A tool for coarse-grained modeling of complex biological
+  matter and soft condensed matter physics.
+\newblock {\em Journal of Molecular Biology}, 433(11):166841, 2021.
+
+\bibitem{INSANE}
+R.~A. Wassenaar, H.~I. Ingolfsson, R.~A. Bockmann, D.~P. Tielemann, and S.~J.
+  Marrink.
+\newblock {C}omputational {L}ipidomics with insane: {A} {V}ersatile {T}ool for
+  {G}enerating {C}ustom {M}embranes for {M}olecular {S}imulations.
+\newblock {\em {J}ournal of {C}hemical {T}heory and {C}omputation}, 11:2144 --
+  2155, 2015.
+
+\end{thebibliography}

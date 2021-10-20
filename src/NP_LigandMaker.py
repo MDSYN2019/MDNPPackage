@@ -6,16 +6,17 @@ from rdkit import Chem
 import MDAnalysis as mda
 
 """
-Last Updated: 18/12/2020 
+------------------------
+Last Updated: 20/10/2021 
 ------------------------
 
-
-
 """
+
 class Converter():
     """
     Written Manual here 
     """
+    
     def __init__(self, option):
         """
         What does this constructor do? 
@@ -25,8 +26,15 @@ class Converter():
                 print("Need a mol or sdf input") 
         else:
             self.option = option
-            
-    def GetRingSystems(mol, includeSpiro=False):
+
+        # Adding Martini beads here 
+        self._SmilesToMartiniDictionary = {}
+        SmilesToMartiniDictionary["CC(=O)CO"] = 'P2' # P2 Bead 
+        SmilesToMartiniDictionary["CC(=O)O"] = 'SP2' # SP2 Bead 
+        SmilesToMartiniDictionary["CC(C)O"] = 'P1' # P1 Bead 
+        SmilesToMartiniDictionary["CC(C)O"] = 'P1' # P1 Bead 
+    
+    def GetRingSystems(self, mol, includeSpiro=False):
         """
         What is this function doing?
         """
@@ -44,3 +52,6 @@ class Converter():
                 nSystems.append(ringAts)
                 systems = nSystems
         return systems
+
+    def FunctionPlaceHolder(self):
+        pass

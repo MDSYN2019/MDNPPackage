@@ -1,52 +1,53 @@
-Useful links:
--------------
-
-https://cedric.bouysset.net/blog/2020/06/18/gsoc-rdkit-to-universe - Rdkit tutorial
-
-https://www.sciencedirect.com/science/article/pii/S0022283621000358 - moletemplate literature
-
-https://pubs.acs.org/doi/10.1021/acs.jctc.8b01304 - nanomodeler
-
-https://pubs.acs.org/doi/abs/10.1021/jacs.6b11717 - Heterojunction morphologies 
-
-https://chemrxiv.org/engage/chemrxiv/article-details/60f3ea062b910135237380eb - Mapping of the ligands to specific beads of martini
-
-https://cedric.bouysset.net/blog/2020/08/07/rdkit-interoperability - Information on interoperatbility of the RDKit library and the MDAnalysis library
-
-Introduction
-------------
-
+\documentclass[12pt]{article}
+\usepackage[square, numbers, comma, sort&compress]{natbib} 
+\begin{document}
+\title{Nanoparticle Modeller for Martini - A Proposal}
+\author{Sang Young Noh}
+\date{\today}
+\maketitle
+\section{Introduction}
 The introduction of software frameworks when constructing biomolecular systems and phase systems has revolutionized the pace of research in the
 molecular simulation field. This is due to the ease of entry with the python programming language, as well as the use of molecular template contruction software,
-such as moletemplate (for general use), insane (for the use of Martini and bilayers/proteins). Nanoparticle structures (NPs), on the other hand, have seen a number of software that
-have seen use such as nanomodeler. The case of nanomodeler and its use highlights the importance but also the difficulty of creating a general software that can manage the
-construction of structures.
-
-As highlighted by Franco-Ulloa \emph{et al}, there are two main reasons for this:
+such as moltemplate (for general use) \cite{Moltemplate}, insane (for the use of Martini and bilayers/proteins) \cite{INSANE}. Nanoparticle structures (NPs), on the other hand, have seen a number of software that
+have seen use such as nanomodeler \cite{Nanomodeller}. The case of nanomodeler and its use highlights the importance but also the difficulty of creating a general software that can manage the
+construction of structures. As highlighted by Franco-Ulloa \emph{et al}, there are two main reasons for this:
 \begin{itemize}
 \item Construct complex 3D models of the inner metal core and outer layer of organic ligands.
 \item Correctly assign force-field parameters to these composite systems.
 \end{itemize} 
 Other factors that inhibit the ease of construction of such software is that NPs can occur with several sizes and morphology, for example the carbon nanotube being a classical
 model which should be taken into account to create a general software. 
-
---
-
+\newline
+\newline
 Recent developments in existing software packaged have helped to make this goal closer towards being substatial. MDAnalysis is one of the de-factor molecular packages that
 is avaliable for manipulating PDB/GRO/XYZ molecular topologies, as well as TRR/DCD/XTC binary trajectories from simulation files to analyze according to how one wants to look at the simulation. 
 The most recent version, MDAnalysis-1.0.1, added new functionalities, of structural analysis but especially a cross-link compatibility with SMILES strings of molecules, which in turn
-allows it to utilize the RDKit library, which is already a very-well established chemiinformatics library. From the introduction of the RDKit conversion functionality in MDAnalysis (more information here - https://www.mdanalysis.org/2020/08/29/gsoc-report-cbouy/) the potential for simply inputting a smiles string to construct a ligand on the nanoparticle has been a potential. RDKit is convenient as it can detect what ligands is not suitable due to
-their unrealistic nature.
+allows it to utilize the RDKit library, which is already a very-well established chemiinformatics library. From the introduction of the RDKit conversion functionality in MDAnalysis (more information here - https://www.mdanalysis.org/2020/08/29/gsoc-report-cbouy/) the potential for simply inputting a smiles string to construct a ligand on the nanoparticle has been a potential. RDKit is convenient as it can detect what ligands is not suitable due to their unrealistic nature.
 
 Another advantage with the RDkit infrastructure is the way aromatic atoms can be identified. Following the publication (), we already know that with MARTINI3, aromatic and non-aromatic
 atomic moeities can have significantly different coarse-graining procedures, where instead of a normal 4-to-1 conversion from atomistic to coarse-grained, the mapping may require a 3-to-1 or even
 a 2-to-1 mapping.
 
+\section{Proposed Code Workflow}
 
+\section{Reference Links}
 
+\begin{itemize}
+\item https://cedric.bouysset.net/blog/2020/06/18/gsoc-rdkit-to-universe - Rdkit tutorial
 
-----------------------
-Proposed Code Workflow
-----------------------
+\item https://www.sciencedirect.com/science/article/pii/S0022283621000358 - moletemplate literature
 
+\item https://pubs.acs.org/doi/10.1021/acs.jctc.8b01304 - nanomodeler
 
+\item https://pubs.acs.org/doi/abs/10.1021/jacs.6b11717 - Heterojunction morphologies 
+
+\item http://cgmartini.nl/index.php/martini-3-0 - Martini 3 parameters
+
+\item https://chemrxiv.org/engage/chemrxiv/article-details/60f3ea062b910135237380eb - Mapping of the ligands to specific beads of martini
+
+\item https://cedric.bouysset.net/blog/2020/08/07/rdkit-interoperability - Information on interoperatbility of the RDKit library and the MDAnalysis library
+\end{itemize}
+
+\bibliographystyle{abbrv}
+\bibliography{Documentation}
+\end{document}
