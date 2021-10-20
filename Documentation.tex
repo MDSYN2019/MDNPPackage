@@ -1,5 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage[square, numbers, comma, sort&compress]{natbib} 
+\usepackage{graphicx}
 \begin{document}
 \title{Nanoparticle Modeller for Martini - A Proposal}
 \author{Sang Young Noh}
@@ -23,12 +24,16 @@ Recent developments in existing software packaged have helped to make this goal 
 is avaliable for manipulating PDB/GRO/XYZ molecular topologies, as well as TRR/DCD/XTC binary trajectories from simulation files to analyze according to how one wants to look at the simulation. 
 The most recent version, MDAnalysis-1.0.1, added new functionalities, of structural analysis but especially a cross-link compatibility with SMILES strings of molecules, which in turn
 allows it to utilize the RDKit library, which is already a very-well established chemiinformatics library. From the introduction of the RDKit conversion functionality in MDAnalysis (more information here - https://www.mdanalysis.org/2020/08/29/gsoc-report-cbouy/) the potential for simply inputting a smiles string to construct a ligand on the nanoparticle has been a potential. RDKit is convenient as it can detect what ligands is not suitable due to their unrealistic nature.
-
+\newline
+\newline
 Another advantage with the RDkit infrastructure is the way aromatic atoms can be identified. Following the publication (), we already know that with MARTINI3, aromatic and non-aromatic
 atomic moeities can have significantly different coarse-graining procedures, where instead of a normal 4-to-1 conversion from atomistic to coarse-grained, the mapping may require a 3-to-1 or even
 a 2-to-1 mapping.
 
 \section{Proposed Code Workflow}
+\begin{wrapfigure} %this figure will be at the right
+  \includegraphics[scale=0.4]{schema.pdf}
+\end{wrapfigure}
 
 \section{Reference Links}
 
