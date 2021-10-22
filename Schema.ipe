@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70212" creator="Ipe 7.2.13">
-<info created="D:20211020221243" modified="D:20211020221302"/>
+<info created="D:20211020221243" modified="D:20211022195412"/>
 <bitmap id="1" width="500" height="573" BitsPerComponent="8" ColorSpace="DeviceRGB" Filter="FlateDecode" length="263811" encoding="base64">
 eNrs3XtIZNm5N/5/ujrJe85Y1W3db7Ztey1vVV5K62JZd8or3vCGitooKiqKoqIoiiKKIorS
 KNJN03QIYYZhCD2EEMIQEsIwDCGEEMIQwtAMA8MQDoeX99/39zzPWmvvXeqcc96e7pme/Pbi
@@ -6479,13 +6479,13 @@ h
 <dashstyle name="dash dotted" value="[4 2 1 2] 0"/>
 <dashstyle name="dash dot dotted" value="[4 2 1 2 1 2] 0"/>
 <textsize name="large" value="\large"/>
+<textsize name="small" value="\small"/>
+<textsize name="tiny" value="\tiny"/>
 <textsize name="Large" value="\Large"/>
 <textsize name="LARGE" value="\LARGE"/>
 <textsize name="huge" value="\huge"/>
 <textsize name="Huge" value="\Huge"/>
-<textsize name="small" value="\small"/>
 <textsize name="footnote" value="\footnotesize"/>
-<textsize name="tiny" value="\tiny"/>
 <textstyle name="center" begin="\begin{center}" end="\end{center}"/>
 <textstyle name="itemize" begin="\begin{itemize}" end="\end{itemize}"/>
 <textstyle name="item" begin="\begin{itemize}\item{}" end="\end{itemize}"/>
@@ -6514,7 +6514,7 @@ h
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
 <image layer="alpha" matrix="0.308578 0 0 0.330087 36.0115 471.887" rect="42.5 192 552.5 650" bitmap="2"/>
-<text matrix="1 0 0 1 -25.8418 -15.9027" transformations="translations" pos="75.5254 723.405" stroke="black" type="label" width="75.398" height="6.808" depth="0" valign="baseline">Core Generation </text>
+<text matrix="1 0 0 1 14.7563 -26.9425" transformations="translations" pos="75.5254 723.405" stroke="black" type="label" width="75.398" height="6.808" depth="0" valign="baseline">Core Generation </text>
 <path matrix="0.414616 0 0 0.362651 243.708 180.096" stroke="black" arrow="normal/normal">
 180.92 655.686 m
 204.097 655.257 l
@@ -6997,17 +6997,12 @@ h
 <text matrix="1 0 0 1 159.689 -224.625" transformations="translations" pos="75.5254 723.405" stroke="black" type="label" width="74.346" height="6.815" depth="1.93" valign="baseline">Coarse-Graining </text>
 <image matrix="0.257901 0 0 0.302383 31.2243 326.396" rect="0 334.939 595 507.061" bitmap="3"/>
 <text matrix="1 0 0 1 -44.7947 -224.625" transformations="translations" pos="75.5254 723.405" stroke="black" type="label" width="142.258" height="7.473" depth="2.49" valign="baseline">Smiles to XYZ/PDB Generation</text>
-<path stroke="black" arrow="normal/normal">
-192.741 463.805 m
-225.314 463.805 l
-</path>
-<image matrix="0.124669 0 0 0.131916 442.239 557.201" rect="47.5 134.5 547.5 707.5" bitmap="1"/>
-<text matrix="0.423453 0 0 -5.30415 142.932 3892.68" transformations="translations" pos="247.91 619.409" stroke="black" type="label" width="164.688" height="6.926" depth="1.93" valign="baseline">Vector alignment and bond allocation</text>
+<image matrix="0.124669 0 0 0.131916 361.399 555.777" rect="47.5 134.5 547.5 707.5" bitmap="1"/>
 <path matrix="1 0 0 1 18.3493 144.245" stroke="black" arrow="normal/normal">
 192.741 463.805 m
 225.314 463.805 l
 </path>
-<path matrix="1 0 0 1 221.21 145.774" stroke="black" arrow="normal/normal">
+<path matrix="1 0 0 1 140.37 144.35" stroke="black" arrow="normal/normal">
 192.741 463.805 m
 225.314 463.805 l
 </path>
@@ -7015,6 +7010,39 @@ h
 319.778 513.901 m
 319.778 592.904 l
 </path>
-<text transformations="translations" pos="448.604 560.538" stroke="black" type="label" width="117.227" height="6.926" depth="1.93" valign="baseline">Final Martini Nanopaticle </text>
+<text matrix="1 0 0 1 -97.5779 -9.97146" transformations="translations" pos="448.604 560.538" stroke="black" type="label" width="117.227" height="6.926" depth="1.93" valign="baseline">Final Martini Nanopaticle </text>
+<path matrix="0.492225 0 0 0.926537 126.752 45.1287" stroke="black">
+240 624 m
+240 592 l
+416 592 l
+416 624 l
+h
+</path>
+<path matrix="1 0 0 1 -0.356124 -11.7521" stroke="black">
+20.0797 523.489 m
+20.0797 422.35 l
+192.444 422.35 l
+192.444 523.489 l
+h
+</path>
+<path matrix="0.982069 0 0 1.00315 6.88296 -1.21085" stroke="black">
+223.782 512.805 m
+223.782 384.244 l
+415.377 384.244 l
+415.377 512.805 l
+h
+</path>
+<path stroke="black">
+34.3246 711.878 m
+34.3246 533.104 l
+210.606 533.104 l
+210.606 711.878 l
+h
+</path>
+<text matrix="1 0 0 1 -11.7521 -32.7634" transformations="translations" pos="269.366 638.517" stroke="black" type="label" width="57.869" height="6.13" depth="1.74" valign="baseline" size="small">Martini-PyNP</text>
+<path matrix="1 0 0 1 0.899105 0.726665" stroke="black" arrow="normal/normal">
+192.741 463.805 m
+225.314 463.805 l
+</path>
 </page>
 </ipe>
