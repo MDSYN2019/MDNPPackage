@@ -2,7 +2,7 @@
 # MDNPPackage - the constructor for Coarse-grained/All-atomic Molecular Dynamics simulations
 
 
-A large part of this package was inspired by this GSOC 2020 project - https://www.mdanalysis.org/2020/08/29/gsoc-report-cbouy/ - where MDAnalysis was merged with RDkit.
+A large part of this package was inspired by this GSOC 2020 project - https://www.mdanalysis.org/2020/08/29/gsoc-report-cbouy/ - where MDAnalysis was merged with RDkit. More information about this package can be found in the 
 
 
 

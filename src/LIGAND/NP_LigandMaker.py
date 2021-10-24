@@ -7,27 +7,37 @@ import MDAnalysis as mda
 
 """
 ------------------------
-Last Updated: 20/10/2021 
+Last Updated: 22/10/2021 
 ------------------------
+
+Breakdown: 
+----------
+
+The class MolecularConverter translates the smiles string of the ligand(s)
+into a cartesian coordinate xyz file. From this, we use the indices of the
+smiles sting and match it to the SmilesToMartiniDictionary. From this, we
+can use the center of geometry of the indices and replace with the relevant 
+Martini bead.   
+
+
 
 """
 
-class Converter():
+class MolecularConverter:
     """
     Written Manual here 
-    """
-    
-    def __init__(self, option):
+    """    
+    def __init__(self, option, smilesString):
         """
-        What does this constructor do? 
+        The constructor must detect whether the smiles string is valid or not  
         """
-        if option not in ['mol', 'sdf']:
-            except ValueError:
-                print("Need a mol or sdf input") 
-        else:
-            self.option = option
 
-        # Adding Martini beads here 
+        
+
+
+        # Adding Martini Beads dictionary - at the moment, I am using
+        # Martini 3 references
+        
         self._SmilesToMartiniDictionary = {}
         SmilesToMartiniDictionary["CC(=O)CO"] = 'P2' # P2 Bead 
         SmilesToMartiniDictionary["CC(=O)O"] = 'SP2' # SP2 Bead 
@@ -53,5 +63,14 @@ class Converter():
                 systems = nSystems
         return systems
 
-    def FunctionPlaceHolder(self):
-        pass
+    def ComputeCoordinatesLigands(self):
+        """
+        Get the generic basis of the xyz coorinates of the 
+        ligands 
+        """
+        u = mda.Universe.from_smiles(smilesString)
+        # new feature
+        Molecule = u1.select_atoms('all')
+        MoleculeAtomPositions = Molecule.positions # Finds 
+        
+        

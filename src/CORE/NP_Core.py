@@ -35,6 +35,9 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 import scipy as sp
 from scipy.spatial import SphericalVoronoi, geometric_slerp
+from MDAnalysis.analysis.distances import distance_array
+
+
 
 class CentralCoreGenerator:
     """

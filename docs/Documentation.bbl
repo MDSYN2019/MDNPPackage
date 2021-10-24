@@ -1,5 +1,11 @@
 \begin{thebibliography}{1}
 
+\bibitem{SmallMolecules}
+R.~Alessandri, J.~Barnoud, A.~S. Gertsen, L.~Patmanidis, A.~H. de~Vries,
+  P.~C.~T. Souza, and S.~J. Marrink.
+\newblock {M}artini 3 {C}oarse-{G}rained {F}orce {F}ield: {S}mall {M}olecules.
+\newblock {\em ChemRxiv}, 2021.
+
 \bibitem{Nanomodeller}
 S.~Franco-Ulloa, L.~Riccardi, F.~Rimembrana, M.~Pini, and M.~D. Vivo.
 \newblock {N}ano{M}odeler: {A} {W}ebserver for {M}olecular {S}imulations and
