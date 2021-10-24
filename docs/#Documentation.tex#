@@ -51,6 +51,7 @@ This proposal highlights the project idea for creating an automated NP construct
 following the observation that there is no unified approach to building a coarse-grained NP system (striped, tube or otherwise) that is easy to install and without having to
 go through the tedious process of having the design a separate in-house coding base. Based on the recent features of libraries such as MDAnalysis and RDkit, this proposal shows the possibility
 of making the library that enables this process. 
+
 \section{Reference Links}
 \begin{itemize}
 \item https://cedric.bouysset.net/blog/2020/06/18/gsoc-rdkit-to-universe - RDkit tutorial
