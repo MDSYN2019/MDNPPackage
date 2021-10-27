@@ -6,98 +6,28 @@ REMARK     285 WAS MISSING.
 REMARK     285 PROTEIN DATA BANK CONVENTIONS REQUIRE THAT
 REMARK     285 CRYST1 RECORD IS INCLUDED, BUT THE VALUES ON
 REMARK     285 THIS RECORD ARE MEANINGLESS.
-ATOM      1  C0  UNK X   1      -5.116   0.075   0.132  1.00  0.00      SYST C
-ATOM      2  C1  UNK X   1      -4.921   0.117  -1.358  1.00  0.00      SYST C
-ATOM      3  C2  UNK X   1      -3.564  -0.309  -1.752  1.00  0.00      SYST C
-ATOM      4  C3  UNK X   1      -2.762  -0.984  -0.840  1.00  0.00      SYST C
-ATOM      5  C4  UNK X   1      -1.381  -0.852  -0.916  1.00  0.00      SYST C
-ATOM      6  C5  UNK X   1      -0.858  -0.902  -2.203  1.00  0.00      SYST C
-ATOM      7  C6  UNK X   1      -1.633  -0.297  -3.186  1.00  0.00      SYST C
-ATOM      8  C7  UNK X   1      -2.938   0.104  -2.922  1.00  0.00      SYST C
-ATOM      9  C8  UNK X   1      -0.824  -1.052   0.342  1.00  0.00      SYST C
-ATOM     10  C9  UNK X   1      -1.921  -1.282   1.166  1.00  0.00      SYST C
-ATOM     11  N10 UNK X   1      -3.064  -1.097   0.460  1.00  0.00      SYST N
-ATOM     12  C11 UNK X   1      -4.486  -1.148   0.772  1.00  0.00      SYST C
-ATOM     13  C12 UNK X   1       0.566  -0.710   0.703  1.00  0.00      SYST C
-ATOM     14  C13 UNK X   1       0.979   0.657   0.169  1.00  0.00      SYST C
-ATOM     15  C14 UNK X   1       0.028   1.523   0.937  1.00  0.00      SYST C
-ATOM     16  O15 UNK X   1      -0.635   2.508   0.535  1.00  0.00      SYST O
-ATOM     17  N16 UNK X   1      -0.020   0.915   2.234  1.00  0.00      SYST N
-ATOM     18  C17 UNK X   1       0.544  -0.401   2.170  1.00  0.00      SYST C
-ATOM     19  O18 UNK X   1       0.913  -1.107   3.132  1.00  0.00      SYST O
-ATOM     20  C19 UNK X   1       2.335   0.971   0.655  1.00  0.00      SYST C
-ATOM     21  C20 UNK X   1       2.756   2.157   1.248  1.00  0.00      SYST C
-ATOM     22  N21 UNK X   1       3.946   1.873   1.833  1.00  0.00      SYST N
-ATOM     23  C22 UNK X   1       4.554   0.884   1.134  1.00  0.00      SYST C
-ATOM     24  C23 UNK X   1       5.880   0.560   0.879  1.00  0.00      SYST C
-ATOM     25  C24 UNK X   1       6.173  -0.534   0.074  1.00  0.00      SYST C
-ATOM     26  C25 UNK X   1       5.115  -1.297  -0.396  1.00  0.00      SYST C
-ATOM     27  C26 UNK X   1       3.838  -0.752  -0.431  1.00  0.00      SYST C
-ATOM     28  C27 UNK X   1       3.514   0.265   0.452  1.00  0.00      SYST C
-ATOM     29  H28 UNK X   1      -4.651   0.954   0.634  1.00  0.00      SYST H
-ATOM     30  H29 UNK X   1      -6.213   0.115   0.317  1.00  0.00      SYST H
-ATOM     31  H30 UNK X   1      -5.089   1.179  -1.669  1.00  0.00      SYST H
-ATOM     32  H31 UNK X   1      -5.725  -0.466  -1.837  1.00  0.00      SYST H
-ATOM     33  H32 UNK X   1       0.191  -1.092  -2.300  1.00  0.00      SYST H
-ATOM     34  H33 UNK X   1      -1.123   0.068  -4.079  1.00  0.00      SYST H
-ATOM     35  H34 UNK X   1      -3.558   0.484  -3.711  1.00  0.00      SYST H
-ATOM     36  H35 UNK X   1      -1.878  -1.251   2.252  1.00  0.00      SYST H
-ATOM     37  H36 UNK X   1      -4.690  -1.103   1.851  1.00  0.00      SYST H
-ATOM     38  H37 UNK X   1      -4.960  -2.033   0.277  1.00  0.00      SYST H
-ATOM     39  H38 UNK X   1       1.297  -1.495   0.464  1.00  0.00      SYST H
-ATOM     40  H39 UNK X   1       0.854   0.747  -0.916  1.00  0.00      SYST H
-ATOM     41  H40 UNK X   1      -0.338   1.433   3.094  1.00  0.00      SYST H
-ATOM     42  H41 UNK X   1       2.228   3.111   1.275  1.00  0.00      SYST H
-ATOM     43  H42 UNK X   1       4.444   2.446   2.561  1.00  0.00      SYST H
-ATOM     44  H43 UNK X   1       6.656   1.300   1.079  1.00  0.00      SYST H
-ATOM     45  H44 UNK X   1       7.189  -0.852  -0.071  1.00  0.00      SYST H
-ATOM     46  H45 UNK X   1       5.253  -2.321  -0.735  1.00  0.00      SYST H
-ATOM     47  H46 UNK X   1       3.092  -1.109  -1.134  1.00  0.00      SYST H
-CONECT    1    2   12   29   30
-CONECT    2    1    3   31   32
-CONECT    3    2    4    8
-CONECT    4    3    5   11
-CONECT    5    4    6    9
-CONECT    6    5    7   33
-CONECT    7    6    8   34
-CONECT    8    3    7   35
-CONECT    9    5   10   13
-CONECT   10    9   11   36
-CONECT   11    4   10   12
-CONECT   12    1   11   37   38
-CONECT   13    9   14   18   39
-CONECT   14   13   15   20   40
-CONECT   15   14   16   17
-CONECT   16   15
-CONECT   17   15   18   41
-CONECT   18   13   17   19
-CONECT   19   18
-CONECT   20   14   21   28
-CONECT   21   20   22   42
-CONECT   22   21   23   43
-CONECT   23   22   24   28
-CONECT   24   23   25   44
-CONECT   25   24   26   45
-CONECT   26   25   27   46
-CONECT   27   26   28   47
-CONECT   28   20   23   27
-CONECT   29    1
-CONECT   30    1
-CONECT   31    2
-CONECT   32    2
-CONECT   33    6
-CONECT   34    7
-CONECT   35    8
-CONECT   36   10
-CONECT   37   12
-CONECT   38   12
-CONECT   39   13
-CONECT   40   14
-CONECT   41   17
-CONECT   42   21
-CONECT   43   22
-CONECT   44   24
-CONECT   45   25
-CONECT   46   26
-CONECT   47   27
+ATOM      1  C0  UNK X   1       0.220  -1.096   0.342  1.00  0.00      SYST C
+ATOM      2  N1  UNK X   1       1.550  -1.043   0.135  1.00  0.00      SYST N
+ATOM      3  C2  UNK X   1       2.183   0.050  -0.327  1.00  0.00      SYST C
+ATOM      4  N3  UNK X   1       1.431   1.134  -0.589  1.00  0.00      SYST N
+ATOM      5  C4  UNK X   1       0.089   1.130  -0.397  1.00  0.00      SYST C
+ATOM      6  C5  UNK X   1      -0.561   0.009   0.077  1.00  0.00      SYST C
+ATOM      7  C6  UNK X   1      -2.013  -0.010   0.289  1.00  0.00      SYST C
+ATOM      8  O7  UNK X   1      -2.755   0.949   0.069  1.00  0.00      SYST O
+ATOM      9  O8  UNK X   1      -2.591  -1.183   0.770  1.00  0.00      SYST O
+ATOM     10  H9  UNK X   1      -0.282  -1.986   0.715  1.00  0.00      SYST H
+ATOM     11  H10 UNK X   1       3.258   0.043  -0.477  1.00  0.00      SYST H
+ATOM     12  H11 UNK X   1      -0.527   2.005  -0.607  1.00  0.00      SYST H
+CONECT    1    2    6   10
+CONECT    2    1    3
+CONECT    3    2    4   11
+CONECT    4    3    5
+CONECT    5    4    6   12
+CONECT    6    1    5    7
+CONECT    7    6    8    9
+CONECT    8    7
+CONECT    9    7
+CONECT   10    1
+CONECT   11    3
+CONECT   12    5
 END
