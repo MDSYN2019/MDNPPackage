@@ -1,11 +1,5 @@
 Riccardo Alessandri
--------------------	
-Wed, Oct 27, 3:06 PM (3 days ago)
-	
-to me
-Hi Sang,
-
-Thank you very much for putting the proposal together and sharing the code!
+-------------------
 
 Overall the proposal looks great to me. This has really the potential to fill an important gap in the current literature and be heavily used by the large Martini community. Moreover, I like the idea of coupling with the Martini 3 small molecule database for custom-functionalization of the NPs.
 
@@ -13,9 +7,17 @@ A few questions:
 
 1) Regarding the SYSTEM part of the code: I remember when we discussed you were inclined to rely on/couple the program to insane for setting up the system. So, do you mean that you'll just "patch" insane to allow for handling of (multiple) NPs but you will still have 2 separate codes (Martini-PyNP and insane) that will be used sequentially or will you re-code the thing from scratch and include it in Martini-PyNP (but use similar implementations to insane)?
 
+Most likely a mixture of both - I'm currently going through the insane code now to see what I can keep, which parts I can adapt and improve on, and the rest I have not fully decided at this point. I think the lattice-based system generation of insane to produce bilayers could be adapted for other systems, but I am currently thinking about this point. 
+
+
 2) Not sure if PyCGTool is what you look for in terms of system building. As far as I know, PyCGTool doesn't do any system building but is instead geared towards bonded parameter fitting.
 
+The way pyCGtool works for making CG systems I suppose was what I had in mind when adapting that approach to RDKit as well. 
+
 3) I think that being able to generate any system that a user would want is very challenging - the potential applications are vast. An option is to be able to support a couple of main options: one for biological applications (e.g., NPs in membranes as you already described) and one for materials (e.g., NPs blended with either small molecules or polymers). For polymers-NP blend generation, polyply (https://github.com/marrink-lab/polyply_1.0) could be used for the coordinate generation. And again, this could simply be done sequentially, that is, use Martini-PyNP to generate topologies+coordinates of any custom-functionalized NP/CNT and then feed those topologies/gro files to (potentially "patched" versions of) insane/polyply for the final system generation. I could take care of the "materials" system generation for example with polyply using the output of Martini-PyNP.
+
+Yes - this is probably the toughest part of the project from what I can see, and I am currently looking at the polypy to see what I can gather from it. I'll be creating an update to the plan to incorporate my vision of it, but I'm sure you would have much more well-though through ideas about this.
+
 
 4) side question:
 
@@ -24,7 +26,6 @@ A few questions:
 --> do you mean here automatizing the mapping step (i.e., grouping molecular fragments into beads)?
 
 
-Let me know if you want to discuss anything over Zoom, I'd be happy to.
+Yes. I was thinking of leveraging the RDKit chain identifier and index identification and matching that to the CG-beads of Martini. In fact, it is currently the class I am working on at the moment.
 
-Thanks,
-Riccardo
+

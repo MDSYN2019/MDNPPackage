@@ -20,7 +20,6 @@ can use the center of geometry of the indices and replace with the relevant
 Martini bead.   
 
 
-
 """
 
 class MolecularConverter:
