@@ -46,6 +46,9 @@ The CORE module handles the central sphere/nanotube construction, the LIGAND mod
 the structure so that unrealistic steric hindrances do not cause the breakdown of the simulation. The CONNECT module handles the attachment of the ligands
 onto the NP surface - where one can determine one wants to make the ligands into a striped/janus/random mix type, or a custom surface pattern that one can define. Also,
 the conversion of this system to the MARTINI 3 morphology would be done in this module. The SYSTEM deals with the construction of sample systems that the NP(s) can be placed, whether it be a lipid bilayer or a solvent system. This would follow similar protocol as the INSANE bilayer builder \cite{INSANE}. However, in this case the option for multiple-NP systems would be valid.
+
+% Add section on how we adapted the Automated coarse-grain mapping here
+\cite{Automated}
 \section{Conclusion}
 This proposal highlights the project idea for creating an automated NP construction based on Python, which has been preliminarily named \emph{Martini-PyNP},
 following the observation that there is no unified approach to building a coarse-grained NP system (striped, tube or otherwise) that is easy to install and without having to
@@ -62,6 +65,7 @@ of making the library that enables this process.
 \item https://cedric.bouysset.net/blog/2020/08/07/rdkit-interoperability - Information on interoperatbility of the RDKit library and the MDAnalysis library
 \item http://www.cgmartini.nl/index.php/example-applications2
   /35-downloads/exampleapplications/193-f16 - Fullerene models in Martini
+\item https://pubs.acs.org/doi/abs/10.1021/acs.jctc.1c00322 - Automated mapping methodology I am trying to adopt 
 \end{itemize}
 
 \bibliographystyle{abbrv}

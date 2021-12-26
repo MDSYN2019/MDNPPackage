@@ -1,14 +1,27 @@
 
+# Last Updated - 20/12/2021
+
 # MDNPPackage - the constructor for Coarse-grained/All-atomic Molecular Dynamics simulations
 
+This package unites the many heuristic NP constructor methods and constructs bniomolecular and physical systems with the NPs, specifically with the Martini forcefield. The types
+of NPs supported with this package are:
+
+- Ligand-functionalized NPs
+
+- Carbon nanotubes 
+
+- Permutations of the C60 buckyball carbon nanoparticle 
 
 A large part of this package was inspired by this GSOC 2020 project - https://www.mdanalysis.org/2020/08/29/gsoc-report-cbouy/ - where MDAnalysis was merged with RDkit. More information about this package can be found in the 
+
+
 
 
 
 [![image](https://img.shields.io/pypi/v/py-package-template.svg)](https://pypi.org/project/py-package-template/)
 [![Build Status](https://travis-ci.org/AlexIoannides/py-package-template.svg?branch=master)](https://travis-ci.org/AlexIoannides/py-package-template)
 
+--
 The py-template-project package allows users to download the contents of this [GiHub repository](https://github.com/AlexIoannides/py-package-template),  containing a skeleton Python package project to be used as a template for kick-starting development of **any** type of Package; destined for upload to PyPI, or just for local install using Pip. The downloaded package includes the following components to aid rapid development without having to spend time cloning existing set-ups from other projects:
 
 - a minimal `setup.py` file;
@@ -31,7 +44,7 @@ pip3 install py-template-project
 
 ## Downloading a Python Package Template Project
 
-To down load the latest version of the Python Package Template project located in [this GiHub repository](https://github.com/AlexIoannides/py-package-template), execute the following command from the command line:
+To download the latest version of the Python Package Template project located in [this GiHub repository](https://github.com/AlexIoannides/py-package-template), execute the following command from the command line:
 
 ```bash
 py-package-template install
