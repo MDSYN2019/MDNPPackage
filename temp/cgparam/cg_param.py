@@ -521,6 +521,8 @@ def mapping(mol,ring_atoms,matched_maps,n_iter):
     path_matrix = floyd_warshall(csgraph=A_atom,directed=False)
     w_init = [atom.GetMass() for atom in mol.GetAtoms()]
     #w_init = [1.0 for atom in mol.GetAtoms()]
+
+    # This part is the tricky part 
     ring_beads,comp,A_init = group_rings(A_atom,ring_atoms,matched_maps,mol)
     #w_init = get_weights(comp,w_init)
 
