@@ -1,7 +1,4 @@
-
-# Last Updated - 20/12/2021
-
-# MDNPPackage - the constructor for Coarse-grained/All-atomic Molecular Dynamics simulations
+# Martini-PyNP - the constructor for Coarse-grained/All-atomic Molecular Dynamics simulations
 
 This package unites the many heuristic NP constructor methods and constructs bniomolecular and physical systems with the NPs, specifically with the Martini forcefield. The types
 of NPs supported with this package are:
@@ -12,11 +9,7 @@ of NPs supported with this package are:
 
 - Permutations of the C60 buckyball carbon nanoparticle 
 
-A large part of this package was inspired by this GSOC 2020 project - https://www.mdanalysis.org/2020/08/29/gsoc-report-cbouy/ - where MDAnalysis was merged with RDkit. More information about this package can be found in the 
-
-
-
-
+A large part of this package was inspired by this GSOC 2020 project - https://www.mdanalysis.org/2020/08/29/gsoc-report-cbouy/ - where MDAnalysis was merged with RDkit. More information about this package can be found in the documentation. 
 
 [![image](https://img.shields.io/pypi/v/py-package-template.svg)](https://pypi.org/project/py-package-template/)
 [![Build Status](https://travis-ci.org/AlexIoannides/py-package-template.svg?branch=master)](https://travis-ci.org/AlexIoannides/py-package-template)
