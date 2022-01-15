@@ -7,7 +7,10 @@ of NPs supported with this package are:
 
 - Carbon nanotubes 
 
-- Permutations of the C60 buckyball carbon nanoparticle 
+- Permutations of the C60 buckyball carbon nanoparticle
+
+- Insertion into systems by leveraging the polyply program - https://github.com/marrink-lab/polyply_1.0
+
 
 A large part of this package was inspired by this GSOC 2020 project - https://www.mdanalysis.org/2020/08/29/gsoc-report-cbouy/ - where MDAnalysis was merged with RDkit. More information about this package can be found in the documentation. 
 
@@ -15,6 +18,7 @@ A large part of this package was inspired by this GSOC 2020 project - https://ww
 [![Build Status](https://travis-ci.org/AlexIoannides/py-package-template.svg?branch=master)](https://travis-ci.org/AlexIoannides/py-package-template)
 
 --
+
 The py-template-project package allows users to download the contents of this [GiHub repository](https://github.com/AlexIoannides/py-package-template),  containing a skeleton Python package project to be used as a template for kick-starting development of **any** type of Package; destined for upload to PyPI, or just for local install using Pip. The downloaded package includes the following components to aid rapid development without having to spend time cloning existing set-ups from other projects:
 
 - a minimal `setup.py` file;
