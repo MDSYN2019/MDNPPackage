@@ -27,10 +27,10 @@ setup(
     author='Sang Young Noh',
     author_email='sangyoung123@googlemail.com',
     url=about['__url__'],
-    packages=['mdanalysis'],
+    packages='',
     include_package_data=True,
     python_requires=">=3.7.*",
-    install_requires=['numpy', 'requests'],
+    install_requires=['numpy', 'requests', 'mdanalysis'],
     license='MIT',
     zip_safe=False, # ?
     setup_requires = ['pytest-runner'],
