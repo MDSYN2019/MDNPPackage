@@ -2,6 +2,8 @@
 
 import os
 from setuptools import setup
+from setuptools import find_packages
+
 
 # get key package details from py_pkg/__version__.py
 about = {}  # type: ignore
@@ -15,21 +17,25 @@ with open('README.md', 'r') as f:
 
 # package configuration - for reference see:
 # https://setuptools.readthedocs.io/en/latest/setuptools.html#id9
+
 setup(
-    name=about['__title__'],
-    description=about['__description__'],
+    name='Martini-PyNP', # 
+    description='Python package to create simulation templates for Nanoparticle mixed simulations',
     long_description=readme,
     long_description_content_type='text/markdown',
-    version=about['__version__'],
-    author=about['__author__'],
-    author_email=about['__author_email__'],
+    version='0.0.1',
+    author='Sang Young Noh',
+    author_email='sangyoung123@googlemail.com',
     url=about['__url__'],
-    packages=['py_pkg'],
+    packages=['mdanalysis'],
     include_package_data=True,
     python_requires=">=3.7.*",
     install_requires=['numpy', 'requests'],
-    license=about['__license__'],
-    zip_safe=False,
+    license='MIT',
+    zip_safe=False, # ?
+    setup_requires = ['pytest-runner'],
+    tests_require = ['pytest==4.4.1'],
+    test_suite = 'tests',
     entry_points={
         'console_scripts': ['py-package-template=py_pkg.entry_points:main'],
     },
