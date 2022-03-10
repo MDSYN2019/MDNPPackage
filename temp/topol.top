@@ -1,0 +1,9 @@
+#include "martini_v3.0.0.itp"
+#include "PEO200.itp"
+[ system ]
+; name
+Melt of PEO 200
+
+[ molecules ]
+; name  number
+PEO 200

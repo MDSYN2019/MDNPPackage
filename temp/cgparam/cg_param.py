@@ -1,5 +1,6 @@
 """
 
+
 Last Updated: 08/12/2021
 ------------------------
 
@@ -594,6 +595,10 @@ def get_hbonding(mol,beads):
     return h_donor,h_acceptor
 
 def get_smi(bead,mol):
+    """
+    """
+    
+
     #gets fragment smiles from list of atoms
 
     bead_smi = Chem.rdmolfiles.MolFragmentToSmiles(mol,bead)
@@ -653,7 +658,7 @@ def get_smi(bead,mol):
 def get_types(beads,mol,ring_beads):
     #loops through beads and determines bead type
     path = os.path.dirname(os.path.realpath(__file__))
-    DG_data = read_DG_data('/home/sang/Desktop/GIT/MDNPPackage/temp/cgparam/fragment_DGs.dat'.format(path))
+    DG_data = read_DG_data('/home/sang/Desktop/GIT/MDNPPackage/temp/cgparam/fragment_DGs.dat')
     bead_types = []
     charges = []
     all_smi = []

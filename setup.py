@@ -1,5 +1,17 @@
 #!/usr/bin/env python3
 
+"""
+Useful links:
+-------------
+
+Last Updated: 15/01/2022
+------------------------
+
+
+- https://stackoverflow.com/questions/53547811/python-package-directory-does-not-exist
+
+
+"""
 import os
 from setuptools import setup
 from setuptools import find_packages
@@ -27,7 +39,7 @@ setup(
     author='Sang Young Noh',
     author_email='sangyoung123@googlemail.com',
     url=about['__url__'],
-    packages='',
+    packages=find_packages('src', exclude = ['test']),
     include_package_data=True,
     python_requires=">=3.7.*",
     install_requires=['numpy', 'requests', 'mdanalysis'],

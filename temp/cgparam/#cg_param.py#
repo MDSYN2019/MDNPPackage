@@ -1,5 +1,6 @@
 """
 
+
 Last Updated: 08/12/2021
 ------------------------
 
@@ -414,7 +415,9 @@ def group_rings(A,ring_atoms,matched_maps,moli):
             new_groups.append([i])
 
     return ring_beads,new_groups,A                 
- 
+
+
+
 def postprocessing(results,ring_atoms,n_iter,A_init,w_init,path_matrix,matched_maps):
     #Checks if overall mapping is too high resolution
     last_iter = results[n_iter -1]
@@ -521,6 +524,8 @@ def mapping(mol,ring_atoms,matched_maps,n_iter):
     path_matrix = floyd_warshall(csgraph=A_atom,directed=False)
     w_init = [atom.GetMass() for atom in mol.GetAtoms()]
     #w_init = [1.0 for atom in mol.GetAtoms()]
+
+    # This part is the tricky part 
     ring_beads,comp,A_init = group_rings(A_atom,ring_atoms,matched_maps,mol)
     #w_init = get_weights(comp,w_init)
 
@@ -592,6 +597,10 @@ def get_hbonding(mol,beads):
     return h_donor,h_acceptor
 
 def get_smi(bead,mol):
+    """
+    """
+    
+
     #gets fragment smiles from list of atoms
 
     bead_smi = Chem.rdmolfiles.MolFragmentToSmiles(mol,bead)
@@ -651,7 +660,7 @@ def get_smi(bead,mol):
 def get_types(beads,mol,ring_beads):
     #loops through beads and determines bead type
     path = os.path.dirname(os.path.realpath(__file__))
-    DG_data = read_DG_data('/home/sang/Desktop/GIT/MDNPPackage/temp/cgparam/fragment_DGs.dat'.format(path))
+    DG_data = read_DG_data('/home/sang/Desktop/GIT/MDNPPackage/temp/cgparam/fragment_DGs.dat')
     bead_types = []
     charges = []
     all_smi = []
