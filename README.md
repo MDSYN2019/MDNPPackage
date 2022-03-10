@@ -1,3 +1,5 @@
+https://app.travis-ci.com/MDSYN2019/MDNPPackage.svg?branch=master
+
 # Martini-PyNP - the constructor for Coarse-grained/All-atomic Molecular Dynamics simulations
 
 This package unites the many heuristic NP constructor methods and constructs bniomolecular and physical systems with the NPs, specifically with the Martini forcefield. The types
