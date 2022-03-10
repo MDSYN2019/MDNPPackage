@@ -1,4 +1,4 @@
-https://app.travis-ci.com/MDSYN2019/MDNPPackage.svg?branch=master
+[![Build Status](https://app.travis-ci.com/MDSYN2019/MDNPPackage.svg?branch=master)](https://app.travis-ci.com/MDSYN2019/MDNPPackage)
 
 # Martini-PyNP - the constructor for Coarse-grained/All-atomic Molecular Dynamics simulations
 
