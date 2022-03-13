@@ -1,6 +1,6 @@
 """
 -----------------------
-Last updated: 20/10/2021 
+Last updated: 13/03/2021 
 ------------------------
 
 Prerequisite packages reuqired: OpenBabel (and the API python package, pybel, as linked here: https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html) 
@@ -11,32 +11,137 @@ Summary
 
 This package builds the central sphere of the NP in question, using a voronoi approach. The input is as follows:
 
-
 Useful Links: 
+-------------
 
--https://py-sphere-voronoi.readthedocs.io/en/latest/voronoi_utility.html
 
--https://www.mdanalysis.org/2020/08/29/gsoc-report-cbouy/
+
+-> https://py-sphere-voronoi.readthedocs.io/en/latest/voronoi_utility.html
+
+-> https://www.mdanalysis.org/2020/08/29/gsoc-report-cbouy/
+
+-> https://cedric.bouysset.net/blog/2020/08/07/rdkit-interoperability
+
+-> https://stackoverflow.com/questions/47319238/python-plot-3d-vectors
+ 
+-> https://en.wikipedia.org/wiki/XYZ_file_format - information on the xyz coordination file 
+
+-> https://mattermodeling.stackexchange.com/questions/3961/recalculate-atom-positions-to-account-for-periodic-boundary-conditions/3970#3970  - Atomsk
+
+-> https://stackoverflow.com/questions/49064611/how-to-find-different-groups-in-networkx-using-python - grouping networks 
+
+-> https://www.mdanalysis.org/2020/08/29/gsoc-report-cbouy/
+
+-> http://cgmartini.nl/index.php/component/kunena/8-martini-philosophy/5776-mapping-of-benzene-ring
+
+-> https://docs.mdanalysis.org/1.0.0/documentation_pages/lib/NeighborSearch.html
+
+-> https://math.stackexchange.com/questions/180418/calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d
+
+-> https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_numpy.html
+
+-> https://nanotube.msu.edu/fullerene/fullerene-isomers.html
+
+-> https://towardsdatascience.com/molecular-visualization-in-streamlit-using-rdkit-and-py3dmol-part-2-657d28152753
+
+-> https://plotly.com/python/3d-scatter-plots/
+
+
+Quote by Riccardo: 
+------------------
+
+In the open beta of Martini 3, benzene is indeed mapped with three TC4 beads, that that's again a 2-to-1 mapping. 
+The bond length is changed to 0.29 nm in 3.0 because this allows to represent more closely the volume of a benzene 
+molecule, taking into account also the smaller size of T-beads as compared to S -beads
+
+---------------------------
+How the modules are divided
+---------------------------
+
+-> We want to be given free reign into making NPs of multiple types. The primary types we are concerned with at the 
+   moment is 
+
+   1. Functionalized AuNP type ones.  
+   2. Carbon Nanotube like ones. 
+   3. Large spherical buckyball type structures - Like C70. 
+
+-> TODO 
+    
+   - Am not able to get the box dimenisons correct for the xyz file...
+   - Need to write Striped/Janus functionality to the NP maker  
+
+
+Trying to translate the atomic C70 structure into the coarse-grained c70 structure 
+
+TODO - isolate per 2 beads - There is a two to one mapping, and find the center of mass 
+       for each of these beads. Then construct the itp file for the bead. 
 
 
 """
 
-import numpy as np
-import csv
-import scipy
+# Boilerplate libraries                                                                                                                                                                                    
+import sys                                                                                                                                                                                                
+import re                                                                                                                                                                                                 
+import math 
 
-import matplotlib
-import matplotlib.pyplot as plt
-import matplotlib.colors as colors
+# Rdkit libraries 
+from rdkit.Chem.Draw import IPythonConsole
+from rdkit.Chem import Draw
+from rdkit import Chem
+from rdkit.Chem import AllChem                                                                                                                                                                            
+from rdkit.Chem import ChemicalFeatures                                                                                                                                                                   
+from rdkit.Chem import rdchem                                                                                                                                                                             
+from rdkit.Chem import rdMolDescriptors                                                                                                                                                                   
+from rdkit import RDConfig  
 
-from mpl_toolkits.mplot3d import proj3d 
+# Alignment libraries in MDAnalysis
+import MDAnalysis as mda
+from MDAnalysis.analysis import align
+from MDAnalysis.analysis.rms import rmsd
+from MDAnalysis.tests.datafiles import PSF, DCD, PDB_small, PDB, XTC
+
+# Scipy libraries
+import scipy                                                                                                                                                                                                                                                                                                                                                                                                          
+from scipy.sparse import csr_matrix                                                                                                                                                                        
+from scipy.sparse.csgraph import floyd_warshall                                                                                                                                                            
+from scipy.spatial import ConvexHull, convex_hull_plot_2d 
+from scipy.linalg import solve
+from scipy.spatial import distance
+
+# Matplotlib libraries 
+import matplotlib.pyplot as plt 
+from mpl_toolkits.mplot3d import axes3d    
 from mpl_toolkits.mplot3d import Axes3D
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+import plotly.graph_objs as go
 
-import scipy as sp
-from scipy.spatial import SphericalVoronoi, geometric_slerp
-from MDAnalysis.analysis.distances import distance_array
+# Pandas 
+import pandas as pd
+import numpy as np
+import plotly.graph_objs as go
+import math 
+from operator import itemgetter
+import itertools                                                                                                                                                                                           
+import requests                                                                                                                                                                                           
+import collections                                                                                                                                                                                        
+import random
 
+
+
+#import numpy as np
+#import csv
+#import scipy
+
+#import matplotlib
+#import matplotlib.pyplot as plt
+#import matplotlib.colors as colors
+
+#from mpl_toolkits.mplot3d import proj3d 
+#from mpl_toolkits.mplot3d import Axes3D
+#from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+
+#import scipy as sp
+#from scipy.spatial import SphericalVoronoi, geometric_slerp
+#from MDAnalysis.analysis.distances import distance_array
 
 
 class CentralCoreGenerator:
