@@ -597,8 +597,6 @@ def get_hbonding(mol,beads):
 def get_smi(bead,mol):
     """
     """
-    
-
     #gets fragment smiles from list of atoms
 
     bead_smi = Chem.rdmolfiles.MolFragmentToSmiles(mol,bead)
