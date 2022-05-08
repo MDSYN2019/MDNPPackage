@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
 
 """
+Author: Sang Young Noh
+----------------------
+
 Useful links:
 -------------
 
-Last Updated: 15/01/2022
+Last Updated: 08/05/2022
 ------------------------
 
-
 - https://stackoverflow.com/questions/53547811/python-package-directory-does-not-exist
-
-
+7
 """
+
 import os
 from setuptools import setup
 from setuptools import find_packages
-
 
 # get key package details from py_pkg/__version__.py
 about = {}  # type: ignore
@@ -35,7 +36,7 @@ setup(
     description='Python package to create simulation templates for Nanoparticle mixed simulations',
     long_description=readme,
     long_description_content_type='text/markdown',
-    version='0.0.1',
+    version='1.0.1',
     author='Sang Young Noh',
     author_email='sangyoung123@googlemail.com',
     url=about['__url__'],
