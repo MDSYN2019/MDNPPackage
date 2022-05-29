@@ -614,3 +614,55 @@ class MDNPPackage(object):
                 LigandStringImpropers.append(dihedralstring)
         
         return LigandStringBonds, LigandStringImpropers
+
+    def CoreNetwork(CoreName, PandasFile = None, PickFile = None):
+        """ Bond restraint allocator for the central core atoms of the NP 
+    
+        We add a very high spring constant constraint on the central atoms 
+        to ensure that the central core can be considered as 'static'
+    
+        Args:
+            PandasFile ()
+            CoreName ()
+            PickFile () 
+        Returns:
+            Placeholder
+        Raises:
+            Placeholder    
+        """
+        StripedNPCore = self.NPPandasTable[self.NPPandasTable['name'] == CoreName]
+        #StripedNPCore = StripedNP[StripedNP['name'] == CoreName] # Pick out only the aoms of the core
+        StripedNPCore = StripedNPCore[['X', 'Y', 'Z']] 
+        StripedNPCoreArray = StripedNPCore.to_numpy() 
+        DuplicateArray = []
+        ReturnString = [] 
+    
+        for index, entry in enumerate(StripedNPCoreArray):
+            pos_goal = np.array([entry])
+            dist_matrix = np.linalg.norm(StripedNPCoreArray - pos_goal, axis=1)
+            for index2, entry in enumerate(dist_matrix):
+                if index == index2: # If we are looking at the same index, then pass
+                    pass
+                else:
+                    if entry/10 >= 0.7: # If the length of the bonds is more than 0.7 nm, then pass - dont use that bond   
+                        pass
+                    # sorted out the indentation but the rest needs to be fixed
+                    elif index == 1:
+                        entryString = f"{index} {index2} 1 {entry/10} 5000"
+                        sortedInput = [index, index2]
+                        sortedInput.sort()
+                        DuplicateArray.append(sortedInput)
+                        ReturnString.append(entryString)
+                    
+                    elif index > 1:
+                        sortedInput = [index, index2]
+                        sortedInput.sort()
+                        if sortedInput in DuplicateArray: # if already contained in array, then dont do anything
+                            pass
+                        else:
+                            #print (index, index2, 1, entry/10, 5000) # The ones printed out here has gone through the check of the duplicates so print              
+                            DuplicateArray.append(sortedInput) # Store the combination to make sure it is checked for duplicates as it goes down             
+                            entryString = f"{index} {index2} 1 {entry/10} 5000"
+                            ReturnString.append(entryString)
+                        
+        return ReturnString
