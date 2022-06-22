@@ -1,0 +1,3046 @@
+                       :-) GROMACS - gmx mdrun, 2022 (-:
+
+Copyright 1991-2022 The GROMACS Authors.
+GROMACS is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License
+as published by the Free Software Foundation; either version 2.1
+of the License, or (at your option) any later version.
+
+                         Current GROMACS contributors:
+       Mark Abraham           Andrey Alekseenko           Cathrine Bergh      
+      Christian Blau            Eliane Briand               Kevin Boyd        
+     Oliver Fleetwood         Stefan Fleischmann           Vytas Gapsys       
+       Gaurav Garg           Gilles Gouaillardet            Alan Gray         
+      Victor Holanda           M. Eric Irrgang              Joe Jordan        
+    Christoph Junghans        Prashanth Kanduri           Sebastian Kehl      
+     Sebastian Keller          Carsten Kutzner           Magnus Lundborg      
+       Pascal Merz              Dmitry Morozov             Szilard Pall       
+      Roland Schulz             Michael Shirts         David van der Spoel    
+     Alessandra Villa      Sebastian Wingbermuehle        Artem Zhmurov       
+
+                         Previous GROMACS contributors:
+        Emile Apol             Rossen Apostolov           James Barnett       
+  Herman J.C. Berendsen          Par Bjelkmar           Viacheslav Bolnykh    
+    Aldert van Buuren          Carlo Camilloni           Rudi van Drunen      
+      Anton Feenstra           Gerrit Groenhof            Bert de Groot       
+      Anca Hamuraru           Vincent Hindriksen         Aleksei Iupinov      
+   Dimitrios Karkoulis           Peter Kasson               Jiri Kraus        
+       Per Larsson             Justin A. Lemkul           Viveca Lindahl      
+      Erik Marklund           Pieter Meulenhoff           Vedran Miletic      
+      Teemu Murtola              Sander Pronk            Alexey Shvetsov      
+      Alfons Sijbers            Peter Tieleman             Jon Vincent        
+     Teemu Virolainen         Christian Wennberg           Maarten Wolf       
+
+                  Coordinated by the GROMACS project leaders:
+                    Paul Bauer, Berk Hess, and Erik Lindahl
+
+GROMACS:      gmx mdrun, version 2022
+Executable:   /home/sang/Desktop/gromacs-2022/build/bin/gmx
+Data prefix:  /home/sang/Desktop/gromacs-2022 (source tree)
+Working dir:  /home/sang/Desktop/GIT/MDNPPackage/notebooks
+Process ID:   31417
+Command line:
+  gmx mdrun -deffnm new -v -c minimized.gro
+
+GROMACS version:    2022
+Precision:          mixed
+Memory model:       64 bit
+MPI library:        thread_mpi
+OpenMP support:     enabled (GMX_OPENMP_MAX_THREADS = 128)
+GPU support:        disabled
+SIMD instructions:  AVX_256
+CPU FFT library:    fftw-3.3.8-sse2-avx-avx2-avx2_128
+GPU FFT library:    none
+RDTSCP usage:       enabled
+TNG support:        enabled
+Hwloc support:      disabled
+Tracing support:    disabled
+C compiler:         /usr/bin/cc GNU 9.4.0
+C compiler flags:   -mavx -Wno-missing-field-initializers -fexcess-precision=fast -funroll-all-loops -O3 -DNDEBUG
+C++ compiler:       /usr/bin/c++ GNU 9.4.0
+C++ compiler flags: -mavx -Wno-missing-field-initializers -fexcess-precision=fast -funroll-all-loops -fopenmp -O3 -DNDEBUG
+
+
+Running on 1 node with total 2 cores, 4 processing units
+Hardware detected:
+  CPU info:
+    Vendor: Intel
+    Brand:  Intel(R) Core(TM) i3-3120M CPU @ 2.50GHz
+    Family: 6   Model: 58   Stepping: 9
+    Features: apic avx clfsh cmov cx8 cx16 f16c htt intel lahf mmx msr nonstop_tsc pcid pclmuldq pdcm popcnt pse rdtscp sse2 sse3 sse4.1 sse4.2 ssse3 tdt x2apic
+  Hardware topology: Basic
+    Packages, cores, and logical processors:
+    [indices refer to OS logical processors]
+      Package  0: [   0   1] [   2   3]
+    CPU limit set by OS: -1   Recommended max number of threads: 4
+
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+M. J. Abraham, T. Murtola, R. Schulz, S. Páll, J. C. Smith, B. Hess, E.
+Lindahl
+GROMACS: High performance molecular simulations through multi-level
+parallelism from laptops to supercomputers
+SoftwareX 1 (2015) pp. 19-25
+-------- -------- --- Thank You --- -------- --------
+
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+S. Páll, M. J. Abraham, C. Kutzner, B. Hess, E. Lindahl
+Tackling Exascale Software Challenges in Molecular Dynamics Simulations with
+GROMACS
+In S. Markidis & E. Laure (Eds.), Solving Software Challenges for Exascale 8759 (2015) pp. 3-27
+-------- -------- --- Thank You --- -------- --------
+
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+S. Pronk, S. Páll, R. Schulz, P. Larsson, P. Bjelkmar, R. Apostolov, M. R.
+Shirts, J. C. Smith, P. M. Kasson, D. van der Spoel, B. Hess, and E. Lindahl
+GROMACS 4.5: a high-throughput and highly parallel open source molecular
+simulation toolkit
+Bioinformatics 29 (2013) pp. 845-54
+-------- -------- --- Thank You --- -------- --------
+
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+B. Hess and C. Kutzner and D. van der Spoel and E. Lindahl
+GROMACS 4: Algorithms for highly efficient, load-balanced, and scalable
+molecular simulation
+J. Chem. Theory Comput. 4 (2008) pp. 435-447
+-------- -------- --- Thank You --- -------- --------
+
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+D. van der Spoel, E. Lindahl, B. Hess, G. Groenhof, A. E. Mark and H. J. C.
+Berendsen
+GROMACS: Fast, Flexible and Free
+J. Comp. Chem. 26 (2005) pp. 1701-1719
+-------- -------- --- Thank You --- -------- --------
+
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+E. Lindahl and B. Hess and D. van der Spoel
+GROMACS 3.0: A package for molecular simulation and trajectory analysis
+J. Mol. Mod. 7 (2001) pp. 306-317
+-------- -------- --- Thank You --- -------- --------
+
+
+++++ PLEASE READ AND CITE THE FOLLOWING REFERENCE ++++
+H. J. C. Berendsen, D. van der Spoel and R. van Drunen
+GROMACS: A message-passing parallel molecular dynamics implementation
+Comp. Phys. Comm. 91 (1995) pp. 43-56
+-------- -------- --- Thank You --- -------- --------
+
+
+++++ PLEASE CITE THE DOI FOR THIS VERSION OF GROMACS ++++
+https://doi.org/10.5281/zenodo.6103835
+-------- -------- --- Thank You --- -------- --------
+
+Input Parameters:
+   integrator                     = steep
+   tinit                          = 0
+   dt                             = 0.001
+   nsteps                         = 10000000
+   init-step                      = 0
+   simulation-part                = 1
+   mts                            = false
+   comm-mode                      = Linear
+   nstcomm                        = 100
+   bd-fric                        = 0
+   ld-seed                        = -1075839494
+   emtol                          = 10
+   emstep                         = 0.01
+   niter                          = 20
+   fcstep                         = 0
+   nstcgsteep                     = 1000
+   nbfgscorr                      = 10
+   rtpi                           = 0.05
+   nstxout                        = 0
+   nstvout                        = 0
+   nstfout                        = 0
+   nstlog                         = 100
+   nstcalcenergy                  = 100
+   nstenergy                      = 1000
+   nstxout-compressed             = 0
+   compressed-x-precision         = 1000
+   cutoff-scheme                  = Verlet
+   nstlist                        = 20
+   pbc                            = xyz
+   periodic-molecules             = false
+   verlet-buffer-tolerance        = 0.005
+   rlist                          = 1.155
+   coulombtype                    = Reaction-Field
+   coulomb-modifier               = Potential-shift
+   rcoulomb-switch                = 0
+   rcoulomb                       = 1.1
+   epsilon-r                      = 15
+   epsilon-rf                     = inf
+   vdw-type                       = Cut-off
+   vdw-modifier                   = Potential-shift
+   rvdw-switch                    = 0
+   rvdw                           = 1.1
+   DispCorr                       = No
+   table-extension                = 1
+   fourierspacing                 = 0.12
+   fourier-nx                     = 0
+   fourier-ny                     = 0
+   fourier-nz                     = 0
+   pme-order                      = 4
+   ewald-rtol                     = 1e-05
+   ewald-rtol-lj                  = 0.001
+   lj-pme-comb-rule               = Geometric
+   ewald-geometry                 = 3d
+   epsilon-surface                = 0
+   tcoupl                         = No
+   nsttcouple                     = -1
+   nh-chain-length                = 0
+   print-nose-hoover-chain-variables = false
+   pcoupl                         = No
+   pcoupltype                     = Isotropic
+   nstpcouple                     = -1
+   tau-p                          = 1
+   compressibility (3x3):
+      compressibility[    0]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+      compressibility[    1]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+      compressibility[    2]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+   ref-p (3x3):
+      ref-p[    0]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+      ref-p[    1]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+      ref-p[    2]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+   refcoord-scaling               = No
+   posres-com (3):
+      posres-com[0]= 0.00000e+00
+      posres-com[1]= 0.00000e+00
+      posres-com[2]= 0.00000e+00
+   posres-comB (3):
+      posres-comB[0]= 0.00000e+00
+      posres-comB[1]= 0.00000e+00
+      posres-comB[2]= 0.00000e+00
+   QMMM                           = false
+qm-opts:
+   ngQM                           = 0
+   constraint-algorithm           = Lincs
+   continuation                   = false
+   Shake-SOR                      = false
+   shake-tol                      = 0.0001
+   lincs-order                    = 4
+   lincs-iter                     = 1
+   lincs-warnangle                = 30
+   nwall                          = 0
+   wall-type                      = 9-3
+   wall-r-linpot                  = -1
+   wall-atomtype[0]               = -1
+   wall-atomtype[1]               = -1
+   wall-density[0]                = 0
+   wall-density[1]                = 0
+   wall-ewald-zfac                = 3
+   pull                           = false
+   awh                            = false
+   rotation                       = false
+   interactiveMD                  = false
+   disre                          = No
+   disre-weighting                = Conservative
+   disre-mixed                    = false
+   dr-fc                          = 1000
+   dr-tau                         = 0
+   nstdisreout                    = 100
+   orire-fc                       = 0
+   orire-tau                      = 0
+   nstorireout                    = 100
+   free-energy                    = no
+   cos-acceleration               = 0
+   deform (3x3):
+      deform[    0]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+      deform[    1]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+      deform[    2]={ 0.00000e+00,  0.00000e+00,  0.00000e+00}
+   simulated-tempering            = false
+   swapcoords                     = no
+   userint1                       = 0
+   userint2                       = 0
+   userint3                       = 0
+   userint4                       = 0
+   userreal1                      = 0
+   userreal2                      = 0
+   userreal3                      = 0
+   userreal4                      = 0
+   applied-forces:
+     electric-field:
+       x:
+         E0                       = 0
+         omega                    = 0
+         t0                       = 0
+         sigma                    = 0
+       y:
+         E0                       = 0
+         omega                    = 0
+         t0                       = 0
+         sigma                    = 0
+       z:
+         E0                       = 0
+         omega                    = 0
+         t0                       = 0
+         sigma                    = 0
+     density-guided-simulation:
+       active                     = false
+       group                      = protein
+       similarity-measure         = inner-product
+       atom-spreading-weight      = unity
+       force-constant             = 1e+09
+       gaussian-transform-spreading-width = 0.2
+       gaussian-transform-spreading-range-in-multiples-of-width = 4
+       reference-density-filename = reference.mrc
+       nst                        = 1
+       normalize-densities        = true
+       adaptive-force-scaling     = false
+       adaptive-force-scaling-time-constant = 4
+       shift-vector               = 
+       transformation-matrix      = 
+     qmmm-cp2k:
+       active                     = false
+       qmgroup                    = System
+       qmmethod                   = PBE
+       qmfilenames                = 
+       qmcharge                   = 0
+       qmmultiplicity             = 1
+grpopts:
+   nrdf:         669
+   ref-t:           0
+   tau-t:           0
+annealing:          No
+annealing-npoints:           0
+   acc:	           0           0           0
+   nfreeze:           N           N           N
+   energygrp-flags[  0]: 0
+
+When checking whether update groups are usable:
+  Domain decomposition is not active, so there is no need for update groups
+  No constraints or virtual sites are in use, so it is best not to use update groups
+Using 1 MPI thread
+Using 4 OpenMP threads 
+
+Pinning threads with an auto-selected logical cpu stride of 1
+System total charge: 0.000
+Reaction-Field:
+epsRF = 0, rc = 1.1, krf = 0.375657, crf = 1.36364, epsfac = 9.26236
+The electrostatics potential has its minimum at r = 1.1
+Potential shift: LJ r^-12: -3.186e-01 r^-6: -5.645e-01
+
+
+Using SIMD 4x8 nonbonded short-range kernels
+
+Using a 4x8 pair-list setup:
+  updated every 20 steps, buffer 0.055 nm, rlist 1.155 nm
+
+Using full Lennard-Jones parameter combination matrix
+Removing pbc first time
+
+Note that activating steepest-descent energy minimization via the integrator .mdp option and the command gmx mdrun may be available in a different form in a future version of GROMACS, e.g. gmx minimize and an .mdp option.
+Initiating Steepest Descents
+Started Steepest Descents on rank 0 Sun Jun 19 20:29:11 2022
+
+
+Steepest Descents:
+   Tolerance (Fmax)   =  1.00000e+01
+   Number of steps    =     10000000
+           Step           Time
+              0        0.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.98088e+06    7.30599e-03   -2.32612e+02    0.00000e+00    5.98065e+06
+ Pressure (bar)
+    7.18481e+03
+
+           Step           Time
+              1        1.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.94479e+06    7.78383e-03   -2.33318e+02    0.00000e+00    5.94456e+06
+ Pressure (bar)
+    7.37178e+03
+
+           Step           Time
+              2        2.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.90162e+06    8.45341e-03   -2.34901e+02    0.00000e+00    5.90139e+06
+ Pressure (bar)
+    7.59415e+03
+
+           Step           Time
+              3        3.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.84999e+06    9.42840e-03   -2.37676e+02    0.00000e+00    5.84976e+06
+ Pressure (bar)
+    7.85824e+03
+
+           Step           Time
+              4        4.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.78829e+06    1.09258e-02   -2.41420e+02    0.00000e+00    5.78804e+06
+ Pressure (bar)
+    8.17143e+03
+
+           Step           Time
+              5        5.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.71455e+06    1.33826e-02   -2.44134e+02    0.00000e+00    5.71431e+06
+ Pressure (bar)
+    8.54218e+03
+
+           Step           Time
+              6        6.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.62647e+06    1.78378e-02   -2.36816e+02    0.00000e+00    5.62623e+06
+ Pressure (bar)
+    8.98071e+03
+
+           Step           Time
+              7        7.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.52122e+06    2.72471e-02   -1.80361e+02    0.00000e+00    5.52104e+06
+ Pressure (bar)
+    9.50083e+03
+
+           Step           Time
+              8        8.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.39538e+06    5.30535e-02    1.11743e+02    0.00000e+00    5.39549e+06
+ Pressure (bar)
+    1.01285e+04
+
+           Step           Time
+              9        9.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.24482e+06    1.77475e-01    1.73806e+03    0.00000e+00    5.24656e+06
+ Pressure (bar)
+    1.09543e+04
+
+           Step           Time
+             10       10.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.06658e+06    1.03492e+01    1.16525e+04    0.00000e+00    5.07824e+06
+ Pressure (bar)
+    1.24580e+04
+
+           Step           Time
+             11       11.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.87843e+06    1.84192e+04    1.34430e+04    0.00000e+00    4.91029e+06
+ Pressure (bar)
+    1.34223e+04
+
+           Step           Time
+             12       12.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.66126e+06    1.49063e+04    8.71279e+03    0.00000e+00    4.68488e+06
+ Pressure (bar)
+    1.40396e+04
+
+           Step           Time
+             13       13.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.38948e+06    1.54589e+04    2.29023e+04    0.00000e+00    4.42784e+06
+ Pressure (bar)
+    1.61458e+04
+
+           Step           Time
+             14       14.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.18322e+06    1.43298e+04    1.02154e+04    0.00000e+00    4.20776e+06
+ Pressure (bar)
+    1.61538e+04
+
+           Step           Time
+             15       15.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.81484e+06    1.55595e+04    1.97031e+05    0.00000e+00    4.02744e+06
+ Pressure (bar)
+    3.03578e+04
+
+           Step           Time
+             16       16.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.83969e+06    1.50529e+04    5.62044e+04    0.00000e+00    3.91094e+06
+ Pressure (bar)
+    2.07108e+04
+
+           Step           Time
+             17       17.00000
+
+           Step           Time
+             18       18.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.79019e+06    1.48070e+04    4.40886e+04    0.00000e+00    3.84909e+06
+ Pressure (bar)
+    2.00326e+04
+
+           Step           Time
+             19       19.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.76914e+06    1.47900e+04    3.48171e+04    0.00000e+00    3.81875e+06
+ Pressure (bar)
+    1.94772e+04
+
+           Step           Time
+             20       20.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.46021e+06    1.44852e+04    2.24221e+05    0.00000e+00    3.69892e+06
+ Pressure (bar)
+    3.34703e+04
+
+           Step           Time
+             21       21.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.47861e+06    1.44624e+04    8.84587e+04    0.00000e+00    3.58153e+06
+ Pressure (bar)
+    2.41731e+04
+
+           Step           Time
+             22       22.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.46772e+06    1.43213e+04    7.23315e+04    0.00000e+00    3.55438e+06
+ Pressure (bar)
+    2.29896e+04
+
+           Step           Time
+             23       23.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.45077e+06    1.42999e+04    6.87912e+04    0.00000e+00    3.53386e+06
+ Pressure (bar)
+    2.27686e+04
+
+           Step           Time
+             24       24.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.43988e+06    1.42825e+04    6.65025e+04    0.00000e+00    3.52066e+06
+ Pressure (bar)
+    2.26216e+04
+
+           Step           Time
+             25       25.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.42631e+06    1.42657e+04    3.22112e+04    0.00000e+00    3.47278e+06
+ Pressure (bar)
+    2.03343e+04
+
+           Step           Time
+             26       26.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.07366e+06    1.39988e+04    3.46188e+05    0.00000e+00    3.43385e+06
+ Pressure (bar)
+    4.25558e+04
+
+           Step           Time
+             27       27.00000
+
+           Step           Time
+             28       28.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.08672e+06    1.40036e+04    1.98432e+05    0.00000e+00    3.29916e+06
+ Pressure (bar)
+    3.25294e+04
+
+           Step           Time
+             29       29.00000
+
+           Step           Time
+             30       30.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.09286e+06    1.40078e+04    1.04916e+05    0.00000e+00    3.21179e+06
+ Pressure (bar)
+    2.61887e+04
+
+           Step           Time
+             31       31.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.09054e+06    1.40166e+04    6.56615e+04    0.00000e+00    3.17022e+06
+ Pressure (bar)
+    2.35363e+04
+
+           Step           Time
+             32       32.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.08804e+06    1.40432e+04    3.77446e+04    0.00000e+00    3.13983e+06
+ Pressure (bar)
+    2.15985e+04
+
+           Step           Time
+             33       33.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.95021e+06    1.42106e+04    4.85891e+04    0.00000e+00    3.01301e+06
+ Pressure (bar)
+    2.26044e+04
+
+           Step           Time
+             34       34.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.93974e+06    1.42357e+04    2.35263e+04    0.00000e+00    2.97750e+06
+ Pressure (bar)
+    2.09067e+04
+
+           Step           Time
+             35       35.00000
+
+           Step           Time
+             36       36.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.62198e+06    1.45298e+04    3.19128e+05    0.00000e+00    2.95563e+06
+ Pressure (bar)
+    4.14966e+04
+
+           Step           Time
+             37       37.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.63030e+06    1.45315e+04    9.02111e+04    0.00000e+00    2.73504e+06
+ Pressure (bar)
+    2.61290e+04
+
+           Step           Time
+             38       38.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.63741e+06    1.45524e+04    2.95953e+04    0.00000e+00    2.68156e+06
+ Pressure (bar)
+    2.18856e+04
+
+           Step           Time
+             39       39.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.53493e+06    1.46412e+04    9.62892e+04    0.00000e+00    2.64586e+06
+ Pressure (bar)
+    2.65382e+04
+
+           Step           Time
+             40       40.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.53758e+06    1.46502e+04    3.07742e+04    0.00000e+00    2.58301e+06
+ Pressure (bar)
+    2.20788e+04
+
+           Step           Time
+             41       41.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.34045e+06    1.48144e+04    9.78487e+04    0.00000e+00    2.45312e+06
+ Pressure (bar)
+    2.67941e+04
+
+           Step           Time
+             42       42.00000
+
+           Step           Time
+             43       43.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.33494e+06    1.48243e+04    7.29981e+04    0.00000e+00    2.42277e+06
+ Pressure (bar)
+    2.50552e+04
+
+           Step           Time
+             44       44.00000
+
+           Step           Time
+             45       45.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.33683e+06    1.48282e+04    1.96894e+04    0.00000e+00    2.37135e+06
+ Pressure (bar)
+    2.14404e+04
+
+           Step           Time
+             46       46.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.24395e+06    1.48799e+04    2.80512e+04    0.00000e+00    2.28688e+06
+ Pressure (bar)
+    2.21138e+04
+
+           Step           Time
+             47       47.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.20681e+06    1.49080e+04    1.71590e+04    0.00000e+00    2.23888e+06
+ Pressure (bar)
+    2.13753e+04
+
+           Step           Time
+             48       48.00000
+
+           Step           Time
+             49       49.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.14898e+06    1.49361e+04    2.03044e+04    0.00000e+00    2.18422e+06
+ Pressure (bar)
+    2.16437e+04
+
+           Step           Time
+             50       50.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.07315e+06    1.49748e+04    2.63377e+04    0.00000e+00    2.11446e+06
+ Pressure (bar)
+    2.20902e+04
+
+           Step           Time
+             51       51.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.04102e+06    1.49923e+04    2.19967e+04    0.00000e+00    2.07801e+06
+ Pressure (bar)
+    2.17948e+04
+
+           Step           Time
+             52       52.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.94270e+06    1.50395e+04    5.64057e+04    0.00000e+00    2.01414e+06
+ Pressure (bar)
+    2.41103e+04
+
+           Step           Time
+             53       53.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.94073e+06    1.50439e+04    2.66321e+04    0.00000e+00    1.98241e+06
+ Pressure (bar)
+    2.20767e+04
+
+           Step           Time
+             54       54.00000
+
+           Step           Time
+             55       55.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.91166e+06    1.50563e+04    2.78729e+04    0.00000e+00    1.95459e+06
+ Pressure (bar)
+    2.21464e+04
+
+           Step           Time
+             56       56.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.89160e+06    1.50671e+04    1.98452e+04    0.00000e+00    1.92651e+06
+ Pressure (bar)
+    2.15776e+04
+
+           Step           Time
+             57       57.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.80658e+06    1.51014e+04    2.97018e+04    0.00000e+00    1.85138e+06
+ Pressure (bar)
+    2.22057e+04
+
+           Step           Time
+             58       58.00000
+
+           Step           Time
+             59       59.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.79604e+06    1.51077e+04    1.82843e+04    0.00000e+00    1.82944e+06
+ Pressure (bar)
+    2.14080e+04
+
+           Step           Time
+             60       60.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.68796e+06    1.51450e+04    6.49658e+04    0.00000e+00    1.76807e+06
+ Pressure (bar)
+    2.44543e+04
+
+           Step           Time
+             61       61.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.69084e+06    1.51467e+04    2.05753e+04    0.00000e+00    1.72656e+06
+ Pressure (bar)
+    2.14408e+04
+
+           Step           Time
+             62       62.00000
+
+           Step           Time
+             63       63.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.55282e+06    1.51962e+04    3.39395e+04    0.00000e+00    1.60195e+06
+ Pressure (bar)
+    2.20824e+04
+
+           Step           Time
+             64       64.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.54133e+06    1.52008e+04    1.33609e+04    0.00000e+00    1.56989e+06
+ Pressure (bar)
+    2.06366e+04
+
+           Step           Time
+             65       65.00000
+
+           Step           Time
+             66       66.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.47177e+06    1.52192e+04    1.93920e+04    0.00000e+00    1.50638e+06
+ Pressure (bar)
+    2.09092e+04
+
+           Step           Time
+             67       67.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.45716e+06    1.52238e+04    1.43860e+04    0.00000e+00    1.48677e+06
+ Pressure (bar)
+    2.05263e+04
+
+           Step           Time
+             68       68.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.38212e+06    1.52441e+04    1.77979e+04    0.00000e+00    1.41516e+06
+ Pressure (bar)
+    2.05552e+04
+
+           Step           Time
+             69       69.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.34416e+06    1.52546e+04    1.19797e+04    0.00000e+00    1.37139e+06
+ Pressure (bar)
+    2.00200e+04
+
+           Step           Time
+             70       70.00000
+
+           Step           Time
+             71       71.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.22166e+06    1.52837e+04    3.09777e+04    0.00000e+00    1.26792e+06
+ Pressure (bar)
+    2.08626e+04
+
+           Step           Time
+             72       72.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.21638e+06    1.52860e+04    1.21568e+04    0.00000e+00    1.24383e+06
+ Pressure (bar)
+    1.95398e+04
+
+           Step           Time
+             73       73.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.12887e+06    1.53048e+04    1.46697e+04    0.00000e+00    1.15884e+06
+ Pressure (bar)
+    1.93101e+04
+
+           Step           Time
+             74       74.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.07259e+06    1.53172e+04    1.23576e+04    0.00000e+00    1.10026e+06
+ Pressure (bar)
+    1.88113e+04
+
+           Step           Time
+             75       75.00000
+
+           Step           Time
+             76       76.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.02273e+06    1.53272e+04    1.14666e+04    0.00000e+00    1.04952e+06
+ Pressure (bar)
+    1.84515e+04
+
+           Step           Time
+             77       77.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.95016e+05    1.53324e+04    7.29999e+03    0.00000e+00    1.01765e+06
+ Pressure (bar)
+    1.79797e+04
+
+           Step           Time
+             78       78.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.60092e+05    1.53558e+04    1.30685e+04    0.00000e+00    8.88517e+05
+ Pressure (bar)
+    1.74140e+04
+
+           Step           Time
+             79       79.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.38926e+05    1.53593e+04    1.08043e+04    0.00000e+00    8.65089e+05
+ Pressure (bar)
+    1.70461e+04
+
+           Step           Time
+             80       80.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.03933e+05    1.53642e+04    1.12992e+04    0.00000e+00    8.30596e+05
+ Pressure (bar)
+    1.67387e+04
+
+           Step           Time
+             81       81.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    7.79443e+05    1.53680e+04    6.63501e+03    0.00000e+00    8.01446e+05
+ Pressure (bar)
+    1.61381e+04
+
+           Step           Time
+             82       82.00000
+
+           Step           Time
+             83       83.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    7.02008e+05    1.53760e+04    1.82935e+04    0.00000e+00    7.35678e+05
+ Pressure (bar)
+    1.61312e+04
+
+           Step           Time
+             84       84.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    7.00888e+05    1.53766e+04    5.60989e+03    0.00000e+00    7.21874e+05
+ Pressure (bar)
+    1.52088e+04
+
+           Step           Time
+             85       85.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    6.34038e+05    1.53820e+04    4.98411e+04    0.00000e+00    6.99261e+05
+ Pressure (bar)
+    1.73693e+04
+
+           Step           Time
+             86       86.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    6.31603e+05    1.53821e+04    1.81842e+04    0.00000e+00    6.65169e+05
+ Pressure (bar)
+    1.51938e+04
+
+           Step           Time
+             87       87.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    6.31090e+05    1.53824e+04    3.51335e+03    0.00000e+00    6.49986e+05
+ Pressure (bar)
+    1.41255e+04
+
+           Step           Time
+             88       88.00000
+
+           Step           Time
+             89       89.00000
+
+           Step           Time
+             90       90.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.76013e+05    1.53850e+04    5.96007e+03    0.00000e+00    5.97358e+05
+ Pressure (bar)
+    1.35724e+04
+
+           Step           Time
+             91       91.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.64268e+05    1.53853e+04    3.70374e+03    0.00000e+00    5.83357e+05
+ Pressure (bar)
+    1.32378e+04
+
+           Step           Time
+             92       92.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.19518e+05    1.53860e+04    6.26381e+03    0.00000e+00    5.41168e+05
+ Pressure (bar)
+    1.27004e+04
+
+           Step           Time
+             93       93.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.07726e+05    1.53856e+04    3.04329e+03    0.00000e+00    5.26155e+05
+ Pressure (bar)
+    1.22612e+04
+
+           Step           Time
+             94       94.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.05420e+05    1.53819e+04    5.37614e+04    0.00000e+00    4.74564e+05
+ Pressure (bar)
+    1.36681e+04
+
+           Step           Time
+             95       95.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.07819e+05    1.53818e+04    2.60968e+04    0.00000e+00    4.49298e+05
+ Pressure (bar)
+    1.17819e+04
+
+           Step           Time
+             96       96.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.08524e+05    1.53815e+04    4.59738e+03    0.00000e+00    4.28503e+05
+ Pressure (bar)
+    1.02987e+04
+
+           Step           Time
+             97       97.00000
+
+           Step           Time
+             98       98.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.74351e+05    1.53750e+04    3.92103e+03    0.00000e+00    3.93647e+05
+ Pressure (bar)
+    9.41352e+03
+
+           Step           Time
+             99       99.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.65150e+05    1.53726e+04    1.14767e+04    0.00000e+00    3.91999e+05
+ Pressure (bar)
+    9.65467e+03
+
+           Step           Time
+            100      100.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.63923e+05    1.53718e+04    1.18497e+03    0.00000e+00    3.80479e+05
+ Pressure (bar)
+    8.88817e+03
+
+           Step           Time
+            101      101.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.59628e+05    1.53369e+04    6.14946e+04    0.00000e+00    3.36460e+05
+ Pressure (bar)
+    9.72012e+03
+
+           Step           Time
+            102      102.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.63739e+05    1.53364e+04    1.12196e+04    0.00000e+00    2.90295e+05
+ Pressure (bar)
+    6.33626e+03
+
+           Step           Time
+            103      103.00000
+
+           Step           Time
+            104      104.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.61504e+05    1.53325e+04    2.09722e+03    0.00000e+00    2.78934e+05
+ Pressure (bar)
+    5.56940e+03
+
+           Step           Time
+            105      105.00000
+
+           Step           Time
+            106      106.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.39496e+05    1.53137e+04    4.33989e+03    0.00000e+00    2.59150e+05
+ Pressure (bar)
+    5.08306e+03
+
+           Step           Time
+            107      107.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.37455e+05    1.53088e+04    5.83879e+03    0.00000e+00    2.58602e+05
+ Pressure (bar)
+    5.04869e+03
+
+           Step           Time
+            108      108.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.35872e+05    1.53070e+04    1.14087e+03    0.00000e+00    2.52320e+05
+ Pressure (bar)
+    4.69393e+03
+
+           Step           Time
+            109      109.00000
+
+           Step           Time
+            110      110.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.15705e+05    1.52850e+04    3.11281e+03    0.00000e+00    2.34103e+05
+ Pressure (bar)
+    4.29532e+03
+
+           Step           Time
+            111      111.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.09881e+05    1.52739e+04    1.11771e+03    0.00000e+00    2.26273e+05
+ Pressure (bar)
+    3.95071e+03
+
+           Step           Time
+            112      112.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.86844e+05    1.52338e+04    1.09506e+04    0.00000e+00    2.13028e+05
+ Pressure (bar)
+    4.04614e+03
+
+           Step           Time
+            113      113.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.87541e+05    1.52325e+04    3.52413e+03    0.00000e+00    2.06297e+05
+ Pressure (bar)
+    3.51447e+03
+
+           Step           Time
+            114      114.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.82302e+05    1.52243e+04    1.59838e+03    0.00000e+00    1.99125e+05
+ Pressure (bar)
+    3.18225e+03
+
+           Step           Time
+            115      115.00000
+
+           Step           Time
+            116      116.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.78217e+05    1.52181e+04    2.19270e+03    0.00000e+00    1.95628e+05
+ Pressure (bar)
+    3.16316e+03
+
+           Step           Time
+            117      117.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.75415e+05    1.52128e+04    3.17254e+03    0.00000e+00    1.93800e+05
+ Pressure (bar)
+    3.14586e+03
+
+           Step           Time
+            118      118.00000
+
+           Step           Time
+            119      119.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.74436e+05    1.52111e+04    1.80817e+03    0.00000e+00    1.91456e+05
+ Pressure (bar)
+    3.04154e+03
+
+           Step           Time
+            120      120.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.71834e+05    1.52055e+04    1.00041e+03    0.00000e+00    1.88040e+05
+ Pressure (bar)
+    2.88962e+03
+
+           Step           Time
+            121      121.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.59527e+05    1.51755e+04    2.17286e+03    0.00000e+00    1.76875e+05
+ Pressure (bar)
+    2.87644e+03
+
+           Step           Time
+            122      122.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.55266e+05    1.51643e+04    7.58180e+02    0.00000e+00    1.71189e+05
+ Pressure (bar)
+    2.61439e+03
+
+           Step           Time
+            123      123.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.41816e+05    1.51304e+04    4.88788e+03    0.00000e+00    1.61834e+05
+ Pressure (bar)
+    2.82676e+03
+
+           Step           Time
+            124      124.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.40088e+05    1.51208e+04    2.15836e+03    0.00000e+00    1.57367e+05
+ Pressure (bar)
+    2.41363e+03
+
+           Step           Time
+            125      125.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.37194e+05    1.51096e+04    4.76815e+02    0.00000e+00    1.52781e+05
+ Pressure (bar)
+    2.23360e+03
+
+           Step           Time
+            126      126.00000
+
+           Step           Time
+            127      127.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.28128e+05    1.50812e+04    2.78629e+03    0.00000e+00    1.45995e+05
+ Pressure (bar)
+    2.45059e+03
+
+           Step           Time
+            128      128.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.24945e+05    1.50711e+04    1.42198e+03    0.00000e+00    1.41438e+05
+ Pressure (bar)
+    2.22732e+03
+
+           Step           Time
+            129      129.00000
+
+           Step           Time
+            130      130.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.22452e+05    1.50619e+04    7.35523e+02    0.00000e+00    1.38249e+05
+ Pressure (bar)
+    2.11626e+03
+
+           Step           Time
+            131      131.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.18206e+05    1.50417e+04    5.08446e+02    0.00000e+00    1.33756e+05
+ Pressure (bar)
+    2.06446e+03
+
+           Step           Time
+            132      132.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.10129e+05    1.50071e+04    2.14796e+03    0.00000e+00    1.27284e+05
+ Pressure (bar)
+    2.20172e+03
+
+           Step           Time
+            133      133.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.06004e+05    1.49924e+04    2.68844e+03    0.00000e+00    1.23685e+05
+ Pressure (bar)
+    2.08119e+03
+
+           Step           Time
+            134      134.00000
+
+           Step           Time
+            135      135.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.05689e+05    1.49870e+04    4.61811e+02    0.00000e+00    1.21138e+05
+ Pressure (bar)
+    1.88531e+03
+
+           Step           Time
+            136      136.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.77769e+04    1.49373e+04    2.58056e+03    0.00000e+00    1.15295e+05
+ Pressure (bar)
+    1.98454e+03
+
+           Step           Time
+            137      137.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.74050e+04    1.49322e+04    3.34733e+02    0.00000e+00    1.12672e+05
+ Pressure (bar)
+    1.79885e+03
+
+           Step           Time
+            138      138.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.00616e+04    1.48911e+04    2.86462e+03    0.00000e+00    1.07817e+05
+ Pressure (bar)
+    2.00861e+03
+
+           Step           Time
+            139      139.00000
+
+           Step           Time
+            140      140.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.78806e+04    1.48798e+04    1.12098e+03    0.00000e+00    1.03881e+05
+ Pressure (bar)
+    1.78777e+03
+
+           Step           Time
+            141      141.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.44933e+04    1.48579e+04    1.54990e+03    0.00000e+00    1.00901e+05
+ Pressure (bar)
+    1.60208e+03
+
+           Step           Time
+            142      142.00000
+
+           Step           Time
+            143      143.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.30639e+04    1.48457e+04    4.01934e+02    0.00000e+00    9.83116e+04
+ Pressure (bar)
+    1.50352e+03
+
+           Step           Time
+            144      144.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    7.95422e+04    1.48151e+04    8.79624e+02    0.00000e+00    9.52370e+04
+ Pressure (bar)
+    1.51646e+03
+
+           Step           Time
+            145      145.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    7.83873e+04    1.48048e+04    5.49000e+02    0.00000e+00    9.37412e+04
+ Pressure (bar)
+    1.48495e+03
+
+           Step           Time
+            146      146.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    7.60482e+04    1.47799e+04    7.89411e+02    0.00000e+00    9.16175e+04
+ Pressure (bar)
+    1.52589e+03
+
+           Step           Time
+            147      147.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    7.39670e+04    1.47609e+04    2.84995e+02    0.00000e+00    8.90129e+04
+ Pressure (bar)
+    1.47238e+03
+
+           Step           Time
+            148      148.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    7.03090e+04    1.47052e+04    1.92389e+03    0.00000e+00    8.69381e+04
+ Pressure (bar)
+    1.56563e+03
+
+           Step           Time
+            149      149.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    6.78208e+04    1.46898e+04    1.55513e+03    0.00000e+00    8.40657e+04
+ Pressure (bar)
+    1.39203e+03
+
+           Step           Time
+            150      150.00000
+
+           Step           Time
+            151      151.00000
+
+           Step           Time
+            152      152.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    6.73921e+04    1.46860e+04    3.69778e+02    0.00000e+00    8.24478e+04
+ Pressure (bar)
+    1.30086e+03
+
+           Step           Time
+            153      153.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    6.60852e+04    1.46704e+04    1.25553e+02    0.00000e+00    8.08812e+04
+ Pressure (bar)
+    1.25385e+03
+
+           Step           Time
+            154      154.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    6.35629e+04    1.46422e+04    3.08568e+02    0.00000e+00    7.85136e+04
+ Pressure (bar)
+    1.30629e+03
+
+           Step           Time
+            155      155.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    6.14052e+04    1.46129e+04   -3.67958e+01    0.00000e+00    7.59813e+04
+ Pressure (bar)
+    1.24900e+03
+
+           Step           Time
+            156      156.00000
+
+           Step           Time
+            157      157.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.84398e+04    1.45749e+04    4.63980e+02    0.00000e+00    7.34787e+04
+ Pressure (bar)
+    1.27328e+03
+
+           Step           Time
+            158      158.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.74276e+04    1.45618e+04    1.56913e+02    0.00000e+00    7.21463e+04
+ Pressure (bar)
+    1.21486e+03
+
+           Step           Time
+            159      159.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.53734e+04    1.45147e+04    9.01317e+02    0.00000e+00    7.07894e+04
+ Pressure (bar)
+    1.28792e+03
+
+           Step           Time
+            160      160.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.41961e+04    1.45042e+04   -2.17244e+00    0.00000e+00    6.86982e+04
+ Pressure (bar)
+    1.13090e+03
+
+           Step           Time
+            161      161.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.14784e+04    1.44367e+04    1.28647e+03    0.00000e+00    6.72016e+04
+ Pressure (bar)
+    1.28266e+03
+
+           Step           Time
+            162      162.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    5.00901e+04    1.44159e+04    4.62124e+02    0.00000e+00    6.49681e+04
+ Pressure (bar)
+    1.12941e+03
+
+           Step           Time
+            163      163.00000
+
+           Step           Time
+            164      164.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.79231e+04    1.43878e+04    9.15397e+02    0.00000e+00    6.32263e+04
+ Pressure (bar)
+    1.04404e+03
+
+           Step           Time
+            165      165.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.75982e+04    1.43755e+04    1.27390e+02    0.00000e+00    6.21011e+04
+ Pressure (bar)
+    9.89348e+02
+
+           Step           Time
+            166      166.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.62795e+04    1.43330e+04    8.40380e+02    0.00000e+00    6.14530e+04
+ Pressure (bar)
+    1.03940e+03
+
+           Step           Time
+            167      167.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.51365e+04    1.43134e+04    8.16553e+02    0.00000e+00    6.02665e+04
+ Pressure (bar)
+    1.04720e+03
+
+           Step           Time
+            168      168.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.51750e+04    1.42906e+04    2.48246e+02    0.00000e+00    5.97139e+04
+ Pressure (bar)
+    8.83333e+02
+
+           Step           Time
+            169      169.00000
+
+           Step           Time
+            170      170.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.30665e+04    1.42573e+04    1.76595e+02    0.00000e+00    5.75004e+04
+ Pressure (bar)
+    9.78604e+02
+
+           Step           Time
+            171      171.00000
+
+           Step           Time
+            172      172.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.13322e+04    1.42196e+04    4.05348e+02    0.00000e+00    5.59572e+04
+ Pressure (bar)
+    1.01861e+03
+
+           Step           Time
+            173      173.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    4.03864e+04    1.42087e+04    1.32874e+02    0.00000e+00    5.47280e+04
+ Pressure (bar)
+    9.70088e+02
+
+           Step           Time
+            174      174.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.90286e+04    1.41698e+04    3.89485e+02    0.00000e+00    5.35879e+04
+ Pressure (bar)
+    9.43406e+02
+
+           Step           Time
+            175      175.00000
+
+           Step           Time
+            176      176.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.82585e+04    1.41419e+04    1.33691e+02    0.00000e+00    5.25342e+04
+ Pressure (bar)
+    9.80835e+02
+
+           Step           Time
+            177      177.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.66675e+04    1.41021e+04    5.72652e+02    0.00000e+00    5.13422e+04
+ Pressure (bar)
+    9.27361e+02
+
+           Step           Time
+            178      178.00000
+
+           Step           Time
+            179      179.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.60161e+04    1.40841e+04    1.75687e+02    0.00000e+00    5.02759e+04
+ Pressure (bar)
+    8.53303e+02
+
+           Step           Time
+            180      180.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.54882e+04    1.40695e+04    1.33906e+02    0.00000e+00    4.96916e+04
+ Pressure (bar)
+    8.31817e+02
+
+           Step           Time
+            181      181.00000
+
+           Step           Time
+            182      182.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.49398e+04    1.40494e+04    1.78347e+02    0.00000e+00    4.91675e+04
+ Pressure (bar)
+    8.81595e+02
+
+           Step           Time
+            183      183.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.40071e+04    1.40210e+04    2.16620e+02    0.00000e+00    4.82447e+04
+ Pressure (bar)
+    8.53340e+02
+
+           Step           Time
+            184      184.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.36054e+04    1.39967e+04    3.07050e+02    0.00000e+00    4.79091e+04
+ Pressure (bar)
+    8.92283e+02
+
+           Step           Time
+            185      185.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.26172e+04    1.39666e+04    4.25389e+02    0.00000e+00    4.70092e+04
+ Pressure (bar)
+    8.29919e+02
+
+           Step           Time
+            186      186.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.23415e+04    1.39467e+04    5.91082e+02    0.00000e+00    4.68794e+04
+ Pressure (bar)
+    8.36189e+02
+
+           Step           Time
+            187      187.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.21703e+04    1.39330e+04    4.20516e+02    0.00000e+00    4.65238e+04
+ Pressure (bar)
+    7.96731e+02
+
+           Step           Time
+            188      188.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.16559e+04    1.39172e+04    1.38816e+02    0.00000e+00    4.57119e+04
+ Pressure (bar)
+    7.95321e+02
+
+           Step           Time
+            189      189.00000
+
+           Step           Time
+            190      190.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.09849e+04    1.38792e+04    3.91694e+02    0.00000e+00    4.52557e+04
+ Pressure (bar)
+    8.61225e+02
+
+           Step           Time
+            191      191.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    3.02576e+04    1.38539e+04    2.19138e+02    0.00000e+00    4.43306e+04
+ Pressure (bar)
+    8.16435e+02
+
+           Step           Time
+            192      192.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.92981e+04    1.38153e+04    4.28962e+02    0.00000e+00    4.35424e+04
+ Pressure (bar)
+    7.77220e+02
+
+           Step           Time
+            193      193.00000
+
+           Step           Time
+            194      194.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.88466e+04    1.37926e+04    2.45023e+02    0.00000e+00    4.28842e+04
+ Pressure (bar)
+    7.59322e+02
+
+           Step           Time
+            195      195.00000
+
+           Step           Time
+            196      196.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.82004e+04    1.37730e+04    2.76276e+02    0.00000e+00    4.22496e+04
+ Pressure (bar)
+    7.46090e+02
+
+           Step           Time
+            197      197.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.79147e+04    1.37466e+04    4.19955e+02    0.00000e+00    4.20813e+04
+ Pressure (bar)
+    7.62550e+02
+
+           Step           Time
+            198      198.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.73518e+04    1.37264e+04    3.04551e+02    0.00000e+00    4.13828e+04
+ Pressure (bar)
+    7.31201e+02
+
+           Step           Time
+            199      199.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.70137e+04    1.36997e+04    4.61259e+02    0.00000e+00    4.11746e+04
+ Pressure (bar)
+    7.13431e+02
+
+           Step           Time
+            200      200.00000
+
+           Step           Time
+            201      201.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.67153e+04    1.36869e+04    1.91258e+02    0.00000e+00    4.05935e+04
+ Pressure (bar)
+    7.08778e+02
+
+           Step           Time
+            202      202.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.61129e+04    1.36443e+04    6.38171e+02    0.00000e+00    4.03954e+04
+ Pressure (bar)
+    7.54270e+02
+
+           Step           Time
+            203      203.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.57185e+04    1.36294e+04    3.12203e+02    0.00000e+00    3.96601e+04
+ Pressure (bar)
+    6.93123e+02
+
+           Step           Time
+            204      204.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.53757e+04    1.36100e+04    5.26559e+02    0.00000e+00    3.95123e+04
+ Pressure (bar)
+    7.32401e+02
+
+           Step           Time
+            205      205.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.52367e+04    1.35949e+04    3.67594e+02    0.00000e+00    3.91992e+04
+ Pressure (bar)
+    6.88181e+02
+
+           Step           Time
+            206      206.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.48590e+04    1.35643e+04    6.28975e+02    0.00000e+00    3.90523e+04
+ Pressure (bar)
+    6.76942e+02
+
+           Step           Time
+            207      207.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.48883e+04    1.35490e+04    5.07185e+02    0.00000e+00    3.89444e+04
+ Pressure (bar)
+    6.91465e+02
+
+           Step           Time
+            208      208.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.44084e+04    1.35296e+04    2.45214e+02    0.00000e+00    3.81832e+04
+ Pressure (bar)
+    6.58936e+02
+
+           Step           Time
+            209      209.00000
+
+           Step           Time
+            210      210.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.41144e+04    1.34821e+04    5.30048e+02    0.00000e+00    3.81265e+04
+ Pressure (bar)
+    7.52953e+02
+
+           Step           Time
+            211      211.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.36234e+04    1.34608e+04    6.54896e+02    0.00000e+00    3.77391e+04
+ Pressure (bar)
+    7.58258e+02
+
+           Step           Time
+            212      212.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.34184e+04    1.34463e+04    1.61643e+02    0.00000e+00    3.70264e+04
+ Pressure (bar)
+    6.33374e+02
+
+           Step           Time
+            213      213.00000
+
+           Step           Time
+            214      214.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.24970e+04    1.34087e+04    4.71323e+02    0.00000e+00    3.63770e+04
+ Pressure (bar)
+    6.59259e+02
+
+           Step           Time
+            215      215.00000
+
+           Step           Time
+            216      216.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.21939e+04    1.33941e+04    2.50727e+02    0.00000e+00    3.58387e+04
+ Pressure (bar)
+    6.36962e+02
+
+           Step           Time
+            217      217.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.19312e+04    1.33631e+04    3.34364e+02    0.00000e+00    3.56287e+04
+ Pressure (bar)
+    6.56703e+02
+
+           Step           Time
+            218      218.00000
+
+           Step           Time
+            219      219.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.15905e+04    1.33502e+04    2.96539e+02    0.00000e+00    3.52372e+04
+ Pressure (bar)
+    6.60284e+02
+
+           Step           Time
+            220      220.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.12974e+04    1.33201e+04    3.41894e+02    0.00000e+00    3.49594e+04
+ Pressure (bar)
+    6.27771e+02
+
+           Step           Time
+            221      221.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.09326e+04    1.33040e+04    3.26753e+02    0.00000e+00    3.45634e+04
+ Pressure (bar)
+    6.20562e+02
+
+           Step           Time
+            222      222.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.08465e+04    1.32733e+04    3.42766e+02    0.00000e+00    3.44626e+04
+ Pressure (bar)
+    6.12643e+02
+
+           Step           Time
+            223      223.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.05471e+04    1.32554e+04    3.48791e+02    0.00000e+00    3.41514e+04
+ Pressure (bar)
+    6.63206e+02
+
+           Step           Time
+            224      224.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.03395e+04    1.32215e+04    4.26845e+02    0.00000e+00    3.39879e+04
+ Pressure (bar)
+    6.15025e+02
+
+           Step           Time
+            225      225.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    2.00904e+04    1.32018e+04    2.97526e+02    0.00000e+00    3.35897e+04
+ Pressure (bar)
+    6.35613e+02
+
+           Step           Time
+            226      226.00000
+
+           Step           Time
+            227      227.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.97547e+04    1.31759e+04    2.01749e+02    0.00000e+00    3.31324e+04
+ Pressure (bar)
+    6.20393e+02
+
+           Step           Time
+            228      228.00000
+
+           Step           Time
+            229      229.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.92709e+04    1.31518e+04    3.68121e+02    0.00000e+00    3.27908e+04
+ Pressure (bar)
+    6.19835e+02
+
+           Step           Time
+            230      230.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.91358e+04    1.31300e+04    2.59921e+02    0.00000e+00    3.25257e+04
+ Pressure (bar)
+    5.81545e+02
+
+           Step           Time
+            231      231.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.87838e+04    1.31059e+04    3.97526e+02    0.00000e+00    3.22872e+04
+ Pressure (bar)
+    5.93135e+02
+
+           Step           Time
+            232      232.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.89264e+04    1.30840e+04    2.53501e+02    0.00000e+00    3.22639e+04
+ Pressure (bar)
+    6.18186e+02
+
+           Step           Time
+            233      233.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.82537e+04    1.30577e+04    4.39604e+02    0.00000e+00    3.17510e+04
+ Pressure (bar)
+    6.02481e+02
+
+           Step           Time
+            234      234.00000
+
+           Step           Time
+            235      235.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.82609e+04    1.30439e+04    2.13355e+02    0.00000e+00    3.15182e+04
+ Pressure (bar)
+    5.72392e+02
+
+           Step           Time
+            236      236.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.79251e+04    1.30098e+04    4.11375e+02    0.00000e+00    3.13462e+04
+ Pressure (bar)
+    5.90275e+02
+
+           Step           Time
+            237      237.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.79706e+04    1.29923e+04    2.92474e+02    0.00000e+00    3.12553e+04
+ Pressure (bar)
+    5.99852e+02
+
+           Step           Time
+            238      238.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.74394e+04    1.29654e+04    4.11808e+02    0.00000e+00    3.08166e+04
+ Pressure (bar)
+    5.84209e+02
+
+           Step           Time
+            239      239.00000
+
+           Step           Time
+            240      240.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.74284e+04    1.29521e+04    1.97960e+02    0.00000e+00    3.05784e+04
+ Pressure (bar)
+    5.57869e+02
+
+           Step           Time
+            241      241.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.70764e+04    1.29168e+04    4.04359e+02    0.00000e+00    3.03976e+04
+ Pressure (bar)
+    5.77163e+02
+
+           Step           Time
+            242      242.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.71307e+04    1.28981e+04    2.91154e+02    0.00000e+00    3.03199e+04
+ Pressure (bar)
+    5.85376e+02
+
+           Step           Time
+            243      243.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.66143e+04    1.28697e+04    4.19682e+02    0.00000e+00    2.99037e+04
+ Pressure (bar)
+    5.69641e+02
+
+           Step           Time
+            244      244.00000
+
+           Step           Time
+            245      245.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.66270e+04    1.28553e+04    1.73807e+02    0.00000e+00    2.96561e+04
+ Pressure (bar)
+    5.50258e+02
+
+           Step           Time
+            246      246.00000
+
+           Step           Time
+            247      247.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.61919e+04    1.28332e+04    2.87480e+02    0.00000e+00    2.93126e+04
+ Pressure (bar)
+    5.26674e+02
+
+           Step           Time
+            248      248.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.62234e+04    1.28159e+04    2.21485e+02    0.00000e+00    2.92607e+04
+ Pressure (bar)
+    5.64514e+02
+
+           Step           Time
+            249      249.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.58498e+04    1.27855e+04    3.29603e+02    0.00000e+00    2.89649e+04
+ Pressure (bar)
+    5.40187e+02
+
+           Step           Time
+            250      250.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.58244e+04    1.27563e+04    3.17485e+02    0.00000e+00    2.88982e+04
+ Pressure (bar)
+    5.53560e+02
+
+           Step           Time
+            251      251.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.56377e+04    1.27313e+04    3.03316e+02    0.00000e+00    2.86723e+04
+ Pressure (bar)
+    5.66339e+02
+
+           Step           Time
+            252      252.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.54734e+04    1.27042e+04    3.31967e+02    0.00000e+00    2.85096e+04
+ Pressure (bar)
+    5.28758e+02
+
+           Step           Time
+            253      253.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.52202e+04    1.26801e+04    3.29744e+02    0.00000e+00    2.82301e+04
+ Pressure (bar)
+    5.40024e+02
+
+           Step           Time
+            254      254.00000
+
+           Step           Time
+            255      255.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.50924e+04    1.26635e+04    1.70761e+02    0.00000e+00    2.79267e+04
+ Pressure (bar)
+    5.29221e+02
+
+           Step           Time
+            256      256.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.45948e+04    1.26250e+04    6.41765e+02    0.00000e+00    2.78616e+04
+ Pressure (bar)
+    5.23477e+02
+
+           Step           Time
+            257      257.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.47868e+04    1.26119e+04    2.30335e+02    0.00000e+00    2.76291e+04
+ Pressure (bar)
+    5.08807e+02
+
+           Step           Time
+            258      258.00000
+
+           Step           Time
+            259      259.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.44315e+04    1.25920e+04    1.83385e+02    0.00000e+00    2.72069e+04
+ Pressure (bar)
+    4.79044e+02
+
+           Step           Time
+            260      260.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.42236e+04    1.25558e+04    3.50733e+02    0.00000e+00    2.71301e+04
+ Pressure (bar)
+    5.21528e+02
+
+           Step           Time
+            261      261.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.42120e+04    1.25239e+04    3.43523e+02    0.00000e+00    2.70794e+04
+ Pressure (bar)
+    5.68818e+02
+
+           Step           Time
+            262      262.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.39749e+04    1.25040e+04    2.28496e+02    0.00000e+00    2.67075e+04
+ Pressure (bar)
+    4.87925e+02
+
+           Step           Time
+            263      263.00000
+
+           Step           Time
+            264      264.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.36854e+04    1.24863e+04    1.97854e+02    0.00000e+00    2.63695e+04
+ Pressure (bar)
+    4.79452e+02
+
+           Step           Time
+            265      265.00000
+
+           Step           Time
+            266      266.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.33958e+04    1.24539e+04    3.09503e+02    0.00000e+00    2.61593e+04
+ Pressure (bar)
+    4.77314e+02
+
+           Step           Time
+            267      267.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.34421e+04    1.24336e+04    2.00572e+02    0.00000e+00    2.60763e+04
+ Pressure (bar)
+    4.96826e+02
+
+           Step           Time
+            268      268.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.31285e+04    1.24120e+04    3.49194e+02    0.00000e+00    2.58897e+04
+ Pressure (bar)
+    5.00422e+02
+
+           Step           Time
+            269      269.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.31650e+04    1.23930e+04    1.67926e+02    0.00000e+00    2.57260e+04
+ Pressure (bar)
+    4.60869e+02
+
+           Step           Time
+            270      270.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.28960e+04    1.23619e+04    4.35142e+02    0.00000e+00    2.56930e+04
+ Pressure (bar)
+    5.24409e+02
+
+           Step           Time
+            271      271.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.30101e+04    1.23445e+04    2.11789e+02    0.00000e+00    2.55664e+04
+ Pressure (bar)
+    4.93319e+02
+
+           Step           Time
+            272      272.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.25768e+04    1.23092e+04    4.99168e+02    0.00000e+00    2.53852e+04
+ Pressure (bar)
+    5.01509e+02
+
+           Step           Time
+            273      273.00000
+
+           Step           Time
+            274      274.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.26427e+04    1.23006e+04    1.57821e+02    0.00000e+00    2.51012e+04
+ Pressure (bar)
+    4.68796e+02
+
+           Step           Time
+            275      275.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.23376e+04    1.22590e+04    4.56242e+02    0.00000e+00    2.50528e+04
+ Pressure (bar)
+    5.09938e+02
+
+           Step           Time
+            276      276.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.24246e+04    1.22440e+04    2.32621e+02    0.00000e+00    2.49012e+04
+ Pressure (bar)
+    4.82414e+02
+
+           Step           Time
+            277      277.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.20109e+04    1.22091e+04    3.61856e+02    0.00000e+00    2.45819e+04
+ Pressure (bar)
+    4.49547e+02
+
+           Step           Time
+            278      278.00000
+
+           Step           Time
+            279      279.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.20762e+04    1.21954e+04    1.57100e+02    0.00000e+00    2.44287e+04
+ Pressure (bar)
+    4.49650e+02
+
+           Step           Time
+            280      280.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.17215e+04    1.21655e+04    3.24143e+02    0.00000e+00    2.42112e+04
+ Pressure (bar)
+    4.61974e+02
+
+           Step           Time
+            281      281.00000
+
+           Step           Time
+            282      282.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.17207e+04    1.21478e+04    1.75278e+02    0.00000e+00    2.40438e+04
+ Pressure (bar)
+    4.48573e+02
+
+           Step           Time
+            283      283.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.14693e+04    1.21179e+04    3.56827e+02    0.00000e+00    2.39441e+04
+ Pressure (bar)
+    4.62153e+02
+
+           Step           Time
+            284      284.00000
+
+           Step           Time
+            285      285.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.14897e+04    1.21048e+04    1.63105e+02    0.00000e+00    2.37576e+04
+ Pressure (bar)
+    4.47279e+02
+
+           Step           Time
+            286      286.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.11616e+04    1.20829e+04    3.90538e+02    0.00000e+00    2.36351e+04
+ Pressure (bar)
+    4.32851e+02
+
+           Step           Time
+            287      287.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.12585e+04    1.20702e+04    1.99625e+02    0.00000e+00    2.35283e+04
+ Pressure (bar)
+    4.24692e+02
+
+           Step           Time
+            288      288.00000
+
+           Step           Time
+            289      289.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.11413e+04    1.20549e+04    2.06710e+02    0.00000e+00    2.34030e+04
+ Pressure (bar)
+    4.28097e+02
+
+           Step           Time
+            290      290.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.10740e+04    1.20336e+04    2.26616e+02    0.00000e+00    2.33342e+04
+ Pressure (bar)
+    4.47455e+02
+
+           Step           Time
+            291      291.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.08905e+04    1.20100e+04    2.61549e+02    0.00000e+00    2.31621e+04
+ Pressure (bar)
+    4.25646e+02
+
+           Step           Time
+            292      292.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.09385e+04    1.19806e+04    1.96083e+02    0.00000e+00    2.31152e+04
+ Pressure (bar)
+    4.60660e+02
+
+           Step           Time
+            293      293.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.07192e+04    1.19497e+04    2.70297e+02    0.00000e+00    2.29392e+04
+ Pressure (bar)
+    4.37824e+02
+
+           Step           Time
+            294      294.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.06408e+04    1.19221e+04    3.48034e+02    0.00000e+00    2.29109e+04
+ Pressure (bar)
+    4.71125e+02
+
+           Step           Time
+            295      295.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.05700e+04    1.18961e+04    2.51449e+02    0.00000e+00    2.27175e+04
+ Pressure (bar)
+    4.12025e+02
+
+           Step           Time
+            296      296.00000
+
+           Step           Time
+            297      297.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.04754e+04    1.18765e+04    1.75357e+02    0.00000e+00    2.25273e+04
+ Pressure (bar)
+    4.36849e+02
+
+           Step           Time
+            298      298.00000
+
+           Step           Time
+            299      299.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.02340e+04    1.18579e+04    1.69415e+02    0.00000e+00    2.22613e+04
+ Pressure (bar)
+    4.08810e+02
+
+           Step           Time
+            300      300.00000
+
+           Step           Time
+            301      301.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    1.00697e+04    1.18405e+04    1.66338e+02    0.00000e+00    2.20765e+04
+ Pressure (bar)
+    3.91158e+02
+
+           Step           Time
+            302      302.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.96945e+03    1.18182e+04    1.73368e+02    0.00000e+00    2.19610e+04
+ Pressure (bar)
+    3.91399e+02
+
+           Step           Time
+            303      303.00000
+
+           Step           Time
+            304      304.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.88328e+03    1.18114e+04    1.66368e+02    0.00000e+00    2.18610e+04
+ Pressure (bar)
+    3.90629e+02
+
+           Step           Time
+            305      305.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.83054e+03    1.17926e+04    1.58455e+02    0.00000e+00    2.17816e+04
+ Pressure (bar)
+    3.97308e+02
+
+           Step           Time
+            306      306.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.78137e+03    1.17825e+04    1.59679e+02    0.00000e+00    2.17236e+04
+ Pressure (bar)
+    4.18799e+02
+
+           Step           Time
+            307      307.00000
+
+           Step           Time
+            308      308.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.66780e+03    1.17697e+04    1.41957e+02    0.00000e+00    2.15795e+04
+ Pressure (bar)
+    3.88147e+02
+
+           Step           Time
+            309      309.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.58500e+03    1.17576e+04    1.49624e+02    0.00000e+00    2.14923e+04
+ Pressure (bar)
+    3.86575e+02
+
+           Step           Time
+            310      310.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.52225e+03    1.17473e+04    1.57230e+02    0.00000e+00    2.14268e+04
+ Pressure (bar)
+    4.00941e+02
+
+           Step           Time
+            311      311.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.45137e+03    1.17361e+04    1.49594e+02    0.00000e+00    2.13370e+04
+ Pressure (bar)
+    4.01178e+02
+
+           Step           Time
+            312      312.00000
+
+           Step           Time
+            313      313.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.39335e+03    1.17229e+04    1.39671e+02    0.00000e+00    2.12560e+04
+ Pressure (bar)
+    4.00656e+02
+
+           Step           Time
+            314      314.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.33215e+03    1.17142e+04    1.45670e+02    0.00000e+00    2.11921e+04
+ Pressure (bar)
+    4.07485e+02
+
+           Step           Time
+            315      315.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.23299e+03    1.16933e+04    1.51708e+02    0.00000e+00    2.10780e+04
+ Pressure (bar)
+    3.94160e+02
+
+           Step           Time
+            316      316.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.18316e+03    1.16827e+04    1.47313e+02    0.00000e+00    2.10132e+04
+ Pressure (bar)
+    4.14277e+02
+
+           Step           Time
+            317      317.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.09171e+03    1.16661e+04    1.29751e+02    0.00000e+00    2.08876e+04
+ Pressure (bar)
+    3.96964e+02
+
+           Step           Time
+            318      318.00000
+
+           Step           Time
+            319      319.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    9.04395e+03    1.16558e+04    1.38761e+02    0.00000e+00    2.08385e+04
+ Pressure (bar)
+    4.00526e+02
+
+           Step           Time
+            320      320.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.98002e+03    1.16440e+04    1.53386e+02    0.00000e+00    2.07774e+04
+ Pressure (bar)
+    4.06138e+02
+
+           Step           Time
+            321      321.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.94092e+03    1.16323e+04    1.22190e+02    0.00000e+00    2.06954e+04
+ Pressure (bar)
+    3.95316e+02
+
+           Step           Time
+            322      322.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.87607e+03    1.16146e+04    1.32744e+02    0.00000e+00    2.06234e+04
+ Pressure (bar)
+    4.05754e+02
+
+           Step           Time
+            323      323.00000
+
+           Step           Time
+            324      324.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.80571e+03    1.16040e+04    1.31030e+02    0.00000e+00    2.05407e+04
+ Pressure (bar)
+    4.06203e+02
+
+           Step           Time
+            325      325.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.69955e+03    1.15891e+04    1.13673e+02    0.00000e+00    2.04023e+04
+ Pressure (bar)
+    3.79939e+02
+
+           Step           Time
+            326      326.00000
+
+           Step           Time
+            327      327.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.66474e+03    1.15828e+04    1.09855e+02    0.00000e+00    2.03574e+04
+ Pressure (bar)
+    3.83814e+02
+
+           Step           Time
+            328      328.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.61021e+03    1.15733e+04    1.13804e+02    0.00000e+00    2.02973e+04
+ Pressure (bar)
+    3.83524e+02
+
+           Step           Time
+            329      329.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.56113e+03    1.15624e+04    1.18090e+02    0.00000e+00    2.02416e+04
+ Pressure (bar)
+    3.86592e+02
+
+           Step           Time
+            330      330.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.52176e+03    1.15511e+04    1.01323e+02    0.00000e+00    2.01742e+04
+ Pressure (bar)
+    3.89007e+02
+
+           Step           Time
+            331      331.00000
+
+           Step           Time
+            332      332.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.45491e+03    1.15431e+04    9.23708e+01    0.00000e+00    2.00904e+04
+ Pressure (bar)
+    3.78587e+02
+
+           Step           Time
+            333      333.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.36676e+03    1.15298e+04    9.31788e+01    0.00000e+00    1.99898e+04
+ Pressure (bar)
+    3.69934e+02
+
+           Step           Time
+            334      334.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.32501e+03    1.15183e+04    1.10231e+02    0.00000e+00    1.99535e+04
+ Pressure (bar)
+    3.95410e+02
+
+           Step           Time
+            335      335.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.25676e+03    1.15073e+04    7.84035e+01    0.00000e+00    1.98425e+04
+ Pressure (bar)
+    3.76759e+02
+
+           Step           Time
+            336      336.00000
+
+           Step           Time
+            337      337.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.19071e+03    1.14950e+04    2.59631e+01    0.00000e+00    1.97117e+04
+ Pressure (bar)
+    3.64772e+02
+
+           Step           Time
+            338      338.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    8.09381e+03    1.14866e+04    3.14067e+01    0.00000e+00    1.96119e+04
+ Pressure (bar)
+    3.68187e+02
+
+           Step           Time
+            339      339.00000
+
+   Energies (kJ/mol)
+           Bond  Improper Dih.        LJ (SR)   Coulomb (SR)      Potential
+    7.98352e+03    1.14761e+04    2.41978e+01    0.00000e+00    1.94838e+04
+ Pressure (bar)
+    3.52834e+02
+
+           Step           Time
+            340      340.00000
+
+           Step           Time
+            341      341.00000
+
+           Step           Time
+            342      342.00000
+
+           Step           Time
+            343      343.00000
+
+           Step           Time
+            344      344.00000
+
+           Step           Time
+            345      345.00000
+
+           Step           Time
+            346      346.00000
+
+           Step           Time
+            347      347.00000
+
+           Step           Time
+            348      348.00000
+
+           Step           Time
+            349      349.00000
+
+           Step           Time
+            350      350.00000
+
+           Step           Time
+            351      351.00000
+
+           Step           Time
+            352      352.00000
+
+           Step           Time
+            353      353.00000
+
+           Step           Time
+            354      354.00000
+
+
+Energy minimization has stopped, but the forces have not converged to the
+requested precision Fmax < 10 (which may not be possible for your system). It
+stopped because the algorithm tried to make a new step whose size was too
+small, or there was no change in the energy since last step. Either way, we
+regard the minimization as converged to within the available machine
+precision, given your starting configuration and EM parameters.
+
+Double precision normally gives you higher accuracy, but this is often not
+needed for preparing to run molecular dynamics.
+
+Steepest Descents converged to machine precision in 355 steps,
+but did not reach the requested Fmax < 10.
+Potential Energy  =  1.9483785e+04
+Maximum force     =  2.2811670e+03 on atom 35
+Norm of force     =  3.3465372e+02
+Finished mdrun on rank 0 Sun Jun 19 20:29:11 2022
+

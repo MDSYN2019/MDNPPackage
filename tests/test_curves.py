@@ -7,9 +7,7 @@ supply and demand curves.
 """
 
 from copy import deepcopy
-
 import pytest
-
 from py_pkg.curves import (SupplyCurve, DemandCurve, Equilibrium,
                            SupplyMonotonicityError, DemandMonotonicityError,
                            equil_price, equil_price_ranges, HorizPriceShock,

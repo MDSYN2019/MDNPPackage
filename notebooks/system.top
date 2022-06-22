@@ -1,0 +1,8 @@
+#include "martini_v3.0.0.itp"
+#include "NPTest.itp"
+
+[SYSTEM]
+RANDOM
+
+[ molecules ]
+RES	    1
