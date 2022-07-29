@@ -1,0 +1,122 @@
+; Martini-to-Gromos Mapping file for [6,6]-phenyl-C61-butyric acid methyl ester (PCBM)
+;
+; Description:
+;   See [DOI: 10.26434/chemrxiv.12277931].
+; Reference(s):
+;   R Alessandri, JJ Uusitalo, AH de Vries, RWA Havenith, SJ Marrink, Bulk Heterojunction Morphologies with Atomistic Resolution
+;   from Coarse-Grain Solvent Evaporation Simulations, JACS 2017, 139, 3697 [DOI: 10.1021/jacs.6b11717]
+;
+; Updated:
+;   2019.09.27 by RA
+
+[ molecule ]
+PCBM
+
+[ martini ]
+C01 C02 C03 C04 C05 C06 C07 C08 C09 C10 C11 C12 C13 C14 C15 C16 C17 C18 C19 C20 N21
+
+[ mapping ]
+gromos gromos53a6
+
+[ atoms ]
+  1    C1   C02
+  2    C2   C01 C01 C02 C02 C02 C03 C03
+  3    C3   C01 C01 C01 C02
+  4    C4   C01 C04
+  5    C5   C02 C04
+  6    C6   C01 C01 C01 C05
+  7    C7   C05 C06 
+  8    C8   C05 C05 C05 C14
+  9    C9   C05 C05 C05 C05 C05 C09
+ 10   C10   C01 C01 C01 C05 C05 C05 C09 C09
+ 11   C11   C06 C06 C07 
+ 12   C12   C06 C06 C16 C16 C16
+ 13   C13   C06 C06 C14 C16 
+ 14   C14   C05 C06 C06 C06 C06 C06 
+ 15   C15   C02 C06 C06
+ 16   C16   C07 C07 C07 C07 C10
+ 17   C17   C07 C07 C07 C07 C16 
+ 18   C18   C06 C06 C07 C07 C07
+ 19   C19   C02 C02 C07
+ 20   C20   C07 C10
+ 21   C21   C10 C10 C12
+ 22   C22   C10 
+ 23   C23   C04 C10
+ 24   C24   C04 C04 C10 C15
+ 25   C25   C10 C15
+ 26   C26   C04 C04 C04 C09 C15
+ 27   C27   C02 C04 C04 C09
+ 28   C28   C01 C01 C09 C09 C09
+ 29   C29   C09
+ 30   C30   C09 C15
+ 31   C31   C03
+ 32   C32   C03 C03 C03 C11 C11
+ 33   C33   C11 C13
+ 34   C34   C13
+ 35   C35   C03 C08 C13
+ 36   C36   C11 C12
+ 37   C37   C07 C11 C11 C12
+ 38   C38   C07 C12
+ 39   C39   C10 C12 C12
+ 40   C40   C12 C12 C12 C12 C12 C13
+ 41   C41   C03 C03 C16 C16 C16
+ 42   C42   C16
+ 43   C43   C07 C07 C07 C11 C11 C16 C16 C16
+ 44   C44   C07 C11 C11 C11 C16
+ 45   C45   C03 C03 C11 C11 C11 C16 C16
+ 46   C46   C05 C14 C14
+ 47   C47   C06 C14 C14 C14 C14
+ 48   C48   C03 C03 C14 C14 C14 C16 C16
+ 49   C49   C03 C03 C03 C14 C14
+ 50   C50   C08 C08 C14 C14 C14
+ 51   C51   C05 C05 C05 C08 C08 C08 C09 C09
+ 52   C52   C08 C08 C08 C05
+ 53   C53   C08 C08 C08 C13
+ 54   C54   C08 C08 C15
+ 55   C55   C08 C08 C09 C09 C09
+ 56   C56   C08 C08 C09 C09 C13 C13 C13 C15 C15 C15
+ 57   C57   C13 C13 C15
+ 58   C58   C12 C13 C15
+ 59   C59   C12 C15 C15 C15
+ 60   C60   C09 C15 C15 C15 C15
+ 61   C63   C20
+ 62    H8   C20
+ 63    H9   C20
+ 64   C64   C20 C20 C20 N21
+ 65   H10   
+ 66   H11   
+ 67   C65   C20 N21
+ 68    O1   C20 N21 N21 N21
+ 69    O2   C20 C20 N21 N21 C05
+ 70   C66   N21
+ 71   H12   
+ 72   H13   
+ 73   H14   
+ 74   C67   C17
+ 75   C61   C08 C08 C08 C17 C17 C20 C20
+ 76   C62   C08 C17 C20 C20
+ 77    H6   
+ 78    H7   
+ 79   C72   C17 C17 C19
+ 80    H3   
+ 81   C68   C17 C17 C18
+ 82    H1   
+ 83   C71   C17 C19 C19 C19
+ 84    H2   
+ 85   C70   C18 C19
+ 86    H4  
+ 87   C69   C17 C18 C18 C18
+ 88    H5   
+
+[ trans ]
+; positioning of hydrogens of the phenyl group
+ H1 C68 C67 C72
+ H2 C71 C72 C67
+ H3 C72 C67 C68
+ H4 C70 C71 C72
+ H5 C69 C68 C67
+
+[ cis ] 
+; v16
+C63 C62 C61 C67
+

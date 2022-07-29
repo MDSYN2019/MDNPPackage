@@ -1,0 +1,139 @@
+; Martini-to-Gromos Mapping file for TEG-PhPyrrolidino[[3',4':1,2]][C60]fullerene (PTEG1)
+;
+; Description:
+;   See [DOI: 10.26434/chemrxiv.12277931].
+; Reference(s):
+;   R Alessandri, S Sami, J Barnoud, AH de Vries, SJ Marrink, RWA Havenith, [DOI: 10.26434/chemrxiv.12277931]
+;
+; Updated:
+;   2019.09.27 by RA
+
+[ molecule ]
+PTG1
+
+[ martini ]
+C01 C02 C03 C04 C05 C06 C07 C08 C09 C10 C11 C12 C13 C14 C15 C16 
+N17 C18 C19 C20 O21 O22 O23 O24
+
+[ mapping ]
+gromos gromos53a6
+
+[ atoms ]
+  1    C1   C06 C16 C02 C07
+  2    C2   C06 C16 
+  3    C3   C06
+  4    C4   C06 C06 C01 C02
+  5    C5   C02 C02 C02 C06
+  6    C6   C05 C06 C14
+  7    C7   C14
+  8    C8   C14 C14 C05 C08
+  9    C9   C05 C05 C05 C08
+ 10   C10   C05 C05 C05 C06
+ 11   C11   C11 C16 C16 C16
+ 12   C12   C03 C11 C16
+ 13   C13   C03 C03 C14 C16
+ 14   C14   C14 C14 C14 C16 C16
+ 15   C15   C16 C16 C16 C01 C14
+ 16   C16   C07 C07 C10 C12
+ 17   C17   C07 C11
+ 18   C18   C07 C11 C16
+ 19   C19   C07 C07 C02 C16
+ 20   C20   C07 C07 C07 C02 C10
+ 21   C21   C10 C10 C10 C10 C02
+ 22   C22   C02 C07 C10
+ 23   C23   C02
+ 24   C24   C01 C02 C04 C10
+ 25   C25   C04 C04 C10 C10 C02
+ 26   C26   C01 C01 C02 C04 C04
+ 27   C27   C01 C01 C01 C01 C06
+ 28   C28   C01 C01 C05
+ 29   C29   C01 C09
+ 30   C30   C04 C01
+ 31   C31   C13 C13 C13 C13 C08
+ 32   C32   C13 C13 C13 C13 C12
+ 33   C33   C12 C13 C15
+ 34   C34   C15
+ 35   C35   C08 C15
+ 36   C36   C12 C12 C15
+ 37   C37   C12
+ 38   C38   C10 C10 C12 C12 C07
+ 39   C39   C10 C10 C10 C10 C12
+ 40   C40   C10 C15
+ 41   C41   C03 C11 C13
+ 42   C42   C11 C11 C11 C03
+ 43   C43   C11 C11 C11 C07 C12
+ 44   C44   C11 C12
+ 45   C45   C11 C13 C13
+ 46   C46   C08 C14
+ 47   C47   C03 C03 C03 C03 C08 C14
+ 48   C48   C03 C03 C13
+ 49   C49   C03 C08
+ 50   C50   C08 C08 C08 C08 C03
+ 51   C51   C05 C08 C09
+ 52   C52   C08 C08 C09 
+ 53   C53   C08 C08 C09 C09 C15
+ 54   C54   C09
+ 55   C55   C05 C09 C09
+ 56   C56   C04 C09 C09 C15
+ 57   C57   C04 C15 C15 C15 C15
+ 58   C58   C10 C10 C15 C15 C04
+ 59   C59   C04 C04 C04 C10
+ 60   C60   C04 C04 C04 C09
+ 61    H6   N17
+ 62   C63   N17 
+ 63    H5   
+ 64    H7   
+ 65    N1   C08 N17 N17
+ 66   C62   C08 C18
+ 67   H10   
+ 68   C64   C18
+ 69   C65   C18 C19
+ 70    H1   
+ 71   C61   C08 C08 C09 N17 N17
+ 72    H8   
+ 73    H9   
+ 74   C69   C18 C20
+ 75    H4   
+ 76   C68   C20
+ 77    H2   
+ 78   C66   C19
+ 79    H3   
+ 80   C67   C19 C20
+ 81    O1   C19 C20 O21 O21
+ 82   C70   O21
+ 83   H11
+ 84   H12
+ 85   C71   O21 O21 O22
+ 86   H13
+ 87   H14
+ 88    O2   O21 O22 O22
+ 89   C72   O22
+ 90   H15
+ 91   H16
+ 92   C73   O22 O22 O23
+ 93   H17
+ 94   H18
+ 95    O3   O22 O23 O23
+ 96   C74   O23
+ 97   H19
+ 98   H20 
+ 99   C75   O23 O23 O24
+100   H21
+101   H22
+102    O4   O23 O24 
+103   C76   O23 O24 O24
+104   H23
+105   H24
+106   C77   O24
+107   H25
+108   H26
+109   H27
+
+;[ trans ]
+; optionally
+;O1 C67 C65 C64
+;H2 C71 C72 C67
+;H3 C72 C67 C68
+;H4 C70 C71 C72
+;H5 C69 C68 C67
+

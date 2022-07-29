@@ -2,7 +2,7 @@
 
 # Martini-PyNP - the constructor for Coarse-grained/All-atomic Molecular Dynamics simulations
 
-Last Updated: 28/05/2022
+Last Updated: 02/07/2022
 ------------------------
 
 This package unites the many heuristic NP constructor methods and constructs bniomolecular and physical systems with the NPs, specifically with the Martini forcefield. The types
@@ -17,8 +17,19 @@ At the point of writing this (which is shown in the 'Last Updated' part of this 
 part of this project is nearly complete, and the next step would be to integrate this with polyply. The way I am trying to add 
 this project as a 'plugin' to that project is something I need to consider, and currently the main bottleneck I am facing. 
 
+Carbon nanotubes is part of the roadmap, but will most likely follow after the long work of integrating this work into 
+polyply and refactoring this code.  
+
 ## Requirements
+
 Martini-PyNP requires:
+
+* Python3
+* [NumPy](http://www.numpy.org/)
+* [simpletraj](https://github.com/arose/simpletraj)
+* [MDAnalysis](https://www.mdanalysis.org/)
+* [rdkit](https://www.rdkit.org/)
+* [parmed](https://parmed.github.io/ParmEd/)
 
 ### Most recent features to be updated:
 
@@ -31,9 +42,3 @@ Martini-PyNP requires:
   I have to look into the polyply code to see where exactly I can add this code as a 'plugin'. 
   
   
-* Python3
-* [NumPy](http://www.numpy.org/)
-* [simpletraj](https://github.com/arose/simpletraj)
-* [MDAnalysis](https://www.mdanalysis.org/)
-* [rdkit](https://www.rdkit.org/)
-* [parmed](https://parmed.github.io/ParmEd/)
