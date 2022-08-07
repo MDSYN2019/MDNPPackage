@@ -1,0 +1,10 @@
+rdkit-pypi==2022.3.1
+numpy==1.21.5
+scipy
+MDAnalysis==2.1.0
+mdparser==0.0.2
+mdtraj==1.9.7
+membrane-curvature==0.0.2
+vermouth==0.7.3
+pylint
+streamlit
