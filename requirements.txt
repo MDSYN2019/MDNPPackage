@@ -7,3 +7,4 @@ mdtraj==1.9.7
 membrane-curvature==0.0.2
 vermouth==0.7.3
 pylint
+streamlit
