@@ -2,7 +2,7 @@
 
 # Martini-PyNP - the constructor for Coarse-grained/All-atomic Molecular Dynamics simulations
 
-Last Updated: 02/07/2022
+Last Updated: 07/08/2022
 ------------------------
 
 This package unites the many heuristic NP constructor methods and constructs bniomolecular and physical systems with the NPs, specifically with the Martini forcefield. The types
@@ -34,11 +34,13 @@ Martini-PyNP requires:
 ### Most recent features to be updated:
 
 - The Martini version of the NP builder can now account for building the itp file 
-  from ligand to NP. 
+  from ligand to NP. Confirmed that minization works well. 
   
+- All-atomic version can construct a NP, but require additional work to make the right itp file  
+
 ### Immediate future issues to be resolved:
 
-- Integration with Martini Vermouth and polyply - the documentation on vermouth is scarce, meaning at the moment 
-  I have to look into the polyply code to see where exactly I can add this code as a 'plugin'. 
+- - The status as of 07/08/2022 is that I am working on further integration with polyply, but require some work on understanding how
+parts of this code can be refactored. Integration with Martini Vermouth and polyply - the documentation on vermouth is scarce, meaning at the moment I have to look into the polyply code to see where exactly I can add this code as a 'plugin'. 
   
   
