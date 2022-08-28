@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import math
 
-def label_np(core, nptype = 'Janus'):
+def label_np(core: list[list[float]], np_type: str = 'Janus'):
     """
     Depending on the type of NP we want in the input, we can try to generate 
     different patterns on the surface of the spehre, which will help us generate the 
@@ -31,40 +31,40 @@ def label_np(core, nptype = 'Janus'):
     Raises:
     
     """
-    xcoordinates = [i[0] for i in core] # Find x coordinates
-    ycoordinates = [i[1] for i in core] # Find y coordinates
-    zcoordinates = [i[2] for i in core] # Find z coordinates 
-    length = 2 * abs(max(zcoordinates)) # From 2 * the radius, we know the total length of the NP 
+    x_coordinates = [i[0] for i in core] # Find x coordinates
+    y_coordinates = [i[1] for i in core] # Find y coordinates
+    z_coordinates = [i[2] for i in core] # Find z coordinates 
+    length = 2 * abs(max(z_coordinates)) # From 2 * the radius, we know the total length of the NP 
     
-    if nptype == 'Striped': 
+    if np_type == 'Striped': 
         # As we have a spherical structure, we just need to find the minimum/maximum in 
         # one of the axes to find that for the rest 
         # define the threshold for how you wish to generate the NP with striped pattern 
         threshold = length / 3 
         # Find the central band of the sphere where you wish to put 
         # different ligands 
-        stripedvalues = [i for i in core if i[2] > (min(zcoordinates) + threshold)
-                         and i[2] < (max(zcoordinates) - threshold)]
+        striped_values = [i for i in core if i[2] > (min(z_coordinates) + threshold)
+                         and i[2] < (max(z_coordinates) - threshold)]
             
-        ceilingvalues = [i for i in core if i not in stripedvalues] 
-        return [stripedvalues, ceilingvalues]
+        ceiling_values = [i for i in core if i not in striped_values] 
+        return [striped_values, ceiling_values]
             
-    elif nptype == 'Janus':
+    elif np_type == 'Janus':
         # Same logic as with the striped example, but with the Janus pattern 
         threshold = length / 2 
-        topvalues = [i for i in core if i[2] > (min(zcoordinates) + threshold)] 
-        botvalues = [i for i in core if i not in topvalues] # Return bottom hemisphere 
-        return [topvalues, botvalues]
+        top_values = [i for i in core if i[2] > (min(z_coordinates) + threshold)] 
+        bot_values = [i for i in core if i not in top_values] # Return bottom hemisphere 
+        return [top_values, bot_values]
 
-def fibanocci_sphere(samplepoints):
+def fibanocci_sphere(sample_points):
     """ Return a Fibanocci sphere with N number of points on the surface. 
         This will act as the template for the nanoparticle core. 
     """
     points = []
     phi = math.pi * (3. - math.sqrt(5.))  # golden angle in radians
     
-    for i in range(samplepoints):
-        y = 1 - (i / float(samplepoints - 1)) * 2  # y goes from 1 to -1
+    for i in range(sample_points):
+        y = 1 - (i / float(sample_points - 1)) * 2  # y goes from 1 to -1
         radius = math.sqrt(1 - y * y)  # radius at y
         
         theta = phi * i  # golden angle increment

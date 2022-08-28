@@ -5,7 +5,7 @@ from scipy.spatial import distance
 
 import MDAnalysis
 from MDAnalysis.analysis.distances import distance_array
-from MDNPPackage.utils.NP_UTILS import pandas_np, pandas_np_martini, read_martini_molecules
+from MDNPPackage.utils.NP_Utils import pandas_np, pandas_np_martini, read_martini_molecules
 
 import vermouth.forcefield
 import vermouth.molecule

@@ -47,7 +47,8 @@ from parmed.gromacs.gromacstop import GromacsTopologyFile
 sys.path.append("..")
 
 from MDNPPackage.connect.NP_Connect import NPConnect
-from MDNPPackage.utils.NP_UTILS import generate_core
+from MDNPPackage.utils.NP_Utils import generate_core
+
 
 class CentralCoreGenerator(NPConnect):
     """
@@ -73,8 +74,8 @@ class CentralCoreGenerator(NPConnect):
         self.last_atoms = last_atoms
         self.top_1 = top_1
         self.top_2 = top_2
-        self.dummy_ff_1 = vermouth.forcefield.ForceField(name='test_ff')
-        self.dummy_ff_2 = vermouth.forcefield.ForceField(name='test_ff')
+        self.dummy_ff_1 = vermouth.forcefield.ForceField(name="test_ff")
+        self.dummy_ff_2 = vermouth.forcefield.ForceField(name="test_ff")
         self.option = option
         self.sphere_list = generate_core(R, points, option)
         super().__init__(gros, first_atoms, last_atoms, self.sphere_list, CG, option)
@@ -342,7 +343,7 @@ class CentralCoreGenerator(NPConnect):
                 ligand_atom_coordinate[2] = ligand_atom_coordinate[2] + vec_multiplier[2]
                 ligand_list.append(ligand_atom_coordinate.tolist())
                 name_list.append(trans[1])  # Append the names of the atoms
-                
+
             # Append the coordinates of the ligands
             for index, entry in enumerate(ligand_list):
                 x_plot.append(entry[0])
@@ -420,25 +421,25 @@ class CentralCoreGenerator(NPConnect):
         use vermouth to get ligand information to add the molecular mechanics 
         forcefield information of the ligands when attached to the NP 
         """
-        with open(self.top_1, 'r') as d:
+        with open(self.top_1, "r") as d:
             data = d.read()
-            top_1_lines = textwrap.dedent(data).splitlines()   
-        with open(self.top_2, 'r') as d:
+            top_1_lines = textwrap.dedent(data).splitlines()
+        with open(self.top_2, "r") as d:
             data = d.read()
             top_2_lines = textwrap.dedent(data).splitlines()
-            
+
         # fill itp_read with the ligand information
         vermouth.gmx.itp_read.read_itp(top_1_lines, self.dummy_ff_1)
         vermouth.gmx.itp_read.read_itp(top_2_lines, self.dummy_ff_2)
-        
+
         self.ff_1_block = self.dummy_ff_1.blocks[list(self.dummy_ff_1.blocks.keys())[0]]
         self.ff_2_block = self.dummy_ff_2.blocks[list(self.dummy_ff_2.blocks.keys())[0]]
         self.ff_1_length = len(list(self.ff_1_block.find_atoms()))
         self.ff_2_length = len(list(self.ff_2_block.find_atoms()))
         self.ff_1_block_atoms = self.ff_1_block.atoms
         self.ff_2_block_atoms = self.ff_2_block.atoms
-        
-    def generate_np_itp(self, residue_name : str = "RES") -> tuple[list[str], list[str], list[str]]:
+
+    def generate_np_itp(self, residue_name: str = "RES") -> tuple[list[str], list[str], list[str]]:
         """ 
         """
         atoms = []
@@ -466,13 +467,17 @@ class CentralCoreGenerator(NPConnect):
             i + core_len
             for i in self.return_ordered_coordinates()[
                 self.return_ordered_coordinates()["RESNAME"] == "Lig1"
-            ]["index"].iloc[:: self.ff_1_length]#len(self.top1.atoms)]
+            ]["index"].iloc[
+                :: self.ff_1_length
+            ]  # len(self.top1.atoms)]
         ]
         indices_2 = [
             i + core_len + lig_1_len
             for i in self.return_ordered_coordinates()[
                 self.return_ordered_coordinates()["RESNAME"] == "Lig2"
-            ]["index"].iloc[:: self.ff_2_length]#len(self.top1.atoms)]
+            ]["index"].iloc[
+                :: self.ff_2_length
+            ]  # len(self.top1.atoms)]
         ]
 
         atoms.append("[atoms]")
@@ -493,50 +498,50 @@ class CentralCoreGenerator(NPConnect):
         for index in indices_1:
             index = index + 1
             # get bond parameters
-            for information in self.ff_1_block.interactions['bonds']:
-            #for bond in self.top1.bonds:
+            for information in self.ff_1_block.interactions["bonds"]:
+                # for bond in self.top1.bonds:
                 bond_string = f"{information[0][0] + (index)} {information[0][1] + (index)} {information[1][0]} {information[1][1]}"
                 ligand_bonds.append(bond_string)
 
         # get improper dihedral parameters
-        for dihedrals in self.ff_1_block.interactions['dihedrals']:
+        for dihedrals in self.ff_1_block.interactions["dihedrals"]:
             dihedral_string = f"{dihedrals[0][0] + (index)} {dihedrals[0][1] + (index)} {dihedrals[0][2] + (index)} {dihedrals[0][3] + (index)} {dihedrals[1][0]} {dihedrals[1][1]} {dihedrals[1][2]}"
             ligand_string_impropers.append(dihedral_string)
 
-        for improper in self.ff_1_block.interactions['impropers']:
+        for improper in self.ff_1_block.interactions["impropers"]:
             dihedral_string = f"{improper[0][0] + (index)} {improper[0][1] + (index)} {improper[0][2] + (index)} {improper[0][3] + (index)} {improper.funct} {improper.type.psi_eq} {improper.type.psi_k}"
             ligand_string_impropers.append(dihedral_string)
         # get atomic parameters
-        #for atom in self.top1.atoms:
+        # for atom in self.top1.atoms:
         for atom in self.ff_1_block_atoms:
-            atomic_index = atom['index'] - 1 
+            atomic_index = atom["index"] - 1
             atom_string = f"{atomic_index + (index)} {atom['atype']} 1 {residue_name} {atom['atomname']} {atomic_index + (index)} {atom['charge']} {0}"
             atoms.append(atom_string)
-            
+
         ligand_bonds.append("; Ligand 2 data")
         ligand_string_impropers.append("; Ligand 2 improper data")
 
         for index in indices_2:
             index = index + 1
             # ditto for the second lot
-            #for bond in self.top2.bonds:
-            for information in self.ff_2_block.interactions['bonds']:    
-                #bond_string = f"{bond.atom1.idx + (index)} {bond.atom2.idx + (index)} {bond.funct} {bond.type.req / 10} {bond.type.k}"
+            # for bond in self.top2.bonds:
+            for information in self.ff_2_block.interactions["bonds"]:
+                # bond_string = f"{bond.atom1.idx + (index)} {bond.atom2.idx + (index)} {bond.funct} {bond.type.req / 10} {bond.type.k}"
                 bond_string = f"{information[0][0] + (index)} {information[0][1] + (index)} {information[1][0]} {information[1][1]} {bond.type.k}"
                 ligand_bonds.append(bond_string)
 
-            for dihedrals in self.ff_2_block.interactions['dihedrals']:
+            for dihedrals in self.ff_2_block.interactions["dihedrals"]:
                 dihedral_string = f"{dihedrals[0][0] + (index)} {dihedrals[0][1] + (index)} {dihedrals[0][2] + (index)} {dihedrals[0][3] + (index)} {dihedrals[1][0]} {dihedrals[1][1]} {dihedrals[1][2]}"
                 ligand_string_impropers.append(dihedral_string)
 
-            #for atom in self.top2.atoms:
+            # for atom in self.top2.atoms:
             for atom in self.ff_2_block_atoms:
-                atomic_index = atom['index'] - 1 
+                atomic_index = atom["index"] - 1
                 atom_string = f"{atomic_index + (index)} {atom['atype']} 1 {residue_name} {atom['atomname']} {atomic_index + (index)} {atom['charge']} {0}"
                 atoms.append(atom_string)
-                
+
         return ligand_bonds, ligand_string_impropers, atoms
-    
+
     def _tile_universe(self, universe, n_x, n_y, n_z):
         box = universe.dimensions[:3]
         copied = []
@@ -544,15 +549,15 @@ class CentralCoreGenerator(NPConnect):
             for y in range(n_y):
                 for z in range(n_z):
                     u_ = universe.copy()
-                    move_by = box*(x, y, z)
+                    move_by = box * (x, y, z)
                     u_.atoms.translate(move_by)
                     copied.append(u_.atoms)
 
         new_universe = mda.Merge(*copied)
-        new_box = box*(n_x, n_y, n_z)
-        new_universe.dimensions = list(new_box) + [90]*3
+        new_box = box * (n_x, n_y, n_z)
+        new_universe.dimensions = list(new_box) + [90] * 3
         return new_universe
-        
+
     def generate_coordinates(self, gro_name: str):
         """ Generate a gro file from the pandas dataframe 
             we generated from the previous functions 
