@@ -1,24 +1,36 @@
-import numpy as np 
 import sys
-
+import numpy as np
+import pandas as pd
 from scipy.spatial import distance
+
 import MDAnalysis
 from MDAnalysis.analysis.distances import distance_array
-from MDNPPackage.utils.NP_UTILS import pandas_np, pandas_np_martini
-from MDNPPackage.utils.NP_UTILS import read_martini_molecules
+from MDNPPackage.utils.NP_UTILS import pandas_np, pandas_np_martini, read_martini_molecules
+
+import vermouth.forcefield
+import vermouth.molecule
+import vermouth.gmx.itp_read
 
 sys.path.append("..")
 
+
 class NPConnect:
-    def __init__(self, gros, firstatoms, lastatoms, spherelist, CG = 'CG', option = 'Plain'):
+    def __init__(self, gros, first_atoms, last_atoms, sphere_list, CG="CG", option="Plain"):
         self.gros = gros
-        self.firstatoms = firstatoms
-        self.lastatoms = lastatoms
-        self.spherelist = spherelist
+        self.first_atoms = first_atoms
+        self.last_atoms = last_atoms
+        self.sphere_list = sphere_list
         self.option = option
         self.CG = CG
-        
-    def attach_ligands(ligandsmilesstring, firstatomlist, lastatomlist, spherelist, length = 1.0, option = 'Plain'):
+
+    def attach_ligands(
+        ligand_smiles_string: str,
+        first_atom_list: list[str],
+        last_atom_list: list[str],
+        sphere_list: list[list[float]],
+        length: int = 1.0,
+        option: str = "Plain",
+    ):
         """ This function is utilized to place the smiles description of the ligand(s). 
         
         e.g use for the case of a plain ligand functionalized NP: 
@@ -45,140 +57,233 @@ class NPConnect:
         option (default = 'plain'):
              The type of NP we want to generate. 
         """
-        # If the option is 'Plain' - we create a simple Nanoparticle without any patterns included  
+        # If the option is 'Plain' - we create a simple Nanoparticle without any patterns included
 
-        if self.option == 'Plain':
-            
-            ligand, core = pandas_np(ligandsmilesstring[0], firstatomlist[0], 
-                                              lastatomlist[0], self.spherelist[0], 'Ligand1', 'Core', Length)
+        if self.option == "Plain":
+
+            ligand, core = pandas_np(
+                ligand_smiles_string[0],
+                first_atom_list[0],
+                last_atom_list[0],
+                self.sphere_list[0],
+                "Ligand1",
+                "Core",
+                length,
+            )
             total = core.append(ligand)
-            return total 
-    
-        # If the option is 'Janus' or 'Striped', then we have to include the different 
-        # ligands.  We have two entries of ligands we need to take into account 
-        if self.option == 'Janus' or self.option == 'Striped':
-
-            # If the option is 'Janus' or 'Striped', then we have to include the different 
-            # ligands.  We have two entries of ligands we need to take into account 
-            ligandI, coreI = pandas_np(ligandsmilesstring[0], firstatomlist[0], 
-                                              lastatomlist[0], self.spherelist[0], 'Ligand1', 'Core', Length)            
-            ligandII, coreII = pandas_np(ligandsmilesstring[1], firstatomlist[1], 
-                                                lastatomlist[1], self.spherelist[1], 'Ligand2', 'Core', Length)
-            # Append Core with Ligands
-            maincore = coreI.append(coreII)
-            # Add index to the core 
-            ligands = ligandI.append(ligandII)
-            # Add index to the ligands 
-            total = maincore.append(ligands)
-            total['index'] = Total.index
-            total = total.reset_index()
-            
             return total
 
-    def return_ordered_coordinates(self):
+        # If the option is 'Janus' or 'Striped', then we have to include the different
+        # ligands.  We have two entries of ligands we need to take into account
+        if self.option == "Janus" or self.option == "Striped":
+            # if the option is 'Janus' or 'Striped', then we have to include the different
+            # ligands.  We have two entries of ligands we need to take into account
+            ligand_I, core_I = pandas_np(
+                ligand_smiles_string[0],
+                first_atom_list[0],
+                last_atom_list[0],
+                self.sphere_list[0],
+                "Ligand1",
+                "Core",
+                length,
+            )
+            ligand_II, core_II = pandas_np(
+                ligand_smiles_string[1],
+                first_atom_list[1],
+                last_atom_list[1],
+                self.sphere_list[1],
+                "Ligand2",
+                "Core",
+                length,
+            )
+            # append Core with Ligands
+            main_core = core_I.append(core_II)
+            # add index to the core
+            ligands = ligand_I.append(ligand_II)
+            # add index to the ligands
+            total = main_core.append(ligands)
+            total["index"] = total.index
+            total = total.reset_index()
+            return total
+
+    def return_ordered_coordinates(self) -> pd.DataFrame:
         """
         """
-        if self.option == 'Plain': 
+        if self.option == "Plain":
+            molecule, transformation_list, ligand_alignment_vector = read_martini_molecules(
+                self.gros[0], self.first_atoms[0], self.last_atoms[0]
+            )
 
-            molecule, transformationlist, ligandalignmentvector = read_martini_molecules(
-                self.gros[0], self.firstatoms[0], self.lastatoms[0])
-            
-            coordinatesligand, coordinatescore = pandas_np_martini(molecule, ligandalignmentvector, 
-                                              transformationlist, self.spherelist[0], 'Lig1', 'Core')
-            coordinates = coordinatesligand.append(coordinatescore)
-            coordinates['index'] = coordinates.index
-            coordinates = coordinates.reset_index()
-            return coordinates
-        
-        if self.option == 'Janus' or self.option == 'Striped':
-
-            # First ligand 
-            moleculeI, transformationlistI, ligandalignmentvectorI = read_martini_molecules(
-                self.gros[0], self.firstatoms[0], self.lastatoms[0])
-            # Second Ligand 
-            moleculeII, transformationlistII, ligandalignmentvectorII = read_martini_molecules(
-                self.gros[1], self.firstatoms[1], self.lastatoms[1])
-            coordinatesligandI, coordinatescoreI = pandas_np_martini(moleculeI, ligandalignmentvectorI, 
-                                                                             transformationlistI, self.spherelist[0], 'Lig1', 'Core')
-            coordinatesligandII, coordinatescoreII = pandas_np_martini(moleculeII, ligandalignmentvectorII, 
-                                                                               transformationlistII, self.spherelist[1], 'Lig2', 'Core')
-            coordinates = coordinatescoreI.append(coordinatescoreII)
-            coordinates = coordinates.append(coordinatesligandI)
-            coordinates = coordinates.append(coordinatesligandII)
-            # reset index and allocate index column 
-            coordinates['index'] = coordinates.index
+            coordinates_ligand, coordinate_score = pandas_np_martini(
+                molecule,
+                ligand_alignment_vector,
+                transformation_list,
+                self.sphere_list[0],
+                "Lig1",
+                "Core",
+            )
+            coordinates = coordinates_ligand.append(coordinate_score)
+            coordinates["index"] = coordinates.index
             coordinates = coordinates.reset_index()
             return coordinates
 
-    def attach_ligands_martini(self):
+        if self.option == "Janus" or self.option == "Striped":
+
+            # First ligand
+            molecule_I, transformation_list_I, ligand_alignment_vector_I = read_martini_molecules(
+                self.gros[0], self.first_atoms[0], self.last_atoms[0]
+            )
+
+            # Second Ligand
+            molecule_II, transformation_list_II, ligand_alignment_vector_II = read_martini_molecules(
+                self.gros[1], self.first_atoms[1], self.last_atoms[1]
+            )
+
+            coordinates_ligand_I, coordinates_core_I = pandas_np_martini(
+                molecule_I,
+                ligand_alignment_vector_I,
+                transformation_list_I,
+                self.sphere_list[0],
+                "Lig1",
+                "Core",
+            )
+            coordinates_ligand_II, coordinates_core_II = pandas_np_martini(
+                molecule_II,
+                ligand_alignment_vector_II,
+                transformation_list_II,
+                self.sphere_list[1],
+                "Lig2",
+                "Core",
+            )
+            coordinates = coordinates_core_I.append(coordinates_core_II)
+            coordinates = coordinates.append(coordinates_ligand_I)
+            coordinates = coordinates.append(coordinates_ligand_II)
+            # reset index and allocate index column
+            coordinates["index"] = coordinates.index
+            coordinates = coordinates.reset_index()
+            return coordinates
+
+    def attach_ligands_martini(self) -> list[str]:
         """ 
         Here, we follow the same logic as the the AttachLigands to create a 
         Martini version of it. We are currently only using the Martini3 
         small molecules dictionary to create the martini ligands 
         """
-        if self.option == 'Plain': 
-            molecule, transformationlist, ligandalignmentvector = read_martini_molecules(
-                self.gros[0], self.firstatoms[0], self.lastatoms[0])
-        
-            mollen = len(molecule)
-            coordinates = self.return_ordered_coordinates()
-            skippedligandfromspherelist = coordinates[:-len(self.spherelist[0])].iloc[::mollen, :]
-            distlig = [[skippedligandfromspherelist['index'].iloc[i] + 1,  coordinates[-len(spherelist[0]):]['index'].iloc[i] + 1,
-                         distance.euclidean(skippedligandfromspherelist.iloc[i][['X', 'Y', 'Z']].to_numpy(), self.spherelist[0][i])] for i in range(0, len(skippedligandfromspherelist))]
-            attachmentbonds = [] 
-            for bond in distlig:
-                bondstring = f"{bond[0]} {bond[1]} 1 {bond[2] / 10} 10000"
-                atachmentbonds.append(bondstring)
-            return attachmentbonds 
-    
-        if self.option == 'Janus' or self.option == 'Striped':
+        if self.option == "Plain":
+            molecule, transformation_list, ligand_alignment_vector = read_martini_molecules(
+                self.gros[0], self.first_atoms[0], self.last_atoms[0]
+            )
 
-            # First ligand 
-            moleculeI, transformationlistI, ligandalignmentvectorI = read_martini_molecules(
-                self.gros[0], self.firstatoms[0], self.lastatoms[0])
-            # Second Ligand 
-            moleculeII, transformationlistII, ligandalignmentvectorII = read_martini_molecules(
-                self.gros[1], self.firstatoms[1], self.lastatoms[1])
+            mol_len = len(molecule)
+            coordinates = self.return_ordered_coordinates()
+            skipped_ligand_from_sphere_list = coordinates[: -len(self.sphere_list[0])].iloc[
+                ::mol_len, :
+            ]
+            dist_lig = [
+                [
+                    skipped_ligand_from_sphere_list["index"].iloc[i] + 1,
+                    coordinates[-len(sphere_list[0]) :]["index"].iloc[i] + 1,
+                    distance.euclidean(
+                        skipped_ligand_from_sphere_list.iloc[i][["X", "Y", "Z"]].to_numpy(),
+                        self.sphere_list[0][i],
+                    ),
+                ]
+                for i in range(0, len(skipped_ligand_from_sphere_list))
+            ]
+            attachment_bonds = []
+            for bond in dist_lig:
+                bond_string = f"{bond[0]} {bond[1]} 1 {bond[2] / 10} 10000"
+                atachment_bonds.append(bond_string)
+            return attachment_bonds
+
+        if self.option == "Janus" or self.option == "Striped":
+
+            # First ligand
+            molecule_I, transformation_list_I, ligand_alignment_vector_I = read_martini_molecules(
+                self.gros[0], self.first_atoms[0], self.last_atoms[0]
+            )
+            # Second Ligand
+            molecule_II, transformation_list_II, ligand_alignment_vector_II = read_martini_molecules(
+                self.gros[1], self.first_atoms[1], self.last_atoms[1]
+            )
             # Get length of first and second ligand
-            mollenI, mollenII = len(moleculeI), len(moleculeII)
+            mol_len_I, mol_len_II = len(molecule_I), len(molecule_II)
             coordinates = self.return_ordered_coordinates()
-            coordinatesligandI, coordinatescoreI = pandas_np_martini(moleculeI, ligandalignmentvectorI, 
-                                                                             transformationlistI, self.spherelist[0], 'Lig1', 'Core')
-            coordinatesligandII, coordinatescoreII = pandas_np_martini(moleculeII, ligandalignmentvectorII, 
-                                                                               transformationlistII, self.spherelist[1], 'Lig2', 'Core')
-            
-            # We return the coordinates of the first batch of NP atoms attached with ligands, 
-            # and then attach the second batch of NP atoms attached with the second type of ligands 
+            coordinates_ligand_I, coordinates_core_I = pandas_np_martini(
+                molecule_I,
+                ligand_alignment_vector_I,
+                transformation_list_I,
+                self.sphere_list[0],
+                "Lig1",
+                "Core",
+            )
+            coordinates_ligand_II, coordinates_core_II = pandas_np_martini(
+                molecule_II,
+                ligand_alignment_vector_II,
+                transformation_list_II,
+                self.sphere_list[1],
+                "Lig2",
+                "Core",
+            )
 
-            # Skip the spherelist part which is appended after the ligand list, 
+            # We return the coordinates of the first batch of NP atoms attached with ligands,
+            # and then attach the second batch of NP atoms attached with the second type of ligands
+
+            # Skip the spherelist part which is appended after the ligand list,
             # and skip over by length list to get the headgroup index of the ligands
 
-            completespherelistlen = len(self.spherelist[0]) + len(self.spherelist[1])
-            skippedLigandIfromspherelist = coordinates[completespherelistlen:].iloc[0:len(coordinatesligandI):mollenI, :]
-            skippedLigandIIfromspherelist = coordinates[len(coordinatesligandI) + completespherelistlen:].iloc[0:len(coordinatesligandII):mollenII, :]
+            complete_sphere_list_len = len(self.sphere_list[0]) + len(self.sphere_list[1])
+            skipped_ligand_I_from_sphere_list = coordinates[complete_sphere_list_len:].iloc[
+                0 : len(coordinates_ligand_I) : mol_len_I, :
+            ]
+            skipped_ligand_II_from_sphere_list = coordinates[
+                len(coordinates_ligand_I) + complete_sphere_list_len :
+            ].iloc[0 : len(coordinates_ligand_II) : mol_len_II, :]
 
-            assert len(skippedLigandIfromspherelist) == len(self.spherelist[0])
-            assert len(skippedLigandIIfromspherelist) == len(self.spherelist[1])
+            assert len(skipped_ligand_I_from_sphere_list) == len(self.sphere_list[0])
+            assert len(skipped_ligand_II_from_sphere_list) == len(self.sphere_list[1])
 
-            attachmentbonds = []
-            distligI = [[skippedLigandIfromspherelist['index'].iloc[i] + completespherelistlen + 1, 
-                          coordinates[:-len(self.spherelist[0])]['index'].iloc[i] + 1,
-                          distance.euclidean(skippedLigandIfromspherelist.iloc[i][['X', 'Y', 'Z']].to_numpy(),
-                                            self.spherelist[0][i])] for i in range(0, len(skippedLigandIfromspherelist))]
+            attachment_bonds = []
+            dist_lig_I = [
+                [
+                    skipped_ligand_I_from_sphere_list["index"].iloc[i]
+                    + complete_sphere_list_len
+                    + 1,
+                    coordinates[: -len(self.sphere_list[0])]["index"].iloc[i] + 1,
+                    distance.euclidean(
+                        skipped_ligand_I_from_sphere_list.iloc[i][["X", "Y", "Z"]].to_numpy(),
+                        self.sphere_list[0][i],
+                    ),
+                ]
+                for i in range(0, len(skipped_ligand_I_from_sphere_list))
+            ]
 
-            distligII = [[skippedLigandIIfromspherelist['index'].iloc[i] + completespherelistlen + len(coordinatesligandI) + 1, 
-                           coordinates[len(self.spherelist[0]):-completespherelistlen]['index'].iloc[i] + len(self.spherelist[0]) + 1,
-                           distance.euclidean(skippedLigandIIfromspherelist.iloc[i][['X', 'Y', 'Z']].to_numpy(), 
-                                              self.spherelist[1][i])] for i in range(0, len(skippedLigandIIfromspherelist))]
-            # Add the attachment bonds strings into a list to use later 
-            attachmentbonds.append('; Ligand - NP bond')
+            dist_lig_II = [
+                [
+                    skipped_ligand_II_from_sphere_list["index"].iloc[i]
+                    + complete_sphere_list_len
+                    + len(coordinates_ligand_I)
+                    + 1,
+                    coordinates[len(self.sphere_list[0]) : -complete_sphere_list_len]["index"].iloc[
+                        i
+                    ]
+                    + len(self.sphere_list[0])
+                    + 1,
+                    distance.euclidean(
+                        skipped_ligand_II_from_sphere_list.iloc[i][["X", "Y", "Z"]].to_numpy(),
+                        self.sphere_list[1][i],
+                    ),
+                ]
+                for i in range(0, len(skipped_ligand_II_from_sphere_list))
+            ]
+            # Add the attachment bonds strings into a list to use later
+            attachment_bonds.append("; Ligand - NP bond")
             # add indices for ligand type 1
-            for bond in distligI:
-                bondstring = f"{bond[0]} {bond[1]} 1 {bond[2] / 10} 10000"
-                attachmentbonds.append(bondstring)
-            # add indices for ligand type II 
-            for bond in distligII:
-                bondstring = f"{bond[0]} {bond[1]} 1 {bond[2] / 10} 10000"
-                attachmentbonds.append(bondstring)                
-            return attachmentbonds
-    
+            for bond in dist_lig_I:
+                bond_string = f"{bond[0]} {bond[1]} 1 {bond[2] / 10} 10000"
+                attachment_bonds.append(bond_string)
+            # add indices for ligand type II
+            for bond in dist_lig_II:
+                bond_string = f"{bond[0]} {bond[1]} 1 {bond[2] / 10} 10000"
+                attachment_bonds.append(bond_string)
+            return attachment_bonds
