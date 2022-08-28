@@ -386,7 +386,7 @@ class CentralCoreGenerator(NPConnect):
         np_core_array = np_core.to_numpy()
         duplicate_array = []
         return_string = []
-
+        return_string.append("[ bonds ]")
         for index, entry in enumerate(np_core_array):
             pos_goal = np.array([entry])
             dist_matrix = np.linalg.norm(np_core_array - pos_goal, axis=1)
@@ -436,8 +436,8 @@ class CentralCoreGenerator(NPConnect):
         self.ff_2_block = self.dummy_ff_2.blocks[list(self.dummy_ff_2.blocks.keys())[0]]
         self.ff_1_length = len(list(self.ff_1_block.find_atoms()))
         self.ff_2_length = len(list(self.ff_2_block.find_atoms()))
-        self.ff_1_block_atoms = self.ff_1_block.atoms
-        self.ff_2_block_atoms = self.ff_2_block.atoms
+        self.ff_1_block_atoms = list(self.ff_1_block.atoms)
+        self.ff_2_block_atoms = list(self.ff_2_block.atoms)
 
     def generate_np_itp(self, residue_name: str = "RES") -> tuple[list[str], list[str], list[str]]:
         """ 
@@ -480,7 +480,7 @@ class CentralCoreGenerator(NPConnect):
             ]  # len(self.top1.atoms)]
         ]
 
-        atoms.append("[atoms]")
+        atoms.append("[ atoms ]")
         atoms.append("; nr  type  resnr residue atom cgnr charge  mass")
         # Append core atom information
 
@@ -490,7 +490,7 @@ class CentralCoreGenerator(NPConnect):
             atoms.append(atom_string)
 
         ligand_string_impropers = []
-        ligand_string_impropers.append("[dihedrals]")
+        ligand_string_impropers.append("[ dihedrals ]")
         ligand_string_impropers.append("; i j k l  funct  ref.angle   force_k")
         ligand_string_impropers.append("; Ligand 1 improper data")
         ligand_bonds.append("; Ligand 1 bond data")
@@ -503,22 +503,22 @@ class CentralCoreGenerator(NPConnect):
                 bond_string = f"{information[0][0] + (index)} {information[0][1] + (index)} {information[1][0]} {information[1][1]}"
                 ligand_bonds.append(bond_string)
 
-        # get improper dihedral parameters
-        for dihedrals in self.ff_1_block.interactions["dihedrals"]:
-            dihedral_string = f"{dihedrals[0][0] + (index)} {dihedrals[0][1] + (index)} {dihedrals[0][2] + (index)} {dihedrals[0][3] + (index)} {dihedrals[1][0]} {dihedrals[1][1]} {dihedrals[1][2]}"
-            ligand_string_impropers.append(dihedral_string)
+                # get improper dihedral parameters
+            for dihedrals in self.ff_1_block.interactions["dihedrals"]:
+                dihedral_string = f"{dihedrals[0][0] + (index)} {dihedrals[0][1] + (index)} {dihedrals[0][2] + (index)} {dihedrals[0][3] + (index)} {dihedrals[1][0]} {dihedrals[1][1]} {dihedrals[1][2]}"
+                ligand_string_impropers.append(dihedral_string)
 
-        for improper in self.ff_1_block.interactions["impropers"]:
-            dihedral_string = f"{improper[0][0] + (index)} {improper[0][1] + (index)} {improper[0][2] + (index)} {improper[0][3] + (index)} {improper.funct} {improper.type.psi_eq} {improper.type.psi_k}"
-            ligand_string_impropers.append(dihedral_string)
-        # get atomic parameters
-        # for atom in self.top1.atoms:
-        for atom in self.ff_1_block_atoms:
-            atomic_index = atom["index"] - 1
-            atom_string = f"{atomic_index + (index)} {atom['atype']} 1 {residue_name} {atom['atomname']} {atomic_index + (index)} {atom['charge']} {0}"
-            atoms.append(atom_string)
+            for improper in self.ff_1_block.interactions["impropers"]:
+                dihedral_string = f"{improper[0][0] + (index)} {improper[0][1] + (index)} {improper[0][2] + (index)} {improper[0][3] + (index)} {improper.funct} {improper.type.psi_eq} {improper.type.psi_k}"
+                ligand_string_impropers.append(dihedral_string)
+            # get atomic parameters
+            # for atom in self.top1.atoms:
+            for atom in self.ff_1_block_atoms:
+                atomic_index = atom["index"] - 1
+                atom_string = f"{atomic_index + (index)} {atom['atype']} 1 {residue_name} {atom['atomname']} {atomic_index + (index)} {atom['charge']} {0}"
+                atoms.append(atom_string)
 
-        ligand_bonds.append("; Ligand 2 data")
+        ligand_bonds.append("; Ligand 2 bond data")
         ligand_string_impropers.append("; Ligand 2 improper data")
 
         for index in indices_2:
@@ -527,7 +527,7 @@ class CentralCoreGenerator(NPConnect):
             # for bond in self.top2.bonds:
             for information in self.ff_2_block.interactions["bonds"]:
                 # bond_string = f"{bond.atom1.idx + (index)} {bond.atom2.idx + (index)} {bond.funct} {bond.type.req / 10} {bond.type.k}"
-                bond_string = f"{information[0][0] + (index)} {information[0][1] + (index)} {information[1][0]} {information[1][1]} {bond.type.k}"
+                bond_string = f"{information[0][0] + (index)} {information[0][1] + (index)} {information[1][0]} {information[1][1]}"
                 ligand_bonds.append(bond_string)
 
             for dihedrals in self.ff_2_block.interactions["dihedrals"]:
@@ -585,12 +585,10 @@ class CentralCoreGenerator(NPConnect):
         """
         bonds, improper, atoms = self.generate_np_itp()
         attachments = self.attach_ligands_martini()
-
         data = atoms
         data.extend(bonds)
         data.extend(attachments)
         data.extend(improper)
-
         with open(f"{itp_name}.itp", "w") as f:
             for item in data:
                 f.write("%s\n" % item)
