@@ -2,7 +2,7 @@
 
 # Martini-PyNP - the constructor for Coarse-grained/All-atomic Molecular Dynamics simulations
 
-Last Updated: 07/08/2022
+Last Updated: 02/09/2022
 ------------------------
 
 This package unites the many heuristic NP constructor methods and constructs bniomolecular and physical systems with the NPs, specifically with the Martini forcefield. The types
@@ -11,7 +11,7 @@ of NPs supported with this package are:
 - Ligand-functionalized NPs
 - Carbon nanotubes 
 - Permutations of the C60 buckyball carbon nanoparticle
-- Insertion into systems by leveraging the polyply program - https://github.com/marrink-lab/polyply_1.0
+- Insertion into systems by leveraging the polyply program - https://github.com/marrink-lab/polyply_1.0 - not yet implemented
 
 At the point of writing this (which is shown in the 'Last Updated' part of this documentation), the Ligand-functionalized 
 part of this project is nearly complete, and the next step would be to integrate this with polyply. The way I am trying to add 
@@ -30,6 +30,7 @@ Martini-PyNP requires:
 * [MDAnalysis](https://www.mdanalysis.org/)
 * [rdkit](https://www.rdkit.org/)
 * [parmed](https://parmed.github.io/ParmEd/)
+* [vermouth-martini](https://github.com/marrink-lab/vermouth-martinize)
 
 ### Most recent features to be updated:
 
@@ -40,7 +41,7 @@ Martini-PyNP requires:
 
 ### Immediate future issues to be resolved:
 
-- - The status as of 07/08/2022 is that I am working on further integration with polyply, but require some work on understanding how
+- - The status as of 02/09/2022 is that I am working on further integration with polyply, but require some work on understanding how
 parts of this code can be refactored. Integration with Martini Vermouth and polyply - the documentation on vermouth is scarce, meaning at the moment I have to look into the polyply code to see where exactly I can add this code as a 'plugin'. 
   
   
