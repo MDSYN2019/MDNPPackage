@@ -1,36 +1,15 @@
+from typing import Tuple
 import MDAnalysis as mda
 import numpy as np
 import pandas as pd
 import math
 
 
-def label_np(core: list[list[float]], np_type: str = "Janus"):
+def label_np(core: list[list[float]], np_type: str = "Janus") -> list[list[float]]:
     """
     Depending on the type of NP we want in the input, we can try to generate 
     different patterns on the surface of the spehre, which will help us generate the 
     lists correponding to the anisotropic nature of the NP. 
-        
-    The types of NPs we can currently have are:
-        
-    - Janus 
-    - Striped
-    
-    More options will be added. As in its current iteraton:
-    
-    1. The Janus type divides the NP into two hemispheres.
-    
-    2. The Striped type divides the NP into three hemispheres, typically used with a hydrophobic middle 
-    especially when it comes to using with biosimulations. 
-        
-    Args:
-    Core: 
-    Placeholder
-        Type:
-    Placeholder
-    Returns:
-        
-    Raises:
-    
     """
     x_coordinates = [i[0] for i in core]  # Find x coordinates
     y_coordinates = [i[1] for i in core]  # Find y coordinates
@@ -61,7 +40,7 @@ def label_np(core: list[list[float]], np_type: str = "Janus"):
         return [top_values, bot_values]
 
 
-def fibanocci_sphere(sample_points):
+def fibanocci_sphere(sample_points : int) -> list[Tuple[float]]:
     """ Return a Fibanocci sphere with N number of points on the surface. 
         This will act as the template for the nanoparticle core. 
     """
@@ -71,15 +50,13 @@ def fibanocci_sphere(sample_points):
     for i in range(sample_points):
         y = 1 - (i / float(sample_points - 1)) * 2  # y goes from 1 to -1
         radius = math.sqrt(1 - y * y)  # radius at y
-
         theta = phi * i  # golden angle increment
         x = math.cos(theta) * radius
         z = math.sin(theta) * radius
         points.append((x, y, z))
     return points
 
-
-def generate_core(radius, n, option="Plain"):
+def generate_core(radius: float, n : int , option="Plain") -> Tuple[list[list[float]], list[list[float]]]:
     """ Creates a Fibanocci sphere that represents the NP core 
         and allocates the radius. 
 
@@ -126,7 +103,8 @@ def generate_core(radius, n, option="Plain"):
         return topvalues, bottomvalues
 
 
-def rotation_matrix_from_vectors(vec_1, vec_2):
+def rotation_matrix_from_vectors(vec_1: list[float],
+                                 vec_2: list[float]):
     """ Find the rotation matrix that aligns vec1 to vec2
     Args:
         vec1: 
@@ -147,7 +125,13 @@ def rotation_matrix_from_vectors(vec_1, vec_2):
     return rotation_matrix
 
 
-def pandas_np(ligand_string, first_atom, last_atom, sphere_list, ligand_name, core_name, length=1.0):
+def pandas_np(ligand_string : str,
+              first_atom : str,
+              last_atom : str,
+              sphere_list : list[list[float]],
+              ligand_name : str,
+              core_name : str,
+              length : float = 1.0):
     """Placeholder
     """
     transformation_list, name_list = [], []
@@ -155,6 +139,7 @@ def pandas_np(ligand_string, first_atom, last_atom, sphere_list, ligand_name, co
     sphere = []
     x_plot, y_plot, z_plot = [], [], []
     x_plot_sphere, y_plot_sphere, z_plot_sphere = [], [], []
+
     u = mda.Universe.from_smiles(ligand_string)
     ligand = u.select_atoms("all")
     logging.info(f"The length of the ligand is {len(Ligand)}")

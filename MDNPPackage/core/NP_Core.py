@@ -43,18 +43,15 @@ import vermouth.gmx.itp_read
 # parmed functionality
 import parmed as pmd
 from parmed.gromacs.gromacstop import GromacsTopologyFile
-
 sys.path.append("..")
 
 from MDNPPackage.connect.NP_Connect import NPConnect
 from MDNPPackage.utils.NP_Utils import generate_core
 
-
 class CentralCoreGenerator(NPConnect):
     """
     the main generator class for the nanoparticle 
     """
-
     def __init__(
         self,
         R: float,
@@ -79,24 +76,6 @@ class CentralCoreGenerator(NPConnect):
         self.option = option
         self.sphere_list = generate_core(R, points, option)
         super().__init__(gros, first_atoms, last_atoms, self.sphere_list, CG, option)
-
-    def _fibanocci_sphere(self) -> list[list[float]]:
-        """ Return a Fibanocci sphere with N number of points on the surface. 
-        This will act as the template for the nanoparticle core. 
-        """
-        points = []
-        phi = math.pi * (3.0 - math.sqrt(5.0))  # golden angle in radians
-
-        for i in range(self.points):
-            y = 1 - (i / float(self.points - 1)) * 2  # y goes from 1 to -1
-            radius = math.sqrt(1 - y * y)  # radius at y
-            theta = phi * i  # golden angle increment
-            x = math.cos(theta) * radius
-            z = math.sin(theta) * radius
-            points.append((x, y, z))
-
-        return points
-
     def _rotation_matrix_from_vectors(vec_1, vec_2):
         """ Find the rotation matrix that aligns vec1 to vec2
         Args:
@@ -178,51 +157,6 @@ class CentralCoreGenerator(NPConnect):
             top_values = [i for i in core if i[2] > (min(z_coordinates) + threshold)]
             bot_values = [i for i in core if i not in top_values]  # Return bottom hemisphere
             return [top_values, bot_values]
-
-    def _generate_core(self) -> list[list[float]]:
-        """ Creates a Fibanocci sphere that represents the NP core 
-        and allocates the radius. 
-
-        The core is scaled down/up to the size that one wishes to have. 
-        We can generate arrays corresponding  to a plain core, or a tuple with 
-        two entries with different parts of the NP core that corresponds to positions 
-        with striped or janus type positions.
-        """
-        sphere_list = []
-        sphere = self._fibanocci_sphere()  # Create the fibanocci sphere representing the NP core
-        x_sphere, y_sphere, z_sphere = [], [], []
-
-        for entry in sphere:
-            x_sphere.append(entry[0])
-            y_sphere.append(entry[1])
-            z_sphere.append(entry[2])
-        # Append as 2d list
-        for index in range(0, len(x_sphere)):
-            sphere_list.append([x_sphere[index], y_sphere[index], z_sphere[index]])
-        # Take the radius value, and then multiply the unit vector in each
-        # Direction by that radius value to increase the total volume of the
-        # NP core.
-        for index in range(0, len(sphere_list) - 1):
-            sphere_list[index][0] = sphere_list[index][0] * self.R
-            sphere_list[index][1] = sphere_list[index][1] * self.R
-            sphere_list[index][2] = sphere_list[index][2] * self.R
-        # Return just the whole list without any further modifications
-        if self.option == "Plain":
-            return [sphere_list[1:-1]]
-        # Separate out the anisotropy for the Striped variant
-        elif self.option == "Striped":
-            striped_values, ceiling_values = (
-                self._label_np(sphere_list[1:-1], self.option)[0],
-                self._label_np(sphere_list[1:-1], self.option)[1],
-            )
-            return striped_values, ceiling_values
-        # Separate out the anisotropy for the Janus variant
-        elif self.option == "Janus":
-            top_values, bottom_values = (
-                self._label_np(sphere_list[1:-1], self.option)[0],
-                self._label_np(sphere_list[1:-1], self.option)[1],
-            )
-            return top_values, bottom_values
 
     def pandas_np(
         ligand_string, first_atom, last_atom, sphere_list, ligand_name, core_name, length=1.0

@@ -13,7 +13,6 @@ import vermouth.gmx.itp_read
 
 sys.path.append("..")
 
-
 class NPConnect:
     def __init__(self, gros, first_atoms, last_atoms, sphere_list, CG="CG", option="Plain"):
         self.gros = gros
