@@ -13,8 +13,17 @@ import vermouth.gmx.itp_read
 
 sys.path.append("..")
 
+
 class NPConnect:
-    def __init__(self, gros, first_atoms, last_atoms, sphere_list, CG="CG", option="Plain"):
+    def __init__(
+        self,
+        gros: list[str],
+        first_atoms: list[str],
+        last_atoms: list[str],
+        sphere_list: list[list[float]],
+        CG: str = "CG",
+        option: str = "Plain",
+    ):
         self.gros = gros
         self.first_atoms = first_atoms
         self.last_atoms = last_atoms
@@ -134,9 +143,11 @@ class NPConnect:
             )
 
             # Second Ligand
-            molecule_II, transformation_list_II, ligand_alignment_vector_II = read_martini_molecules(
-                self.gros[1], self.first_atoms[1], self.last_atoms[1]
-            )
+            (
+                molecule_II,
+                transformation_list_II,
+                ligand_alignment_vector_II,
+            ) = read_martini_molecules(self.gros[1], self.first_atoms[1], self.last_atoms[1])
 
             coordinates_ligand_I, coordinates_core_I = pandas_np_martini(
                 molecule_I,
@@ -202,9 +213,11 @@ class NPConnect:
                 self.gros[0], self.first_atoms[0], self.last_atoms[0]
             )
             # Second Ligand
-            molecule_II, transformation_list_II, ligand_alignment_vector_II = read_martini_molecules(
-                self.gros[1], self.first_atoms[1], self.last_atoms[1]
-            )
+            (
+                molecule_II,
+                transformation_list_II,
+                ligand_alignment_vector_II,
+            ) = read_martini_molecules(self.gros[1], self.first_atoms[1], self.last_atoms[1])
             # Get length of first and second ligand
             mol_len_I, mol_len_II = len(molecule_I), len(molecule_II)
             coordinates = self.return_ordered_coordinates()
