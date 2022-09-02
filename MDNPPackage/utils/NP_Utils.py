@@ -1,8 +1,9 @@
 from typing import Tuple
+import math
+
 import MDAnalysis as mda
 import numpy as np
 import pandas as pd
-import math
 
 
 def label_np(core: list[list[float]], np_type: str = "Janus") -> list[list[float]]:
@@ -40,7 +41,7 @@ def label_np(core: list[list[float]], np_type: str = "Janus") -> list[list[float
         return [top_values, bot_values]
 
 
-def fibanocci_sphere(sample_points : int) -> list[Tuple[float]]:
+def fibanocci_sphere(sample_points: int) -> list[Tuple[float]]:
     """ Return a Fibanocci sphere with N number of points on the surface. 
         This will act as the template for the nanoparticle core. 
     """
@@ -56,7 +57,10 @@ def fibanocci_sphere(sample_points : int) -> list[Tuple[float]]:
         points.append((x, y, z))
     return points
 
-def generate_core(radius: float, n : int , option="Plain") -> Tuple[list[list[float]], list[list[float]]]:
+
+def generate_core(
+    radius: float, n: int, option="Plain"
+) -> Tuple[list[list[float]], list[list[float]]]:
     """ Creates a Fibanocci sphere that represents the NP core 
         and allocates the radius. 
 
@@ -103,8 +107,7 @@ def generate_core(radius: float, n : int , option="Plain") -> Tuple[list[list[fl
         return topvalues, bottomvalues
 
 
-def rotation_matrix_from_vectors(vec_1: list[float],
-                                 vec_2: list[float]):
+def rotation_matrix_from_vectors(vec_1: list[float], vec_2: list[float]):
     """ Find the rotation matrix that aligns vec1 to vec2
     Args:
         vec1: 
@@ -125,14 +128,17 @@ def rotation_matrix_from_vectors(vec_1: list[float],
     return rotation_matrix
 
 
-def pandas_np(ligand_string : str,
-              first_atom : str,
-              last_atom : str,
-              sphere_list : list[list[float]],
-              ligand_name : str,
-              core_name : str,
-              length : float = 1.0):
-    """Placeholder
+def pandas_np(
+    ligand_string: str,
+    first_atom: str,
+    last_atom: str,
+    sphere_list: list[list[float]],
+    ligand_name: str,
+    core_name: str,
+    length: float = 1.0,
+):
+    """
+    generate pandas table from the all-atomic nanoparticle
     """
     transformation_list, name_list = [], []
     ligand_list = []
@@ -222,23 +228,25 @@ def pandas_np(ligand_string : str,
 
 
 def pandas_np_martini(
-    molecule,
-    ligand_alignment_vector,
-    transformation_list,
-    sphere_list,
-    ligand_name,
-    core_name,
-    length=1.0,
+    molecule: mda.Universe,
+    ligand_alignment_vector: list[float],
+    transformation_list: list[list[float]],
+    sphere_list: list[list[float]],
+    ligand_name: str,
+    core_name: str,
+    length: float = 1.0,
 ):
-    """ Function to read Martini molecule information and orientate on NP surface"""
-
+    """ 
+    generate pandas format table for the martini NP
+    """
     ligand_list, name_list = [], []
-    sphere = []
     x_plot, y_plot, z_plot = [], [], []
     x_plot_sphere, y_plot_sphere, z_plot_sphere = [], [], []
-    # Sulfur/ligand vector
+    sphere = []
+
     unit_vector = np.linalg.norm(ligand_alignment_vector)
     vec_1 = ligand_alignment_vector.tolist()
+
     for index in range(0, len(sphere_list)):
         vec_2 = sphere_list[index]
         transformation_vector = rotation_matrix_from_vectors(vec_1, vec_2)
@@ -303,15 +311,6 @@ def read_martini_molecules(grofile: str, first: str, last: str):
     One needs to describe the attaching bead to the main core and the atom furthest away from the 
     core, to create the directional vector to which the struture will be placed on the surface of the NP 
     core. 
-    
-    Args:
-        GroFile:
-          path the gromacs file of the ligand
-    Returns: 
-        Placeholder
-    Raises: 
-        Placeholder 
-        
     """
     transformation_list = []
     martini_universe = mda.Universe(grofile)  # Load the Martini gro file in as a universe

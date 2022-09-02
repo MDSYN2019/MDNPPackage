@@ -1,34 +1,21 @@
-from typing import Tuple
-import re
-import sys
-import pandas as pd
-import numpy as np
-import plotly.graph_objs as go
 import math
-from operator import itemgetter
 import itertools
 import requests
 import collections
 import random
+from typing import Tuple
+import re
+import sys
+
+import pandas as pd
+import numpy as np
+import plotly.graph_objs as go
+from operator import itemgetter
 import textwrap
 
 # scipy libraries
 import scipy
-from scipy.sparse import csr_matrix
-from scipy.sparse.csgraph import floyd_warshall
-from scipy.spatial import ConvexHull, convex_hull_plot_2d
-from scipy.linalg import solve
 from scipy.spatial import distance
-
-# rdkit libraries
-from rdkit.Chem.Draw import IPythonConsole
-from rdkit.Chem import Draw
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit.Chem import ChemicalFeatures
-from rdkit.Chem import rdchem
-from rdkit.Chem import rdMolDescriptors
-from rdkit import RDConfig
 
 # alignment libraries in MDAnalysis
 import MDAnalysis as mda
@@ -40,18 +27,21 @@ import vermouth.forcefield
 import vermouth.molecule
 import vermouth.gmx.itp_read
 
-# parmed functionality
+# parmed functionality - may still need it for all-atomic functionality
 import parmed as pmd
 from parmed.gromacs.gromacstop import GromacsTopologyFile
+
 sys.path.append("..")
 
 from MDNPPackage.connect.NP_Connect import NPConnect
 from MDNPPackage.utils.NP_Utils import generate_core
 
+
 class CentralCoreGenerator(NPConnect):
     """
     the main generator class for the nanoparticle 
     """
+
     def __init__(
         self,
         R: float,
@@ -76,7 +66,8 @@ class CentralCoreGenerator(NPConnect):
         self.option = option
         self.sphere_list = generate_core(R, points, option)
         super().__init__(gros, first_atoms, last_atoms, self.sphere_list, CG, option)
-    def _rotation_matrix_from_vectors(vec_1, vec_2):
+
+    def _rotation_matrix_from_vectors(vec_1: np.array, vec_2: np.array):
         """ Find the rotation matrix that aligns vec1 to vec2
         Args:
         vec1: 
@@ -99,7 +90,7 @@ class CentralCoreGenerator(NPConnect):
         rotation_matrix = np.eye(3) + k_mat + k_mat.dot(kmat) * ((1 - c) / (s ** 2))
         return rotation_matrix
 
-    def _label_np(self, core, np_type="Janus"):
+    def _label_np(self, core: list[list[float]], np_type: str = "Janus"):
         """
         Depending on the type of NP we want in the input, we can try to generate 
         different patterns on the surface of the spehre, which will help us generate the 
@@ -157,156 +148,6 @@ class CentralCoreGenerator(NPConnect):
             top_values = [i for i in core if i[2] > (min(z_coordinates) + threshold)]
             bot_values = [i for i in core if i not in top_values]  # Return bottom hemisphere
             return [top_values, bot_values]
-
-    def pandas_np(
-        ligand_string, first_atom, last_atom, sphere_list, ligand_name, core_name, length=1.0
-    ) -> tuple[pd.DataFrame, pd.DataFrame]:
-        """Placeholder
-        """
-        transformation_list, name_list = [], []  #
-        ligand_list = []
-        sphere = []
-        x_plot, y_plot, z_plot = [], [], []
-        x_plot_sphere, y_plot_sphere, z_plot_sphere = [], [], []
-        u = mda.Universe.from_smiles(ligand_string)
-        ligand = u.select_atoms("all")
-        logging.info(f"The length of the ligand is {len(Ligand)}")
-        first_atom_group = u.select_atoms("name {}".format(first_atom))
-        last_atom_group = u.select_atoms("name {}".format(last_atom))
-        ligand_alignment_vector = (first_atom_group.positions - last_atom_group.positions)[0]
-        for i, j in enumerate(ligand.positions):
-            vector = (j - first_atom_group.positions)[0]
-            vector[0] = ligand_alignment_vector[0] - vector[0]
-            vector[1] = ligand_alignment_vector[1] - vector[1]
-            vector[2] = ligand_alignment_vector[2] - vector[2]
-            if vector[0] == -math.inf:
-                pass
-            if vector[0] == 0.0:
-                pass
-            else:
-                transformation_list.append([vector, ligand.atoms[i].type])
-        vec_ligand = ligand_alignment_vector.tolist()
-        # Loop over the sphere and find the
-        for index in range(0, len(sphere_list)):
-            vec_2 = sphere_list[index]
-            # Find the transformationvector for the ligand vector to vec2, which is the position of the point on sphere
-            transformation_vector = self._rotation_matrix_from_vectors(vec_ligand, vec_2)
-            # Rotate the vector
-            vec_1_rot = transformation_vector.dot(
-                vec_ligand
-            )  # Rotate the vector to match the surface point on the sphere
-            # Get the absolute length of the unit vector
-            unit_vector_abs = np.linalg.norm(ligand_alignment_vector)
-            # Change the rotation vector in unit vector, then multiply by the absolute
-            # length of the sphere
-            vec_multiplier = vec_1_rot / unit_vector_abs * (np.linalg.norm(np.array(vec_2))) + (
-                vec_1_rot / unit_vector_abs * length
-            )
-            # Find the difference in length
-            sphere.append(vec_2)
-            # Translate the vector further out
-            for trans in transformation_list:
-                ligand_atom_coordinate = transformation_vector.dot(trans[0])
-                ligand_atom_coordinate[0] = ligand_atom_coordinate[0] + vec_multiplier[0]
-                ligand_atom_coordinate[1] = ligand_atom_coordinate[1] + vec_multiplier[1]
-                ligand_atom_coordinate[2] = ligand_atom_coordinate[2] + vec_multiplier[2]
-                ligand_list.append(ligand_atom_coordinate.tolist())  # Append coordinates of the
-                name_list.append(trans[1])  # Append the names of the atoms
-        # Append the coordinates of the ligands
-        for index, entry in enumerate(ligand_list):
-            x_plot.append(entry[0])
-            y_plot.append(entry[1])
-            z_plot.append(entry[2])
-
-        ligand_constituent = [atom.name for atom in ligand]
-        ligands = []
-        for index in range(0, len(sphere)):
-            ligands = ligands + ligand_constituent
-        sphere_name = []
-        # Append the coordinates of the sphere
-        for entry in sphere:
-            x_plot_sphere.append(entry[0])
-            y_plot_sphere.append(entry[1])
-            z_plot_sphere.append(entry[2])
-            sphere_name.append("P5")
-
-        df_ligand = pd.DataFrame(
-            list(zip(x_plot, y_plot, z_plot, ligands)), columns=["X", "Y", "Z", "NAME"]
-        )
-        df_core = pd.DataFrame(
-            list(zip(x_plot_sphere, y_plot_sphere, z_plot_sphere, sphere_name)),
-            columns=["X", "Y", "Z", "NAME"],
-        )
-        df_ligand["RESNAME"] = ligand_name
-        df_core["RESNAME"] = core_name
-        return df_ligand, df_core
-
-    def pandas_np_martini(
-        molecule,
-        ligand_alignment_vector,
-        transformation_list,
-        sphere_list,
-        ligand_name,
-        core_name,
-        length=1.0,
-    ) -> tuple[pd.DataFrame, pd.DataFrame]:
-        """ Function to read Martini molecule information and orientate on NP surface"""
-
-        ligand_list, name_list = [], []
-        sphere = []
-        x_plot, y_plot, z_plot = [], [], []
-        x_plot_sphere, y_plot_sphere, z_plot_sphere = [], [], []
-        # Sulfur/ligand vector
-        vec_1 = ligand_alignment_vector.tolist()
-        for index in range(0, len(sphere_list)):
-            vec_2 = sphere_list[index]
-            transformation_vector = self._rotation_matrix_from_vectors(vec1, vec2)
-            vec_1_rot = transformation_vector.dot(
-                vec1
-            )  # Rotate the vector to match the surface point on the sphere
-            unit_vector_abs = np.linalg.norm(ligand_alignment_vector)
-            vec_multiplier = vec_1_rot / unit_vector_abs * (np.linalg.norm(np.array(vec_2))) + (
-                vec_1_rot / unit_vector_abs * length
-            )
-            sphere.append(vec_2)
-            # Get the factors to translate the vector
-            for trans in transformation_list:
-                ligand_atom_coordinate = transformation_vector.dot(trans[0])
-                ligand_atom_coordinate[0] = ligand_atom_coordinate[0] + vec_multiplier[0]
-                ligand_atom_coordinate[1] = ligand_atom_coordinate[1] + vec_multiplier[1]
-                ligand_atom_coordinate[2] = ligand_atom_coordinate[2] + vec_multiplier[2]
-                ligand_list.append(ligand_atom_coordinate.tolist())
-                name_list.append(trans[1])  # Append the names of the atoms
-
-            # Append the coordinates of the ligands
-            for index, entry in enumerate(ligand_list):
-                x_plot.append(entry[0])
-                y_plot.append(entry[1])
-                z_plot.append(entry[2])
-
-            # Add in the ligand index
-            ligand_constituent = [atom.name for atom in molecule]  # Molecule is utilized here
-            for index in range(0, len(sphere)):
-                ligands = ligands + ligand_constituent
-
-            sphere_name = []
-            # Append the coordinates of the sphere
-            for entry in sphere:
-                x_plot_sphere.append(entry[0])
-                y_plot_sphere.append(entry[1])
-                z_plot_sphere.append(entry[2])
-                sphere_name.append("P5")
-
-            df_ligand = pd.DataFrame(
-                list(zip(x_plot, y_plot, z_plot, ligands)), columns=["X", "Y", "Z", "NAME"]
-            )
-            df_ligand["RESNAME"] = ligand_name
-            df_core = pd.DataFrame(
-                list(zip(x_plot_sphere, y_plot_sphere, z_plot_sphere, sphere_name)),
-                columns=["X", "Y", "Z", "NAME"],
-            )
-            dfcore["RESNAME"] = core_name
-            return df_ligand, df_core
 
     def _core_network(self, core_name: str) -> list[str]:
         """ Bond restraint allocator for the central core atoms of the NP 
@@ -476,7 +317,7 @@ class CentralCoreGenerator(NPConnect):
 
         return ligand_bonds, ligand_string_impropers, atoms
 
-    def _tile_universe(self, universe, n_x, n_y, n_z):
+    def _tile_universe(self, universe: mda.Universe, n_x: int, n_y: int, n_z: int):
         box = universe.dimensions[:3]
         copied = []
         for x in range(n_x):
